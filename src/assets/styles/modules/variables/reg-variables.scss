@@ -1,0 +1,104 @@
+//Variables for font size
+$font25: 25px;
+$font20: 20px;
+$font18: 18px;
+$font16: 16px;
+$font14: 14px;
+$font13: 13px;
+$font12: 12px;
+$spacer: 4px;
+
+//Variables for colors
+$white: #ffffff;
+$font-color: #444444;
+$nav-hover-bg: #f7f7f7;
+$grey200: #8b8b8b;
+$bg-grey: #f0f2f5; 
+$nav-hover-bg: #f7f7f7;
+$yellow100: #ffefad;  
+$yellow200: #ffc107;
+$date-color: #808080;   
+$grey-hover: #efefef; 
+$leftbar-body: #e1e1e1;
+$table-row: #f2f6f7;
+$table-border: #eeeeee;
+$table-header: #343a40;
+$search-border: #98aab3;
+$btn-orange: #fc6565;  
+$btn-green: #0eb582;
+$ques-list-bg: #f4f9ed;
+$ques-pane: #f8ede1;
+$regulatory-bg:#5bc0de;
+$memo-bg: #fcffde;
+$border-bg: #dddddd;
+$dark-black-100: #39353d;
+$orange-bg: #F28123;
+$grey100: #ccc;
+$grey200: #8B8B8B;
+$grey500: #333;
+$scrollBar-color: #777;
+$Lightyellow: #e0dcbe;
+$orange300: #c45132;
+$shadow-1: rgba(0, 0, 0, 0.15);
+$shadow-2: rgba(0, 0, 0, 0.2);
+$form-focus: #2684ff;
+
+// logo colors
+
+$logo-blue: #159dd8;
+$logo-blue-light: #e6f5fc;
+$logo-blue-hover: #1090e0;
+$logo-yellow: #fcd207;
+$logo-yellow-hover: #dccc24;
+$logo-yellow-light: #fff2b3;
+$logo-yellow-lighter: #fffbe6;
+$logo-ash: #85878a;
+
+//Variables for colors
+html {
+  --white: #ffffff;
+  --site-bg-gray: #f0f2f5;
+  --heading-color: #5b7582;
+  --font-color: #656c84;
+  --font-link-color: #668281;
+
+  --site-border-01: #eaeaea;
+  --site-tab-bg: #f6f7f9;
+  --site-blue-100: #f6feff;
+  --site-blue-200: #d4f9ff;
+
+  --site-blue-700: #1e90ff;
+
+  --site-gray-200: #f6f8fa;
+  --site-gray-900: #444444;
+  --scrollbar-grey: #d1d1d1;
+  --site-green-100: #f8fcf1;
+  --site-green-200: #f5fffa;
+  --site-green-300: #e2f6c0;
+  --site-lime-green-light: #f9fdf2;
+  --site-green-400: #cfffe6;
+  --border-green: rgb(173 215 193 / 47%);
+  --disabled-grey: #8b8b8b;
+  --search-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+  --site-table-col-shadow: 2px 0 4px 0 rgba(0, 0, 0, 0.1);
+  --site-table-hover-shadow: -2px 2px 4px 0 rgba(0, 0, 0, 0.1);
+  --detail-card-shadow: 3px 0 5px 0 rgba(0, 0, 0, 0.1);
+  --detail-card-hover-shadow: 3px 2px 5px 0 rgba(0, 0, 0, 0.1);
+  --site-border-radius: 9px;
+  --site-border-radius-sm: 5px;
+  --modal-border-radius: 16px;
+  --site-outline: 1px solid var(--site-blue-200);
+}
+//Variables for font size
+$font24: 24px;  
+$font20: 20px;
+$font18: 18px;
+$font16: 16px;
+$font14: 14px;
+$font13: 13px;
+$font12: 12px;
+$font-weights: (
+"reg": 400,
+"medium": 500,
+"bold": 700  
+);

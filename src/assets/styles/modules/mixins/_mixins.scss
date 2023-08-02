@@ -1,0 +1,33 @@
+@mixin tpa-transition {
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+  }
+  @mixin fixed-form {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 50%;
+    background: $logo-blue-hover;
+    color: $white;
+    width: $spacer*4;
+    height: $spacer*4;     
+  }
+  @mixin btn-blue-outline {
+    background: transparent;
+    border: 1px solid $logo-blue;
+    color: $logo-ash;
+    &:hover {
+      background: $logo-blue-hover;
+      color: $white;
+    }
+  }
+  @mixin tpa-button{
+    font-size: $font14;
+    letter-spacing: .5px;
+    outline: none;
+    text-shadow: none;  
+    transition: color .5s ease-in-out, background-color .5s ease-in-out, border-color .5s ease-in-out;
+  }
