@@ -23,10 +23,10 @@ export default function EntityTablePage() {
                     </div>
                     <div className='col-9 d-flex justify-content-end'>
                         <button
-                            className='btn btn-warning'
-                        // onClick={() => { navigate("/home/") }}
+                            className='btn btn-warning '
+                            onClick={() => { navigate("/home/graph-page") }}
                         >
-                            <FunnelStepsIcon className='' /> Make Diagram
+                            <FunnelStepsIcon className='' /> Create Visual Entity Chart
                         </button>
                     </div>
                 </div>

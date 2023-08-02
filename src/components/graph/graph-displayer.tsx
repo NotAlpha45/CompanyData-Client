@@ -14,7 +14,7 @@ export default function GraphDisplayer() {
     return (
         <>
             <ReactFlowProvider>
-                <div className='flex w-screen h-screen'>
+                <div style={{ width: "100vh", height: "100wh" }}>
                     <GraphFilterLeftSidebar />
                     <GraphComponent />
                 </div>
