@@ -3,11 +3,13 @@ import { GraphReducer } from "./slices/graph-slice";
 import { TypedUseSelectorHook, createSelectorHook } from "react-redux";
 import { EntitySliceReducer } from "./slices/entity-slice";
 import { GraphFilterSliceReducer as GraphFilterReducer } from "./slices/graph-filter-slice";
+import { importEntitiesModalsliceReducer } from "./slices/importEntitiesModalslice";
 
 const appReducer = combineReducers({
   graph: GraphReducer,
   entity: EntitySliceReducer,
   graphFilter: GraphFilterReducer,
+  modals: importEntitiesModalsliceReducer,
 });
 
 export const appStore = configureStore({

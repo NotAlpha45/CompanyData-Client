@@ -1,31 +1,30 @@
+import React from 'react';
 import { Modal } from 'react-bootstrap';
 
+export type ModalParam = { modalTittle: string, children: React.ReactNode, modalFooter: JSX.Element, size: "sm" | "lg" | "xl", show: boolean, handleClose: (() => void) }
 
-function ModalComponent({modalTittle,children,modalFooter,size,show,handleClose}) {
-  // const [show, setShow] = useState(true);
-
-  // const handleClose = () => setShow(false);
+function ModalComponent(props: ModalParam) {
 
   return (
     <>
       <Modal
-        show={show}
-        size={size}
+        show={props.show}
+        size={props.size}
         backdrop="static"
-        onHide={handleClose}
+        onHide={props.handleClose}
       >
         <Modal.Header className="modal-header  pt-30 ps-30 pe-30 pb-30" closeButton>
           <h4 className="modal-title fw-normal font-sz-25 header-text-color">
-            {modalTittle}
+            {props.modalTittle}
           </h4>
         </Modal.Header>
         <Modal.Body>
 
-          {children}
+          {props.children}
 
         </Modal.Body>
         <Modal.Footer>
-          {modalFooter}
+          {props.modalFooter}
         </Modal.Footer>
       </Modal>
     </>
