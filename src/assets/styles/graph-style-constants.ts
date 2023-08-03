@@ -2,7 +2,8 @@ import { MarkerType } from "reactflow";
 
 export const DefaultNodeStyle = {
   background: "white",
-  border: "4px solid teal",
+  borderColor: "teal",
+  borderWidth: "4px",
   fonsize: "medium",
   width: "fit-content",
 };
@@ -25,7 +26,8 @@ export const SelectedNodeStyle2 = {
 
 export const SelectedNodeStyle3 = {
   background: "white",
-  border: "4px solid yellow",
+  borderColor: "yellow",
+  borderWidth: "4px",
   fonsize: "medium",
   fontWeight: "bold",
   width: "fit-content",

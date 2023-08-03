@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import ReactFlow, { Controls, useReactFlow, Background, Panel, BackgroundVariant } from 'reactflow'
+import ReactFlow, { Controls, useReactFlow, Background, Panel, BackgroundVariant, MiniMap, Node } from 'reactflow'
 import 'reactflow/dist/style.css';
 import { useAppSelector } from '../../stores/redux-store';
 import { shallowEqual, useDispatch } from 'react-redux';
@@ -30,10 +30,11 @@ export default function GraphComponent() {
     }
 
     useEffect(() => {
-
         EntityConverter.convertEntitiesToGraph();
-        setLayout();
+    }, [])
 
+    useEffect(() => {
+        setLayout();
     }, [reactFlowInstance, selectedLayout])
 
 
@@ -46,13 +47,21 @@ export default function GraphComponent() {
                 onNodesChange={GraphControlUtils.handleNodeMove}
                 fitView
             >
-                <Panel position="top-right" className='bg-gray-500 rounded-md'>
-                    <button type='button' className='bg-white text-black m-2 border-black border-4' onClick={() => { setSelectedLayout("TB") }}>Vertical Layout</button>
-                    <button type='button' className='bg-white text-black m-2 border-black border-4' onClick={() => { setSelectedLayout("LR") }}>Horizontal Layout</button>
-                    <button type='button' className='bg-white text-black m-2 border-black border-4' onClick={() => { setLayout() }}>Reset Layout</button>
+                <Panel position="bottom-right" className='bg-secondary rounded-3 d-flex m-2 justify-content-end'>
+                    <button className='btn bg-light text-dark m-2 border-dark border-4 p-2 rounded-3' onClick={() => { setSelectedLayout("TB") }}>Vertical Layout</button>
+                    <button className='btn bg-light text-dark m-2 border-dark border-4 p-2 rounded-3' onClick={() => { setSelectedLayout("LR") }}>Horizontal Layout</button>
+                    <button className='btn bg-light text-dark m-2 border-dark border-4 p-2' onClick={() => { setLayout() }}>Reset Layout</button>
                 </Panel>
                 <Controls className='bg-white text-black p-1 rounded-md' />
-                <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
+                <Background className='bg-light' variant={BackgroundVariant.Dots} gap={12} size={1} />
+                <MiniMap
+                    position="top-right"
+                    pannable
+                    zoomable
+                    zoomStep={5}
+                    nodeColor={(node: Node) => { return node.style?.borderColor as string }}
+
+                />
             </ReactFlow>
 
         </>
