@@ -19,15 +19,6 @@ export default function GraphFilterFields() {
     const filterTypesKeys = Object.keys(GraphFilterNames) as GraphFilterNamesKeyType[];
     const formRef = useRef<HTMLFormElement>(null);
 
-    const handleEntitySelection = (selectedEntityId: string, selectedEntityName: string) => {
-        setSelectedEntityId(selectedEntityId);
-        setSelectedEntityName(selectedEntityName);
-    }
-
-    const handleFilterTypeSelection = (selectedFilterType: GraphFilterNamesKeyType) => {
-        setSelectedFilterType(selectedFilterType);
-    }
-
     const handleOwnershipPercentageSelection = (selectedOwnershipPercentage: number) => {
         setSelectedOwnershipPercentage(selectedOwnershipPercentage);
     }
@@ -65,6 +56,13 @@ export default function GraphFilterFields() {
         return selectedEntityId === "" || selectedFilterType === null || selectedOwnershipPercentage === 0;
     }
 
+    const handleEntitySelection = (entityName: string, entityId: string) => {
+        console.log(entityName, entityId);
+
+        setSelectedEntityId(entityId);
+        setSelectedEntityName(entityName);
+    }
+
     const handleResetFilter = () => {
         setSelectedEntityId("");
         setSelectedEntityName("");
@@ -81,6 +79,11 @@ export default function GraphFilterFields() {
         }
     })
 
+    // To accomodate the "All Entities" option
+    entitySelectorData.unshift({
+        label: "All Entities", value: "*"
+    })
+
     const filterSelectorData = filterTypesKeys.map((filterTypesKey) => {
         return {
             label: GraphFilterNames[filterTypesKey],
@@ -91,14 +94,14 @@ export default function GraphFilterFields() {
 
     return (
         <>
-            <form onSubmit={(event) => event.preventDefault()} ref={formRef}>
+            <form onSubmit={(event) => event.preventDefault()} ref={formRef} className='mb-4'>
                 <label htmlFor="entity-selector" className='p-2 fs-6'> Select Entity</label>
                 <SelectPicker
                     className='mb-3'
                     id='entity-selector'
                     data={entitySelectorData}
                     style={{ width: "100%" }}
-                    onChange={(value) => { setSelectedEntityId(value as string) }}
+                    onSelect={(_, item) => { handleEntitySelection(item.label as string, item.value as string); }}
                 />
 
                 <label htmlFor="filter-selector" className='p-2 fs-6'> Select Filter Type</label>
@@ -107,6 +110,7 @@ export default function GraphFilterFields() {
                     id='filter-selector'
                     data={filterSelectorData}
                     style={{ width: "100%" }}
+                    defaultValue={selectedFilterType}
                     onChange={(value) => { setSelectedFilterType(value as GraphFilterNamesKeyType) }}
                 />
 
@@ -131,7 +135,7 @@ export default function GraphFilterFields() {
 
                 <div id="button-groups" className='d-flex justify-content-between mt-2 space-x-2'>
 
-                    <button className="btn-primary text-center  w-32 rounded bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1  hover:bg-blue-500 disabled:opacity-25"
+                    <button className="btn-primary text-center  w-32 rounded px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1  hover:bg-blue-500 disabled:opacity-25"
                         onClick={handleApplyFilter}
                         disabled={shouldDisableButton()}
                     >

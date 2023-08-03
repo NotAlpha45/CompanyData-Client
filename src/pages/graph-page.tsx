@@ -16,12 +16,15 @@ export default function GraphPage() {
             <div className='container-fluid'>
                 <div className='row'>
                     <div className='col-2'>
-                        <GraphFilterLeftSidebar />
+                        <div className='overflow-scroll'>
+                            <GraphFilterLeftSidebar />
+                        </div>
+
                     </div>
                     <div className='col'>
                         <ReactFlowProvider>
                             <div
-                                style={{ height: "57rem", overflow: "auto" }}
+                                style={{ height: "57rem", }}
                                 className=''
                             >
                                 <GraphComponent />

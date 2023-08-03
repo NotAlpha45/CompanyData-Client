@@ -9,13 +9,9 @@ export default function GraphSavedFilterPanel() {
 
     return (
         <>
-            <div className='mt-4 overflow-hidden'>
-                <PanelGroup accordion bordered defaultActiveKey={1} className='w-auto bg-gray-200 rounded-md p-2 justify-between text-black'>
+            <div className=''>
+                <PanelGroup accordion bordered defaultActiveKey={1} className='w-auto bg-gray-200 rounded-md p-2 text-black '>
                     <Panel
-
-                        header={
-                            <span className='text-lg pl-2 pr-5'>Saved filters</span>
-                        }
                         eventKey={1}
                         id={"panel1"}>
 
@@ -26,7 +22,6 @@ export default function GraphSavedFilterPanel() {
                                     <GraphSavedFilterCard {...filter} />
                                 </div>
                             )
-
                         }
                         )}
                     </Panel>
