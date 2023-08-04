@@ -1,9 +1,8 @@
 // import { BaseComponent } from "../components/BaseComponent";
-import GraphDisplayer from "../components/graph/graph-displayer";
 import Navbar from "../components/navbar/Navbar";
-// import { PrivateLayoutModals } from "../modals/PrivateLayoutModals";
 import { Toaster } from "react-hot-toast";
 import EntityTablePage from "../pages/entity-table-page";
+import { PrivateLayoutModals } from "../modal/PrivateLayoutModals";
 export const PrivateLayout = () => {
   return (
     <>
@@ -15,7 +14,7 @@ export const PrivateLayout = () => {
           <EntityTablePage />
         </div>
       </div>
-      {/* <PrivateLayoutModals /> */}
+      <PrivateLayoutModals />
     </>
   );
 };

@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { importEntityModal } from "../../types/modal";
+import { ModalName } from "../../enums/modalName";
 
 type ModalStore = {
   type: string;
@@ -19,18 +20,18 @@ const importEntitiesModalslice = createSlice({
       state.data = action.payload.data;
       state.type = action.payload.type;
     },
-    updateModal: (
+    updateModalType: (
       state: ModalStore,
-      action: PayloadAction<importEntityModal>
+      action: PayloadAction<ModalName>
     ) => {
-      state.data = { ...action.payload };
+      state.type = action.payload;
     },
     updateFileIntoModal: (state: ModalStore, action: PayloadAction<string>) => {
       state.data.file = action.payload;
     },
     removeModal: (state: ModalStore) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      state = initState;
+      state.type = "";
     },
   },
 });

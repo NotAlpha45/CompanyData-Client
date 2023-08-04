@@ -1,57 +1,66 @@
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { Table } from "react-bootstrap";
 
-function EntitiesMap() {
+function EntitiesMap(props) {
   return (
     <>
-      <h3>
-        Reassign databasse columns with columns of your excel file.{" "}
-        <a href="https://www.youtube.com/watch?v=YT8s-90oDC0">
-          Watch this video to learn more
-        </a>
-      </h3>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td colSpan={2}>Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
-        </tbody>
-      </Table>
-    </>
-  );
-}
-
-export function EntitiesMapFooter({ handleClose, handleModal, next }) {
-  return (
-    <>
-      <Button onClick={handleClose} variant="secondary">
-        Cancel
-      </Button>
-      <Button onClick={() => handleModal(next)} variant="primary">
-        Review
-      </Button>
+      <Modal
+        show={props.show}
+        size="xl"
+        backdrop="static"
+        onHide={props.handleClose}
+      >
+        <Modal.Header
+          className="modal-header  pt-30 ps-30 pe-30 pb-30"
+          closeButton
+        >
+          <h4 className="modal-title fw-normal font-sz-25 header-text-color">
+            {props.modalTittle}
+          </h4>
+        </Modal.Header>
+        <Modal.Body>
+          <h3>
+            Reassign databasse columns with columns of your excel file.{" "}
+            <a href="https://www.youtube.com/watch?v=YT8s-90oDC0">
+              Watch this video to learn more
+            </a>
+          </h3>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Columns in our organization chart</th>
+                <th>Columns in your file which you are uploaded</th>
+              </tr>
+            </thead>
+            <tbody>
+              {props.property.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.name}</td>
+                  <td>
+                    <select
+                      // value={selectedOption}
+                      onChange={(e)=>props.handleDropdownChange(e,item.id)}
+                    >
+                      <option value="">Select an option</option>
+                      {props.excelProperty.map((excel) => (
+                        <option value={excel.name}>{excel.name}</option>
+                      ))}
+                    </select>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={props.handleClose} variant="secondary">
+            Cancel
+          </Button>
+          <Button onClick={props.handleModal} variant="primary">
+            Review
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
