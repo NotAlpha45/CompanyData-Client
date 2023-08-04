@@ -123,7 +123,7 @@ export default function GraphFilterFields() {
                 />
 
                 <div className='flex mt-4'>
-                    <button className=" btn text-center  w-100 rounded-5 bg-white px-3 py-2 mb-2 text-sm font-semibold color-red shadow-sm  hover:text-red-600"
+                    <button className=" btn btn-warning text-center  w-100 rounded-5 px-3 py-2 mb-2 shadow-sm"
                         onClick={handleResetFilter}
                     >
                         Reset Filter
@@ -132,13 +132,13 @@ export default function GraphFilterFields() {
 
                 <div id="button-groups" className='d-flex justify-content-between mt-2 space-x-2'>
 
-                    <button className="btn-primary text-center  w-32 rounded px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1  hover:bg-blue-500 disabled:opacity-25"
+                    <button className="btn btn-primary text-center  w-32 rounded px-3 py-2 text-sm text-white shadow-sm "
                         onClick={handleApplyFilter}
                         disabled={shouldDisableButton()}
                     >
                         Apply Filter
                     </button>
-                    <button type='button' className="btn-success text-center  w-32 rounded bg-green-600 px-3 py-2 text-sm text-white shadow-sm ring-1  hover:bg-green-500 disabled:opacity-25"
+                    <button className="btn btn-success text-center  w-32 rounded px-3 py-2 text-sm text-white shadow-sm"
                         disabled={shouldDisableButton()}
                         onClick={handleSaveFilter}
                     >
