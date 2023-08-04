@@ -28,7 +28,7 @@ export default function GraphSavedFilterCard(props: GraphFilterType) {
 
     return (
         <>
-            <div className='rounded-3 mt-2 mb-3 p-1 w-100 border-black border-1 bg-secondary'>
+            <div className='rounded-3 mt-2 mb-3 p-1 border-black border-1 bg-secondary'>
                 <div className='w-100'>
                     <p
                         className='p-2 rounded-md bg-light m-1'

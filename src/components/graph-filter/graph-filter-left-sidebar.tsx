@@ -8,7 +8,7 @@ export default function GraphFilterLeftSidebar() {
     return (
         <>
             <div style={{ width: "100%" }}>
-                <Sidenav defaultOpenKeys={['3']} className="">
+                <Sidenav defaultOpenKeys={['3']} className="p-2">
                     <Sidenav.Header>
                         <div className="fs-4 bg-dark-subtle p-3">Graph Sidenav</div>
                     </Sidenav.Header>
@@ -18,7 +18,7 @@ export default function GraphFilterLeftSidebar() {
                                 <Nav.Item divider />
                                 <GraphFilterFields />
                             </Nav.Menu>
-                            <Nav.Menu eventKey="4" title="Saved Filters" icon={<GearCircleIcon />}>
+                            <Nav.Menu eventKey="4" title="Saved Filters" icon={<GearCircleIcon />} >
                                 <Nav.Item divider />
                                 <GraphSavedFilterPanel />
                             </Nav.Menu>

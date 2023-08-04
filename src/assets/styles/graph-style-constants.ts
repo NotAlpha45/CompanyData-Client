@@ -26,7 +26,7 @@ export const SelectedNodeStyle2 = {
 
 export const SelectedNodeStyle3 = {
   background: "white",
-  borderColor: "yellow",
+  borderColor: "#4DC90E",
   borderWidth: "4px",
   fonsize: "medium",
   fontWeight: "bold",
@@ -57,16 +57,16 @@ export const SelectedEdgeStyle1 = {
     type: MarkerType.ArrowClosed,
     width: 15,
     height: 15,
-    color: "#E1F714",
+    color: "#4DC90E",
   },
   markerStart: {
     type: MarkerType.ArrowClosed,
     width: 15,
     height: 15,
-    color: "#E1F714",
+    color: "#4DC90E",
   },
   edgeLineStyle: {
     strokeWidth: 2,
-    stroke: "#E1F714",
+    stroke: "#4DC90E",
   },
 };
