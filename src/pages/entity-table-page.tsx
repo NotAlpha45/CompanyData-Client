@@ -2,13 +2,19 @@ import EntityTableSidenavComponent from '../components/entity-table/entity-table
 import EntityTableComponent from '../components/entity-table/entity-table-component'
 import FunnelStepsIcon from '@rsuite/icons/FunnelSteps';
 import { useNavigate } from 'react-router-dom';
+import AddEntitiesModal from '../modal/add-entities/AddEntitiesModal';
+import { useState } from 'react';
 
 export default function EntityTablePage() {
 
     const navigate = useNavigate();
+    const [showAddEntitiesModal, setShowAddEntitiesModal] = useState(false);
 
     return (
         <>
+            <div>
+                <AddEntitiesModal showModal={showAddEntitiesModal} setShowModal={setShowAddEntitiesModal} />
+            </div>
 
             <div className="container-fluid">
                 <div className='row mt-3 p-2 mb-3'>
@@ -16,7 +22,7 @@ export default function EntityTablePage() {
                         <button className='btn btn-primary'> Import Entities </button>
                     </div>
                     <div className='col-1 w-auto'>
-                        <button className='btn btn-primary'> Add Entities </button>
+                        <button className='btn btn-primary' onClick={() => { setShowAddEntitiesModal(true) }}> Add Entities </button>
                     </div>
                     <div className='col-1 w-auto'>
                         <button className='btn btn-secondary'> Export Entities </button>

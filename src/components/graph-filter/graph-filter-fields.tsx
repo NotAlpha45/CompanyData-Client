@@ -57,8 +57,6 @@ export default function GraphFilterFields() {
     }
 
     const handleEntitySelection = (entityName: string, entityId: string) => {
-        console.log(entityName, entityId);
-
         setSelectedEntityId(entityId);
         setSelectedEntityName(entityName);
     }
@@ -85,8 +83,6 @@ export default function GraphFilterFields() {
             value: filterTypesKey
         }
     })
-
-    console.log(selectedOwnershipPercentage);
 
 
     return (
