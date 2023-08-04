@@ -53,7 +53,7 @@ export default function GraphFilterFields() {
     }
 
     const shouldDisableButton = () => {
-        return selectedEntityId === "" || selectedFilterType === null || selectedOwnershipPercentage === 0;
+        return selectedEntityId === "" || selectedFilterType === null || selectedOwnershipPercentage === 0 || Number.isNaN(selectedOwnershipPercentage);
     }
 
     const handleEntitySelection = (entityName: string, entityId: string) => {
@@ -64,11 +64,6 @@ export default function GraphFilterFields() {
     }
 
     const handleResetFilter = () => {
-        setSelectedEntityId("");
-        setSelectedEntityName("");
-        setSelectedFilterType(null);
-        setSelectedOwnershipPercentage(0);
-        formRef.current?.reset();
         GraphLayoutUtils.setDefaultNodeEdgeStyle();
     }
 
@@ -90,6 +85,8 @@ export default function GraphFilterFields() {
             value: filterTypesKey
         }
     })
+
+    console.log(selectedOwnershipPercentage);
 
 
     return (

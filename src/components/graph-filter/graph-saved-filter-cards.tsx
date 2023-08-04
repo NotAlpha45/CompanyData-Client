@@ -28,7 +28,7 @@ export default function GraphSavedFilterCard(props: GraphFilterType) {
 
     return (
         <>
-            <div className='rounded-3 mt-2 mb-3 p-1 border-black border-1 bg-secondary'>
+            <div className='rounded-3 mt-2 mb-2 p-1 border border-2 border-black bg-light'>
                 <div className='w-100'>
                     <p
                         className='p-2 rounded-md bg-light m-1'
@@ -45,13 +45,13 @@ export default function GraphSavedFilterCard(props: GraphFilterType) {
                 </div>
                 <div className='mt-3 p-1 text-center d-flex justify-content-evenly'>
                     <button
-                        className="btn btn-primary text-light font-weight-bold text-sm border-2 border-primary rounded-md p-2 w-auto hover:bg-secondary"
+                        className="btn btn-primary rounded-3 text-light font-weight-bold text-sm border-2 border-primary rounded-md p-2 w-auro hover:bg-secondary"
                         onClick={handleApplyFilter}
                     >
                         Apply
                     </button>
                     <button
-                        className='btn btn-danger text-light font-weight-bold text-sm border-2 border-danger rounded-md p-2 w-auto hover:bg-danger'
+                        className='btn btn-danger rounded-3 text-light font-weight-bold text-sm border-2 border-danger rounded-md p-2 w-auto hover:bg-danger'
                         onClick={handleRemoveFilter}
                     >
                         Delete
