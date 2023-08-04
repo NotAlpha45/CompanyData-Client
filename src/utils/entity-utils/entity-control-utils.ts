@@ -12,4 +12,14 @@ export class EntityControlUtils {
       };
     });
   }
+
+  static getEntitiesAndCount(lowerIndex: number, upperIndex: number) {
+    const entities = appStore.getState().entity.entities;
+
+    // Later on, make an API call here and store the result in the store, for now, we are just fetching the entities from the store
+    return {
+      entities: entities.slice(lowerIndex, upperIndex),
+      count: entities.length,
+    };
+  }
 }
