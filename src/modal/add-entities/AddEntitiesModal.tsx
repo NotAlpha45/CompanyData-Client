@@ -7,7 +7,7 @@ import { ModalControlUtils } from '../../utils/modal-utils/ModalControlUtils';
 import { useAppSelector } from '../../stores/redux-store';
 import { shallowEqual } from 'react-redux';
 import { ModalName } from '../../enums/modalName';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AddEntitiesModalStepsName } from '../../enums/ModalSteps';
 import EntitiesLegalInputFields from '../../components/add-entities/EntitiesLegalInputFields';
 import EntitiesOwnershipInputFields from '../../components/add-entities/EntitiesOwnershipInputFields';

@@ -24,10 +24,10 @@ export default function ImportEntities() {
     { id: 3, name: "Column 3" },
   ];
 
-  const initMap:EntityMap[] = [
-    {property:"Column1",excelIndex:1},
-    {property:"Column2",excelIndex:2},
-    {property:"Column3",excelIndex:3},
+  const initMap: EntityMap[] = [
+    { property: "Column1", excelIndex: 1 },
+    { property: "Column2", excelIndex: 2 },
+    { property: "Column3", excelIndex: 3 },
   ]
 
   const [file, setfile] = useState<File>();
@@ -72,10 +72,10 @@ export default function ImportEntities() {
     );
   };
 
-  const handleDropdownChange = (e: ChangeEvent<HTMLSelectElement>, property: number) => {
+  const handleDropdownChange = (e: ChangeEvent<HTMLSelectElement>, property: string) => {
     const value = e.target.value;
 
-    const existingItemIndex = map.findIndex((item) => item.property === prop);
+    const existingItemIndex = map.findIndex((item) => item.property === property);
 
     if (existingItemIndex !== -1) {
       const updatedMap = [...map];
@@ -87,7 +87,7 @@ export default function ImportEntities() {
 
       setMap(() => updatedMap);
     } else {
-      setMap((prevMap) => [...prevMap, { property: prop, excelIndex: value }]);
+      setMap((prevMap) => [...prevMap, { property: property, excelIndex: Number(value) }]);
     }
   };
 

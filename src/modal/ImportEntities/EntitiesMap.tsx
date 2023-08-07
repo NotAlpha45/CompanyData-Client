@@ -1,6 +1,7 @@
 import { Button, Modal } from "react-bootstrap";
 import { Table } from "react-bootstrap";
 import { EntitiesMapExcelProperties, EntitiesMapProperties } from "../../types/entitiesMapDataTypes";
+import { EntityMap } from "./ImportEntities";
 
 type EntitiesMapProps = {
   file: File | undefined;
@@ -8,9 +9,10 @@ type EntitiesMapProps = {
   handleClose: () => void;
   handleModal: () => void;
   modalTitle: string;
-  handleDropdownChange: (e: any, property: number) => void;
+  handleDropdownChange: (e: any, property: string) => void;
   property: EntitiesMapProperties[];
   excelProperty: EntitiesMapExcelProperties[];
+  selectedOption: EntityMap[];
 }
 
 function EntitiesMap(props: EntitiesMapProps) {

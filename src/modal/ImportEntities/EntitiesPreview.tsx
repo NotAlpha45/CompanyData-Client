@@ -10,6 +10,8 @@ type EntitiesPreviewProps = {
   handleFile: (e: ChangeEvent<HTMLInputElement>) => void;
   handleModal: () => void;
   handleBack: () => void;
+  checkbox: boolean;
+  handleSetCheckbox: () => void;
 };
 
 function EntitiesPreview(props: EntitiesPreviewProps) {
