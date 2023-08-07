@@ -74,6 +74,8 @@ function EntitiesPreview(props) {
               name="Replace the existing sheet with new one"
               type={"checkbox"}
               id={`inline-${1}-1`}
+              checked={props.checkbox}
+              onChange={props.handleSetCheckbox}
             />
           </div>
         </Modal.Body>
@@ -88,10 +90,7 @@ function EntitiesPreview(props) {
           <Button onClick={props.handleClose} variant="secondary">
             Cancel
           </Button>
-          <Button
-            onClick={() => props.handleModal(props.next, props.submit)}
-            variant="primary"
-          >
+          <Button onClick={props.handleModal} variant="primary">
             Import
           </Button>
         </Modal.Footer>
