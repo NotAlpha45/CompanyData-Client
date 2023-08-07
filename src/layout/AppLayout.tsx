@@ -1,5 +1,7 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import { PrivateLayout } from "./PrivateLayout";
+import { PrivateLayoutModals } from "../modal/PrivateLayoutModals";
+// import UnsubscribePage from "../pages/Subscription/UnsubscribePage";
 
 export const AppLayout = () => {
   return (
@@ -7,6 +9,9 @@ export const AppLayout = () => {
     <Routes>
       <Route path="/" element={<Navigate replace to="/home" />} />
       <Route path="/home/*" element={<PrivateLayout />} />
+
+      <Route path="/modal" element={<PrivateLayoutModals></PrivateLayoutModals>} />
+
     </Routes>
   );
 };

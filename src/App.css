@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Style for the content on the left side */
+.content {
+    flex: 1;
+}
+
+/* Style for the image on the right side */
+.image {
+    width: 480px;
+    height: 360px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
