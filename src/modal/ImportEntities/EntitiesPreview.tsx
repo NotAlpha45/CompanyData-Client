@@ -1,6 +1,7 @@
 import { Button, Form, Modal } from "react-bootstrap";
 import { Accordion } from "react-bootstrap";
 import { Table } from "react-bootstrap";
+import { Loader } from "rsuite";
 
 function EntitiesPreview(props) {
   return (
@@ -20,45 +21,50 @@ function EntitiesPreview(props) {
           </h4>
         </Modal.Header>
         <Modal.Body>
+          {props.loader && <Loader backdrop content="loading..." vertical />}
+
           <div>
             <Accordion defaultActiveKey="0">
               <Accordion.Item eventKey="0">
-                <Accordion.Header>Column 1</Accordion.Header>
+                <Accordion.Header>Unilever Bangladesh</Accordion.Header>
                 <Accordion.Body>
                   <Table striped bordered hover>
                     <tbody>
                       <tr>
-                        <td>Previous 1</td>
-                        <td>Current 1</td>
+                        <td>Incorporation Jurisdiction</td>
+                        <td>Type</td>
                       </tr>
                       <tr>
-                        <td>Previous 1</td>
-                        <td>Current 1</td>
+                        <td>India</td>
+                        <td>Corporate</td>
                       </tr>
                       <tr>
-                        <td>Previous 1</td>
-                        <td>Current 1</td>
+                        <td>Bangladesh</td>
+                        <td>Company</td>
                       </tr>
                     </tbody>
                   </Table>
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="1">
-                <Accordion.Header>Column 2</Accordion.Header>
+                <Accordion.Header>Unilever Nepal</Accordion.Header>
                 <Accordion.Body>
                   <Table striped bordered hover>
                     <tbody>
-                      <tr>
-                        <td>Previous 1</td>
-                        <td>Current 1</td>
+                    <tr>
+                        <td>Incorporation Jurisdiction</td>
+                        <td>Type</td>
+                        <td>Tax Residence</td>
                       </tr>
                       <tr>
-                        <td>Previous 1</td>
-                        <td>Current 1</td>
+                        <td>India</td>
+                        <td>Corporate</td>
+                        <td>India</td>
                       </tr>
                       <tr>
-                        <td>Previous 1</td>
-                        <td>Current 1</td>
+                        <td>Nepal</td>
+                        <td>Company</td>
+                        <td>Nepal</td>
                       </tr>
                     </tbody>
                   </Table>
@@ -90,7 +96,11 @@ function EntitiesPreview(props) {
           <Button onClick={props.handleClose} variant="secondary">
             Cancel
           </Button>
-          <Button onClick={props.handleModal} variant="primary">
+          <Button
+            disabled={props.loader}
+            onClick={props.handleModal}
+            variant="primary"
+          >
             Import
           </Button>
         </Modal.Footer>

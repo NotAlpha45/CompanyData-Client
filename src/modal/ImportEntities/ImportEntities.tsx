@@ -6,11 +6,21 @@ import { importEntitiesModalsliceActions } from "../../stores/slices/importEntit
 import { useState } from "react";
 import { ModalName } from "../../enums/modalName";
 import { useAppSelector } from "../../stores/redux-store";
+import { IsExcelFile } from "../../utils/file/fileUtils";
 
 export type EntityMap = { property: string; excelIndex: number };
 
 export default function ImportEntities() {
   const tittle = "Add Entities";
+
+  const [loader, setloader] = useState<boolean>(false);
+  const [error, setError] = useState<string>();
+  const [file, setfile] = useState<File>();
+  const [checkbox, setCheckbox] = useState<boolean>(true);
+  const [map, setMap] = useState<EntityMap[]>([]);
+  const dispatch = useDispatch();
+
+  const modalType = useAppSelector((store) => store.modals.type);
 
   const property = [
     { id: 1, name: "Column1" },
@@ -23,42 +33,66 @@ export default function ImportEntities() {
     { id: 3, name: "Column 3" },
   ];
 
-  const initMap:EntityMap[] = [
-    {property:"Column1",excelIndex:1},
-    {property:"Column2",excelIndex:2},
-    {property:"Column3",excelIndex:3},
-  ]
-
-  const [file, setfile] = useState<File>();
-  const [checkbox, setCheckbox] = useState<boolean>(true);
-  const [map, setMap] = useState<EntityMap[]>(initMap);
-  const dispatch = useDispatch();
-
-  const modalType = useAppSelector((store) => store.modals.type);
+  const initMap: EntityMap[] = [
+    { property: "Column1", excelIndex: 1 },
+    { property: "Column2", excelIndex: 2 },
+    { property: "Column3", excelIndex: 3 },
+  ];
 
   const handleClose = () => {
+    resetState();
+
     dispatch(importEntitiesModalsliceActions.removeModal());
   };
 
+  function resetState() {
+    setfile(undefined);
+    setMap([]);
+    setCheckbox(false);
+    setError("");
+  }
+
   const handleFile = (e) => {
-    setfile(e.target.files[0]);
+    const item: File = e.target.files[0];
+
+    if (!IsExcelFile(item.type)) {
+      resetState();
+      setError("invalid file format!");
+      return;
+    }
+
+    setError("");
+
+    setfile(item);
   };
 
   const handleUploadEntitiesSubmit = () => {
+    setloader(true);
+
+    setMap(initMap);
     dispatch(
       importEntitiesModalsliceActions.updateModalType(ModalName.EntitiesMap)
     );
+
+    setloader(false);
   };
 
   const handleMapEntitiesSubmit = () => {
-    console.log(map);
+    setloader(true);
+
     dispatch(
       importEntitiesModalsliceActions.updateModalType(ModalName.EntitiesPreview)
     );
+
+    setloader(false);
   };
 
   const handlePreviewEntitiesSubmit = () => {
+    setloader(true);
+
     dispatch(importEntitiesModalsliceActions.removeModal());
+
+    setloader(false);
   };
   const handleSetCheckbox = () => {
     setCheckbox(!checkbox);
@@ -70,7 +104,7 @@ export default function ImportEntities() {
     );
   };
 
-  const handleDropdownChange = (e, prop) => {
+  const handleDropdownChange = (e, prop: string) => {
     const value = e.target.value;
 
     const existingItemIndex = map.findIndex((item) => item.property === prop);
@@ -98,6 +132,8 @@ export default function ImportEntities() {
         handleModal={handleUploadEntitiesSubmit}
         show={modalType === ModalName.EntitiesUpload}
         file={file}
+        error={error}
+        loader={loader}
       ></EntitiesUpload>
 
       <EntitiesMap
@@ -110,6 +146,7 @@ export default function ImportEntities() {
         excelProperty={excelProperty}
         handleDropdownChange={handleDropdownChange}
         selectedOption={map}
+        loader={loader}
       ></EntitiesMap>
 
       <EntitiesPreview
@@ -121,6 +158,7 @@ export default function ImportEntities() {
         handleBack={handlePreviewEntitiesBack}
         checkbox={checkbox}
         handleSetCheckbox={handleSetCheckbox}
+        loader={loader}
       ></EntitiesPreview>
     </>
   );

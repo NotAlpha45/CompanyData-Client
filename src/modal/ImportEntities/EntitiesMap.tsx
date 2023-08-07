@@ -1,6 +1,7 @@
 import { Button, Modal } from "react-bootstrap";
 import { Table } from "react-bootstrap";
 import { EntityMap } from "./ImportEntities";
+import { Loader } from "rsuite";
 
 function EntitiesMap(props) {
   return (
@@ -20,9 +21,11 @@ function EntitiesMap(props) {
           </h4>
         </Modal.Header>
         <Modal.Body>
+          {props.loader && <Loader backdrop content="loading..." vertical />}
+
           <h3>
             Reassign databasse columns with columns of your excel file.{" "}
-            <a href="https://www.youtube.com/watch?v=YT8s-90oDC0">
+            <a target="_blank" href="https://www.youtube.com/watch?v=YT8s-90oDC0">
               Watch this video to learn more
             </a>
           </h3>
@@ -61,7 +64,11 @@ function EntitiesMap(props) {
           <Button onClick={props.handleClose} variant="secondary">
             Cancel
           </Button>
-          <Button onClick={props.handleModal} variant="primary">
+          <Button
+            disabled={props.loader}
+            onClick={props.handleModal}
+            variant="primary"
+          >
             Review
           </Button>
         </Modal.Footer>
