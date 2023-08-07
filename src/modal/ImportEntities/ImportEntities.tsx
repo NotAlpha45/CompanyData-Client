@@ -3,21 +3,22 @@ import EntitiesMap from "./EntitiesMap";
 import EntitiesPreview from "./EntitiesPreview";
 import EntitiesUpload from "./EntitiesUpload";
 import { importEntitiesModalsliceActions } from "../../stores/slices/importEntitiesModalSlice";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { ModalName } from "../../enums/modalName";
 import { useAppSelector } from "../../stores/redux-store";
+import { EntitiesMapExcelProperties, EntitiesMapProperties } from "../../types/entitiesMapDataTypes";
 
 export type EntityMap = { property: string; excelIndex: number };
 
 export default function ImportEntities() {
   const tittle = "Add Entities";
 
-  const property = [
+  const property: EntitiesMapProperties[] = [
     { id: 1, name: "Column1" },
     { id: 2, name: "Column2" },
     { id: 3, name: "Column3" },
   ];
-  const excelProperty = [
+  const excelProperty: EntitiesMapExcelProperties[] = [
     { id: 1, name: "Column 1" },
     { id: 2, name: "Column 2" },
     { id: 3, name: "Column 3" },
@@ -40,7 +41,8 @@ export default function ImportEntities() {
     dispatch(importEntitiesModalsliceActions.removeModal());
   };
 
-  const handleFile = (e) => {
+  const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
     setfile(e.target.files[0]);
   };
 
@@ -70,7 +72,7 @@ export default function ImportEntities() {
     );
   };
 
-  const handleDropdownChange = (e, prop) => {
+  const handleDropdownChange = (e: ChangeEvent<HTMLSelectElement>, property: number) => {
     const value = e.target.value;
 
     const existingItemIndex = map.findIndex((item) => item.property === prop);
@@ -92,7 +94,7 @@ export default function ImportEntities() {
   return (
     <>
       <EntitiesUpload
-        modalTittle={tittle}
+        modalTitle={tittle}
         handleClose={handleClose}
         handleFile={handleFile}
         handleModal={handleUploadEntitiesSubmit}
@@ -103,7 +105,7 @@ export default function ImportEntities() {
       <EntitiesMap
         file={file}
         show={modalType === ModalName.EntitiesMap}
-        modalTittle={tittle}
+        modalTitle={tittle}
         handleClose={handleClose}
         handleModal={handleMapEntitiesSubmit}
         property={property}
@@ -114,7 +116,7 @@ export default function ImportEntities() {
 
       <EntitiesPreview
         show={modalType === ModalName.EntitiesPreview}
-        modalTittle={tittle}
+        modalTitle={tittle}
         handleClose={handleClose}
         handleFile={handleFile}
         handleModal={handlePreviewEntitiesSubmit}
