@@ -1,6 +1,8 @@
 import { Button, Modal } from 'rsuite';
-import AddEntitiesModalSidebar from './AddEntitiesModalSidebar';
-import EntitiesLegalInputFields from './EntitiesLegalInputFields';
+import AddEntitiesModalSidebar from '../../components/add-entities/AddEntitiesModalSidebar';
+import EntitiesLegalInputFields from '../../components/add-entities/EntitiesLegalInputFields';
+import EntitiesOwnershipInputFields from '../../components/add-entities/EntitiesOwnershipInputFields';
+import EntitiesTaxInputFields from '../../components/add-entities/EntitiesTaxInputFields';
 type AddEntitiesModalPropsType = {
     showModal: boolean,
     setShowModal: (showModal: boolean) => void
@@ -27,7 +29,9 @@ export default function AddEntitiesModal(props: AddEntitiesModalPropsType) {
                                 <AddEntitiesModalSidebar />
                             </div>
                             <div className='col'>
-                                <EntitiesLegalInputFields />
+                                {/* <EntitiesLegalInputFields /> */}
+                                {/* <EntitiesOwnershipInputFields /> */}
+                                <EntitiesTaxInputFields />
                             </div>
                         </div>
                     </div>
