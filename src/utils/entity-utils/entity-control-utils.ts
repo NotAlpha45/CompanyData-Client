@@ -1,4 +1,5 @@
 import { appStore } from "../../stores/redux-store";
+import { EntitySliceActions } from "../../stores/slices/entity-slice";
 import { Entity } from "../../types/entity-types";
 
 export class EntityControlUtils {
@@ -21,5 +22,9 @@ export class EntityControlUtils {
       entities: entities.slice(lowerIndex, upperIndex),
       count: entities.length,
     };
+  }
+
+  static addEntity(entity: Entity) {
+    appStore.dispatch(EntitySliceActions.addEntity(entity));
   }
 }

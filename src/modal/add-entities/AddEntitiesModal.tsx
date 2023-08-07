@@ -12,6 +12,8 @@ import { AddEntitiesModalStepsName } from '../../enums/ModalSteps';
 import EntitiesLegalInputFields from '../../components/add-entities/EntitiesLegalInputFields';
 import EntitiesOwnershipInputFields from '../../components/add-entities/EntitiesOwnershipInputFields';
 import { AddEntitiesModalStepsNameKeyType } from '../../types/modal';
+import { Entity } from '../../types/entity-types';
+import { EntityControlUtils } from '../../utils/entity-utils/entity-control-utils';
 
 
 export default function AddEntitiesModal() {
@@ -22,12 +24,36 @@ export default function AddEntitiesModal() {
     const modalSteps = Object.keys(AddEntitiesModalStepsName) as AddEntitiesModalStepsNameKeyType[];
     const [currentSelectedModalStepIndex, setCurrentSelectedModalStepIndex] = useState<number>(0);
 
+
+    const [addedEntity, setAddedEntity] = useState<Entity>({
+        entityId: "",
+        entityName: "",
+        incorporationJurisdiction: "",
+        entityType: "",
+        subNational: "",
+        sicCode: "",
+    });
+
+    const [addedOwnerships, setAddedOwnerships] = useState<Entity[]>([]);
+
+    const shouldSubmitEntityData = () => {
+        return addedEntity.entityName !== "" && addedEntity.entityId !== "";
+    }
+
     const handleModalClose = () => {
         ModalControlUtils.removeModal();
     }
 
     const changeModalStep = (stepName: AddEntitiesModalStepsName) => {
         setCurrentSelectedModalStep(stepName);
+    }
+
+    const handleAddEnity = () => {
+        if (!shouldSubmitEntityData()) {
+            return;
+        }
+        EntityControlUtils.addEntity(addedEntity);
+        handleModalClose();
     }
 
     const gotoStep = (stepType: "prev" | "next") => {
@@ -57,7 +83,7 @@ export default function AddEntitiesModal() {
                             </div>
 
                             <div className='col' hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Legal}>
-                                <EntitiesLegalInputFields />
+                                <EntitiesLegalInputFields addedEntity={addedEntity} setAddedEntity={setAddedEntity} />
                             </div>
 
                             <div className='col' hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Ownership}>
@@ -89,8 +115,9 @@ export default function AddEntitiesModal() {
                     </Button>
 
                     <Button
-                        onClick={handleModalClose}
-                        className='btn bg-success text-white' disabled
+                        onClick={() => { handleAddEnity() }}
+                        className='btn bg-success text-white'
+                        disabled={!shouldSubmitEntityData()}
                         hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Tax}
                     >
                         Save
