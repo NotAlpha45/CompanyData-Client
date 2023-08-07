@@ -4,7 +4,13 @@ import { EntityControlUtils } from '../../utils/entity-utils/entity-control-util
 import CloseIcon from '@rsuite/icons/Close';
 import { OwnerShip } from '../../types/entity-types';
 
-export default function EntitiesOwnershipInputFields() {
+type EntitiesOwnershipInputFieldsProps = {
+    addedEntityId: string;
+    ownershipInputValues: OwnerShip[];
+    setOwnershipInputValues: React.Dispatch<React.SetStateAction<OwnerShip[]>>;
+}
+
+export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInputFieldsProps) {
 
     const ownerEntityNames = EntityControlUtils.getEntityNamesAndIds().map((entity) => {
         return {
@@ -13,19 +19,21 @@ export default function EntitiesOwnershipInputFields() {
         };
     });
 
-    const [ownershipInputValues, setOwnershipInputValues] = React.useState<OwnerShip[]>([
-        {
-            ownershipId: "",
-            ownerId: "",
-            ownedId: "",
-            ownershipPercentage: 0,
-            ownershipName: ""
-        }
-    ]);
+    const { ownershipInputValues, setOwnershipInputValues } = props;
+
+    // const [ownershipInputValues, setOwnershipInputValues] = React.useState<OwnerShip[]>([
+    //     {
+    //         ownershipId: props.addedEntityId,
+    //         ownerId: "",
+    //         ownedId: "",
+    //         ownershipPercentage: 0,
+    //         ownershipName: ""
+    //     }
+    // ]);
 
     const addOwnershipInputField = () => {
         setOwnershipInputValues([...ownershipInputValues, {
-            ownershipId: "",
+            ownershipId: props.addedEntityId,
             ownerId: "",
             ownedId: "",
             ownershipPercentage: 0,
@@ -44,6 +52,7 @@ export default function EntitiesOwnershipInputFields() {
         ownershipInputValuesCopy[index].ownerId = ownerId;
         ownershipInputValuesCopy[index].ownershipName = ownerName;
         setOwnershipInputValues(ownershipInputValuesCopy);
+
     }
 
     const handleOwnershipPercentageSelection = (index: number, ownershipPercentage: number) => {
@@ -69,6 +78,7 @@ export default function EntitiesOwnershipInputFields() {
                                     </div>
                                 </div>
                                 <div className='row d-flex'>
+
                                     <div className='col'>
                                         <label htmlFor="owner-input" className='fs-6'>Owner Entity</label>
                                         <SelectPicker
@@ -82,12 +92,14 @@ export default function EntitiesOwnershipInputFields() {
                                     <div className='col'>
                                         <label htmlFor="percentage-input" className='fs-6'>Ownership Percentage (%)</label>
                                         <InputNumber
+                                            required
                                             id='percentage-input'
                                             min={0}
                                             max={100}
                                             onChange={(value) => { handleOwnershipPercentageSelection(index, value as number) }}
                                         />
                                     </div>
+
                                 </div>
                             </div>
                         )

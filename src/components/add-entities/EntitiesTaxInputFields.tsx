@@ -67,8 +67,8 @@ export default function EntitiesTaxInputFields() {
                             return (
                                 <div key={index} className='col-5 mb-4 p-2 rounded' style={{ background: "#EDF1F7" }}>
                                     <div>
-
-                                        <p className='fs-5'><Checkbox /> {taxCharachterization.name}</p>
+                                        <Checkbox />
+                                        <p className='fs-5'> {taxCharachterization.name}</p>
                                         <p> {taxCharachterization.description} </p>
                                     </div>
                                 </div>

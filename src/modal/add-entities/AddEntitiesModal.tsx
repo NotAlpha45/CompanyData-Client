@@ -12,7 +12,7 @@ import { AddEntitiesModalStepsName } from '../../enums/ModalSteps';
 import EntitiesLegalInputFields from '../../components/add-entities/EntitiesLegalInputFields';
 import EntitiesOwnershipInputFields from '../../components/add-entities/EntitiesOwnershipInputFields';
 import { AddEntitiesModalStepsNameKeyType } from '../../types/modal';
-import { Entity } from '../../types/entity-types';
+import { Entity, OwnerShip } from '../../types/entity-types';
 import { EntityControlUtils } from '../../utils/entity-utils/entity-control-utils';
 
 
@@ -34,7 +34,7 @@ export default function AddEntitiesModal() {
         sicCode: "",
     });
 
-    const [addedOwnerships, setAddedOwnerships] = useState<Entity[]>([]);
+    const [addedOwnerships, setAddedOwnerships] = useState<OwnerShip[]>([]);
 
     const shouldSubmitEntityData = () => {
         return addedEntity.entityName !== "" && addedEntity.entityId !== "";
@@ -53,6 +53,7 @@ export default function AddEntitiesModal() {
             return;
         }
         EntityControlUtils.addEntity(addedEntity);
+        EntityControlUtils.addOwnerships(addedOwnerships);
         handleModalClose();
     }
 
@@ -87,7 +88,11 @@ export default function AddEntitiesModal() {
                             </div>
 
                             <div className='col' hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Ownership}>
-                                <EntitiesOwnershipInputFields />
+                                <EntitiesOwnershipInputFields
+                                    addedEntityId={addedEntity.entityId}
+                                    ownershipInputValues={addedOwnerships}
+                                    setOwnershipInputValues={setAddedOwnerships}
+                                />
                             </div>
 
                             <div className='col' hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Tax}>
