@@ -1,4 +1,3 @@
-import React from 'react'
 import { Checkbox, SelectPicker } from 'rsuite'
 
 export default function EntitiesTaxInputFields() {
@@ -47,10 +46,10 @@ export default function EntitiesTaxInputFields() {
 
     return (
         <>
-            <div className='container'>
+            <div className='container-fluid'>
 
-                <div className='row d-flex mb-5'>
-                    <div className='col-12' >
+                <div className='row mb-5'>
+                    <div className='col' >
                         <label htmlFor="tr-input" className='fs-6'>Tax Resident Jurisdiction</label>
                         <SelectPicker
                             className='mb-3'
