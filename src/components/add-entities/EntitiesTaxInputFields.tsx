@@ -49,17 +49,18 @@ export default function EntitiesTaxInputFields() {
             <div className='container-fluid'>
 
                 <div className='row mb-5'>
-                    <div className='col' >
-                        <label htmlFor="tr-input" className='fs-6'>Tax Resident Jurisdiction</label>
-                        <SelectPicker
-                            className='mb-3'
-                            id='owner-selector'
-                            style={{ width: "100%" }}
-                            data={taxResidents}
-                        // onSelect={(_, item) => { handleOwnerSelection(index, item.value as string, item.label as string) }}
-                        />
-                    </div>
+
+                    <label htmlFor="tr-input" className='fs-6'>Tax Resident Jurisdiction</label>
+                    <SelectPicker
+                        className='mb-3'
+                        id='owner-selector'
+                        style={{ width: "100%" }}
+                        data={taxResidents}
+                    // onSelect={(_, item) => { handleOwnerSelection(index, item.value as string, item.label as string) }}
+                    />
+
                 </div>
+
                 <div className='row d-flex mb-5 justify-content-evenly'>
                     {
                         taxCharachterizations.map((taxCharachterization, index) => {

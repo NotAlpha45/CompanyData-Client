@@ -1,6 +1,16 @@
+import { ChangeEvent } from "react";
 import { Button, Modal } from "react-bootstrap";
 
-function EntitiesUpload(props) {
+type EntitiesUploadProps = {
+  modalTitle: string;
+  handleClose: () => void;
+  handleModal: () => void;
+  show: boolean;
+  file: File | undefined;
+  handleFile: (e: ChangeEvent<HTMLInputElement>) => void;
+};
+
+function EntitiesUpload(props: EntitiesUploadProps) {
   
   return (
     <>
@@ -10,7 +20,7 @@ function EntitiesUpload(props) {
           closeButton
         >
           <h4 className="modal-title fw-normal font-sz-25 header-text-color">
-            {props.modalTittle}
+            {props.modalTitle}
           </h4>
         </Modal.Header>
         <Modal.Body>
