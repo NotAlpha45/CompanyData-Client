@@ -22,9 +22,6 @@ export default function AddEntitiesModal() {
     const modalSteps = Object.keys(AddEntitiesModalStepsName) as AddEntitiesModalStepsNameKeyType[];
     const [currentSelectedModalStepIndex, setCurrentSelectedModalStepIndex] = useState<number>(0);
 
-    console.log(modalSteps[1]);
-
-
     const handleModalClose = () => {
         ModalControlUtils.removeModal();
     }
