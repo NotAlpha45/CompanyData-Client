@@ -1,22 +1,24 @@
 import { Button, Modal } from 'rsuite';
 import AddEntitiesModalSidebar from '../../components/add-entities/AddEntitiesModalSidebar';
-import EntitiesLegalInputFields from '../../components/add-entities/EntitiesLegalInputFields';
-import EntitiesOwnershipInputFields from '../../components/add-entities/EntitiesOwnershipInputFields';
+// import EntitiesLegalInputFields from '../../components/add-entities/EntitiesLegalInputFields';
+// import EntitiesOwnershipInputFields from '../../components/add-entities/EntitiesOwnershipInputFields';
 import EntitiesTaxInputFields from '../../components/add-entities/EntitiesTaxInputFields';
-type AddEntitiesModalPropsType = {
-    showModal: boolean,
-    setShowModal: (showModal: boolean) => void
-}
+import { ModalControlUtils } from '../../utils/modal-utils/ModalControlUtils';
+import { useAppSelector } from '../../stores/redux-store';
+import { shallowEqual } from 'react-redux';
+import { ModalName } from '../../enums/modalName';
 
-export default function AddEntitiesModal(props: AddEntitiesModalPropsType) {
+export default function AddEntitiesModal() {
 
-    const handleClose = () => {
-        props.setShowModal(false);
+    const currentSelectedModal = useAppSelector(state => state.modals.type, shallowEqual);
+
+    const handleModalClose = () => {
+        ModalControlUtils.removeModal();
     }
 
     return (
         <>
-            <Modal size={"lg"} open={props.showModal} onClose={handleClose} className='d-flex justify-content-center'>
+            <Modal size={"lg"} open={currentSelectedModal === ModalName.AddEntities} onClose={handleModalClose} className='d-flex justify-content-center'>
                 <Modal.Header>
                     <Modal.Title>
                         <p className='fs-3'>Add Entities</p>
@@ -38,10 +40,10 @@ export default function AddEntitiesModal(props: AddEntitiesModalPropsType) {
                     {/* <Placeholder.Paragraph /> */}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={handleClose} appearance="subtle">
+                    <Button onClick={handleModalClose} appearance="subtle">
                         Cancel
                     </Button>
-                    <Button onClick={handleClose} appearance="primary">
+                    <Button onClick={handleModalClose} appearance="primary">
                         Next
                     </Button>
                 </Modal.Footer>

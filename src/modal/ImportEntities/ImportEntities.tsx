@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import EntitiesMap from "./EntitiesMap";
 import EntitiesPreview from "./EntitiesPreview";
 import EntitiesUpload from "./EntitiesUpload";
-import { importEntitiesModalsliceActions } from "../../stores/slices/importEntitiesModalslice";
+import { importEntitiesModalsliceActions } from "../../stores/slices/importEntitiesModalSlice";
 import { useState } from "react";
 import { ModalName } from "../../enums/modalName";
 import { useAppSelector } from "../../stores/redux-store";
@@ -16,7 +16,7 @@ export default function ImportEntities() {
 
   const modalType = useAppSelector((store) => store.modals.type);
 
-  const tittle = "Add Entities";
+  const tittle = "Import Entities";
 
   const property = [
     { id: 1, name: "Column1" },

@@ -3,5 +3,7 @@ export enum ModalName {
   EntitiesMap = "EntitiesMap",
   EntitiesPreview = "EntitiesPreview",
 
+  AddEntities = "AddEntities",
+
   None = "None",
 }

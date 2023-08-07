@@ -2,27 +2,39 @@ import EntityTableSidenavComponent from '../components/entity-table/entity-table
 import EntityTableComponent from '../components/entity-table/entity-table-component'
 import FunnelStepsIcon from '@rsuite/icons/FunnelSteps';
 import { useNavigate } from 'react-router-dom';
-import AddEntitiesModal from '../modal/add-entities/AddEntitiesModal';
-import { useState } from 'react';
+import { ModalControlUtils } from '../utils/modal-utils/ModalControlUtils';
+import { ModalName } from '../enums/modalName';
 
 export default function EntityTablePage() {
 
     const navigate = useNavigate();
-    const [showAddEntitiesModal, setShowAddEntitiesModal] = useState(false);
+
+    const showAddEntitiesModal = () => {
+        ModalControlUtils.setModal({
+            type: ModalName.AddEntities,
+            data: {}
+        })
+    }
+
+    const showImportEntitiesModal = () => {
+        ModalControlUtils.setModal({
+            type: ModalName.EntitiesUpload,
+            data: {},
+        })
+    }
+
+
 
     return (
         <>
-            <div>
-                <AddEntitiesModal showModal={showAddEntitiesModal} setShowModal={setShowAddEntitiesModal} />
-            </div>
 
             <div className="container-fluid">
                 <div className='row mt-3 p-2 mb-3'>
                     <div className='col-1 w-auto'>
-                        <button className='btn btn-primary'> Import Entities </button>
+                        <button className='btn btn-primary' onClick={() => { showImportEntitiesModal() }}> Import Entities </button>
                     </div>
                     <div className='col-1 w-auto'>
-                        <button className='btn btn-primary' onClick={() => { setShowAddEntitiesModal(true) }}> Add Entities </button>
+                        <button className='btn btn-primary' onClick={() => { showAddEntitiesModal() }}> Add Entities </button>
                     </div>
                     <div className='col-1 w-auto'>
                         <button className='btn btn-secondary'> Export Entities </button>
