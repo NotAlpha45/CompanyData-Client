@@ -1,5 +1,6 @@
 import { Button, Modal } from "react-bootstrap";
 import { Table } from "react-bootstrap";
+import { EntityMap } from "./ImportEntities";
 
 function EntitiesMap(props) {
   return (
@@ -38,12 +39,16 @@ function EntitiesMap(props) {
                   <td>{item.name}</td>
                   <td>
                     <select
-                      // value={selectedOption}
-                      onChange={(e)=>props.handleDropdownChange(e,item.id)}
+                      key={item.id + item.name}
+                      value={
+                        props.selectedOption.find(
+                          (i: EntityMap) => i.property === item.name
+                        )?.excelIndex
+                      }
+                      onChange={(e) => props.handleDropdownChange(e, item.name)}
                     >
-                      <option value="">Select an option</option>
                       {props.excelProperty.map((excel) => (
-                        <option value={excel.name}>{excel.name}</option>
+                        <option value={excel.id}>{excel.name}</option>
                       ))}
                     </select>
                   </td>
