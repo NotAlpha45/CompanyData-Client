@@ -10,6 +10,14 @@ import { IsExcelFile } from "../../utils/file/fileUtils";
 
 export type EntityMap = { property: string; excelIndex: number };
 
+export type Entity = {
+  id: number;
+  entityId: string;
+  entityName: string;
+  data: EntityWithValue[];
+};
+export type EntityWithValue = { column: string; old: string; new: string };
+
 export default function ImportEntities() {
   const tittle = "Add Entities";
 
@@ -18,6 +26,7 @@ export default function ImportEntities() {
   const [file, setfile] = useState<File>();
   const [checkbox, setCheckbox] = useState<boolean>(true);
   const [map, setMap] = useState<EntityMap[]>([]);
+  // const [entityPreview, setEntityPreview] = useState<Entity[]>([]);
   const dispatch = useDispatch();
 
   const modalType = useAppSelector((store) => store.modals.type);
@@ -37,6 +46,48 @@ export default function ImportEntities() {
     { property: "Column1", excelIndex: 1 },
     { property: "Column2", excelIndex: 2 },
     { property: "Column3", excelIndex: 3 },
+  ];
+
+  const entityPreview: Entity[] = [
+    {
+      id: 1,
+      entityId: "001",
+      entityName: "Uniliver Bangladesh",
+      data: [
+        {
+          column: "Incorporation Jurisdiction",
+          old: "India",
+          new: "Bangladesh",
+        },
+        {
+          column: "Type",
+          old: "Corporate",
+          new: "Company",
+        },
+      ],
+    },
+    {
+      id: 1,
+      entityId: "002",
+      entityName: "Uniliver India",
+      data: [
+        {
+          column: "Sic Code",
+          old: "12345",
+          new: "Ind-000",
+        },
+        {
+          column: "Incorporation Jurisdiction",
+          old: "UK",
+          new: "India",
+        },
+        {
+          column: "Subnational",
+          old: "UK",
+          new: "India",
+        },
+      ],
+    },
   ];
 
   const handleClose = () => {
@@ -79,6 +130,8 @@ export default function ImportEntities() {
 
   const handleMapEntitiesSubmit = () => {
     setloader(true);
+
+    // setEntityPreview(entity_p);
 
     dispatch(
       importEntitiesModalsliceActions.updateModalType(ModalName.EntitiesPreview)
@@ -159,6 +212,7 @@ export default function ImportEntities() {
         checkbox={checkbox}
         handleSetCheckbox={handleSetCheckbox}
         loader={loader}
+        entityPreview={entityPreview}
       ></EntitiesPreview>
     </>
   );
