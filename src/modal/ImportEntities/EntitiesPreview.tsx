@@ -26,13 +26,13 @@ function EntitiesPreview(props) {
         <Modal.Body>
           {props.loader && <Loader backdrop content="loading..." vertical />}
 
-          <div>
+          <div style={{ maxHeight: "50vh" }}>
             <Accordion defaultActiveKey="0">
               {props.entityPreview.map((item: Entity) => (
                 <Accordion.Item key={item.entityId} eventKey={item.entityId}>
                   <Accordion.Header>{item.entityName}</Accordion.Header>
                   <Accordion.Body>
-                    <Table striped bordered hover>
+                    <Table bordered>
                       <thead>
                         <tr>
                           {item.data.map((h) => (
@@ -41,12 +41,14 @@ function EntitiesPreview(props) {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
+                        <tr style={{ backgroundColor: "#d14b4b", color:"white" }}>
                           {item.data.map((h) => (
                             <td key={h.old}>{h.old}</td>
                           ))}
                         </tr>
-                        <tr>
+                        <tr
+                          style={{ backgroundColor: "#4d943a", color: "white" }}
+                        >
                           {item.data.map((h) => (
                             <td key={h.new}>{h.new}</td>
                           ))}
