@@ -7,6 +7,7 @@ import { AddEntitiesModalStepsName } from '../../enums/ModalSteps';
 type AddEntitiesModalSidebarProps = {
     selectedStep: AddEntitiesModalStepsName,
     changeStep: (stepName: AddEntitiesModalStepsName) => void
+    toggleNavigationEnabled?: boolean
 }
 
 export default function AddEntitiesModalSidebar(props: AddEntitiesModalSidebarProps) {
@@ -18,6 +19,7 @@ export default function AddEntitiesModalSidebar(props: AddEntitiesModalSidebarPr
                         <Nav.Item
                             eventKey={AddEntitiesModalStepsName.Legal}
                             icon={<ReviewIcon />}
+                            disabled={props.toggleNavigationEnabled ? !props.toggleNavigationEnabled : true}
                             onClick={() => { props.changeStep(AddEntitiesModalStepsName.Legal) }}
                         >
                             Legal
@@ -25,6 +27,7 @@ export default function AddEntitiesModalSidebar(props: AddEntitiesModalSidebarPr
                         <Nav.Item
                             eventKey={AddEntitiesModalStepsName.Ownership}
                             icon={<ChangeListIcon />}
+                            disabled={props.toggleNavigationEnabled ? !props.toggleNavigationEnabled : true}
                             onClick={() => { props.changeStep(AddEntitiesModalStepsName.Ownership) }}
                         >
                             OwnerShip
@@ -32,6 +35,7 @@ export default function AddEntitiesModalSidebar(props: AddEntitiesModalSidebarPr
                         <Nav.Item
                             eventKey={AddEntitiesModalStepsName.Tax}
                             icon={<GroupIcon />}
+                            disabled={props.toggleNavigationEnabled ? !props.toggleNavigationEnabled : true}
                             onClick={() => { props.changeStep(AddEntitiesModalStepsName.Tax) }}
                         >
                             Tax

@@ -107,15 +107,17 @@ export default function AddEntitiesModal() {
                 <Modal.Footer>
 
                     <Button
-                        onClick={handleModalClose}
-                        appearance="subtle">
-                        Cancel
+                        onClick={() => { gotoStep("prev") }}
+                        appearance="subtle"
+                        hidden={currentSelectedModalStepIndex === 0}
+                    >
+                        Previous
                     </Button>
 
                     <Button
                         onClick={() => { gotoStep("next") }}
                         appearance="primary"
-                        hidden={currentSelectedModalStep === AddEntitiesModalStepsName.Tax}
+                        hidden={currentSelectedModalStepIndex === modalSteps.length - 1}
                     >
                         Next
                     </Button>
@@ -124,7 +126,7 @@ export default function AddEntitiesModal() {
                         onClick={() => { handleAddEnity() }}
                         className='btn bg-success text-white'
                         disabled={!shouldSubmitEntityData()}
-                        hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Tax}
+                        hidden={currentSelectedModalStepIndex !== modalSteps.length - 1}
                     >
                         Save
                     </Button>
