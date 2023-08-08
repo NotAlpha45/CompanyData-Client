@@ -46,6 +46,7 @@ export default function AddEntitiesModal() {
 
     const changeModalStep = (stepName: AddEntitiesModalStepsName) => {
         setCurrentSelectedModalStep(stepName);
+        setCurrentSelectedModalStepIndex(modalSteps.findIndex((step) => step === stepName));
     }
 
     const handleAddEnity = () => {

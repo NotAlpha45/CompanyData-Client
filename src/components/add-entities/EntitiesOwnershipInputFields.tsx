@@ -52,7 +52,7 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
         ownershipInputValuesCopy[index].ownerId = ownerId;
         ownershipInputValuesCopy[index].ownershipName = ownerName;
         setOwnershipInputValues(ownershipInputValuesCopy);
-        console.log(ownershipInputValues);
+
 
     }
 
@@ -60,7 +60,7 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
         const ownershipInputValuesCopy = [...ownershipInputValues];
         ownershipInputValuesCopy[index].ownershipPercentage = ownershipPercentage;
         setOwnershipInputValues(ownershipInputValuesCopy);
-        console.log(ownershipInputValues);
+
     }
 
     // useEffect(() => {
@@ -104,7 +104,7 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
                                             id='percentage-input'
                                             min={0}
                                             max={100}
-                                            onChange={(value) => { handleOwnershipPercentageSelection(index, value as number) }}
+                                            onChange={(value) => { handleOwnershipPercentageSelection(index, Number(value)) }}
                                         />
                                     </div>
 
