@@ -42,6 +42,8 @@ export default function AddEntitiesModal() {
 
     const handleModalClose = () => {
         ModalControlUtils.removeModal();
+        setCurrentSelectedModalStepIndex(0);
+        setCurrentSelectedModalStep(AddEntitiesModalStepsName[modalSteps[0]]);
     }
 
     const changeModalStep = (stepName: AddEntitiesModalStepsName) => {
