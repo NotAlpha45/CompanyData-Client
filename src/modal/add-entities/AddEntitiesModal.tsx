@@ -78,31 +78,33 @@ export default function AddEntitiesModal() {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <div className='container-fluid' style={{ height: '40rem', width: '70rem' }}>
-                        <div className='row h-100'>
-                            <div className='col-3'>
-                                <AddEntitiesModalSidebar selectedStep={currentSelectedModalStep} changeStep={changeModalStep} />
-                            </div>
+                    <form onSubmit={(event) => { event.preventDefault(); handleAddEnity() }} id='entity-form'>
+                        <div className='container-fluid' style={{ height: '40rem', width: '70rem' }}>
+                            <div className='row h-100'>
+                                <div className='col-3'>
+                                    <AddEntitiesModalSidebar selectedStep={currentSelectedModalStep} changeStep={changeModalStep} />
+                                </div>
 
-                            <div className='col' hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Legal}>
-                                <EntitiesLegalInputFields addedEntity={addedEntity} setAddedEntity={setAddedEntity} />
-                            </div>
+                                <div className='col' hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Legal}>
+                                    <EntitiesLegalInputFields addedEntity={addedEntity} setAddedEntity={setAddedEntity} />
+                                </div>
 
-                            <div className='col' hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Ownership}>
-                                <EntitiesOwnershipInputFields
-                                    addedEntityId={addedEntity.entityId}
-                                    ownershipInputValues={addedOwnerships}
-                                    setOwnershipInputValues={setAddedOwnerships}
-                                />
-                            </div>
+                                <div className='col' hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Ownership}>
+                                    <EntitiesOwnershipInputFields
+                                        addedEntityId={addedEntity.entityId}
+                                        ownershipInputValues={addedOwnerships}
+                                        setOwnershipInputValues={setAddedOwnerships}
+                                    />
+                                </div>
 
-                            <div className='col' hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Tax}>
-                                <EntitiesTaxInputFields />
-                            </div>
+                                <div className='col' hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Tax}>
+                                    <EntitiesTaxInputFields />
+                                </div>
 
+                            </div>
                         </div>
-                    </div>
-                    {/* <Placeholder.Paragraph /> */}
+                        {/* <Placeholder.Paragraph /> */}
+                    </form>
                 </Modal.Body>
                 <Modal.Footer>
 
@@ -123,7 +125,8 @@ export default function AddEntitiesModal() {
                     </Button>
 
                     <Button
-                        onClick={() => { handleAddEnity() }}
+                        type='submit'
+                        form='entity-form'
                         className='btn bg-success text-white'
                         disabled={!shouldSubmitEntityData()}
                         hidden={currentSelectedModalStepIndex !== modalSteps.length - 1}

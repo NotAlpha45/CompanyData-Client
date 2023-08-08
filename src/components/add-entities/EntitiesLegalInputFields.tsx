@@ -1,4 +1,4 @@
-import { Input, SelectPicker } from 'rsuite'
+import { Input, InputPicker } from 'rsuite'
 import { Entity } from '../../types/entity-types';
 
 type EntitiesLegalInputFieldsProps = {
@@ -31,6 +31,7 @@ export default function EntitiesLegalInputFields(props: EntitiesLegalInputFields
                     <div className='col'>
                         <label htmlFor="name-input" className='fs-6'>Name</label>
                         <Input
+                            required
                             placeholder=""
                             id='name-input'
                             onChange={(value) => { props.setAddedEntity({ ...props.addedEntity, entityName: value }) }}
@@ -41,7 +42,8 @@ export default function EntitiesLegalInputFields(props: EntitiesLegalInputFields
                 <div className='row d-flex mb-5'>
                     <div className='col' >
                         <label htmlFor="ij-input" className='fs-6'>Incorporation Jurisdiction</label>
-                        <SelectPicker
+                        <InputPicker
+                            aria-required
                             className='mb-3'
                             id='entity-selector'
                             data={incorporationJuristrictionNames}
@@ -51,7 +53,8 @@ export default function EntitiesLegalInputFields(props: EntitiesLegalInputFields
                     </div>
                     <div className='col'>
                         <label htmlFor="sn-input" className='fs-6'>Sub National</label>
-                        <SelectPicker
+                        <InputPicker
+                            aria-required
                             className='mb-3'
                             id='entity-selector'
                             data={subNationalNames}

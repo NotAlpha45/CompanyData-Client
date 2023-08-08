@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { InputNumber, SelectPicker } from 'rsuite'
+import React from 'react'
+import { InputNumber, InputPicker } from 'rsuite'
 import { EntityControlUtils } from '../../utils/entity-utils/entity-control-utils'
 import CloseIcon from '@rsuite/icons/Close';
 import { OwnerShip } from '../../types/entity-types';
@@ -20,16 +20,6 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
     });
 
     const { ownershipInputValues, setOwnershipInputValues } = props;
-
-    // const [ownershipInputValues, setOwnershipInputValues] = React.useState<OwnerShip[]>([
-    //     {
-    //         ownershipId: props.addedEntityId,
-    //         ownerId: "",
-    //         ownedId: "",
-    //         ownershipPercentage: 0,
-    //         ownershipName: ""
-    //     }
-    // ]);
 
     const addOwnershipInputField = () => {
         setOwnershipInputValues([...ownershipInputValues, {
@@ -88,8 +78,9 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
                                 <div className='row d-flex'>
 
                                     <div className='col'>
-                                        <label htmlFor="owner-input" className='fs-6'>Owner Entity</label>
-                                        <SelectPicker
+                                        <label htmlFor="owner-selector" className='fs-6'>Owner Entity</label>
+                                        <InputPicker
+                                            aria-required
                                             className='mb-3'
                                             id='owner-selector'
                                             style={{ width: "100%" }}
