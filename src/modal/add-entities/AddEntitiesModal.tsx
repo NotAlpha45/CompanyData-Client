@@ -12,6 +12,8 @@ import { AddEntitiesModalStepsName } from '../../enums/ModalSteps';
 import EntitiesLegalInputFields from '../../components/add-entities/EntitiesLegalInputFields';
 import EntitiesOwnershipInputFields from '../../components/add-entities/EntitiesOwnershipInputFields';
 import { AddEntitiesModalStepsNameKeyType } from '../../types/modal';
+import { Entity, OwnerShip } from '../../types/entity-types';
+import { EntityControlUtils } from '../../utils/entity-utils/entity-control-utils';
 
 
 export default function AddEntitiesModal() {
@@ -22,12 +24,40 @@ export default function AddEntitiesModal() {
     const modalSteps = Object.keys(AddEntitiesModalStepsName) as AddEntitiesModalStepsNameKeyType[];
     const [currentSelectedModalStepIndex, setCurrentSelectedModalStepIndex] = useState<number>(0);
 
+
+    const [addedEntity, setAddedEntity] = useState<Entity>({
+        entityId: "",
+        entityName: "",
+        incorporationJurisdiction: "",
+        entityType: "",
+        subNational: "",
+        sicCode: "",
+    });
+
+    const [addedOwnerships, setAddedOwnerships] = useState<OwnerShip[]>([]);
+
+    const shouldSubmitEntityData = () => {
+        return addedEntity.entityName !== "" && addedEntity.entityId !== "";
+    }
+
     const handleModalClose = () => {
         ModalControlUtils.removeModal();
+        setCurrentSelectedModalStepIndex(0);
+        setCurrentSelectedModalStep(AddEntitiesModalStepsName[modalSteps[0]]);
     }
 
     const changeModalStep = (stepName: AddEntitiesModalStepsName) => {
         setCurrentSelectedModalStep(stepName);
+        setCurrentSelectedModalStepIndex(modalSteps.findIndex((step) => step === stepName));
+    }
+
+    const handleAddEnity = () => {
+        if (!shouldSubmitEntityData()) {
+            return;
+        }
+        EntityControlUtils.addEntity(addedEntity);
+        EntityControlUtils.addOwnerships(addedOwnerships);
+        handleModalClose();
     }
 
     const gotoStep = (stepType: "prev" | "next") => {
@@ -50,6 +80,7 @@ export default function AddEntitiesModal() {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    {/* <form onSubmit={(event) => { event.preventDefault(); handleAddEnity() }} id='entity-form'> */}
                     <div className='container-fluid' style={{ height: '40rem', width: '70rem' }}>
                         <div className='row h-100'>
                             <div className='col-3'>
@@ -57,41 +88,47 @@ export default function AddEntitiesModal() {
                             </div>
 
                             <div className='col' hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Legal}>
-                                <EntitiesLegalInputFields />
+                                <EntitiesLegalInputFields addedEntity={addedEntity} setAddedEntity={setAddedEntity} />
                             </div>
 
                             <div className='col' hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Ownership}>
-                                <EntitiesOwnershipInputFields />
+                                <EntitiesOwnershipInputFields
+                                    addedEntityId={addedEntity.entityId}
+                                    ownershipInputValues={addedOwnerships}
+                                    setOwnershipInputValues={setAddedOwnerships}
+                                />
                             </div>
 
                             <div className='col' hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Tax}>
-                                <EntitiesTaxInputFields />
+                                <EntitiesTaxInputFields addedEntity={addedEntity} setAddedEntity={setAddedEntity} />
                             </div>
 
                         </div>
                     </div>
-                    {/* <Placeholder.Paragraph /> */}
                 </Modal.Body>
                 <Modal.Footer>
 
                     <Button
-                        onClick={handleModalClose}
-                        appearance="subtle">
-                        Cancel
+                        onClick={() => { gotoStep("prev") }}
+                        appearance="subtle"
+                        hidden={currentSelectedModalStepIndex === 0}
+                    >
+                        Previous
                     </Button>
 
                     <Button
                         onClick={() => { gotoStep("next") }}
                         appearance="primary"
-                        hidden={currentSelectedModalStep === AddEntitiesModalStepsName.Tax}
+                        hidden={currentSelectedModalStepIndex === modalSteps.length - 1}
                     >
                         Next
                     </Button>
 
                     <Button
-                        onClick={handleModalClose}
-                        className='btn bg-success text-white' disabled
-                        hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Tax}
+                        onClick={() => handleAddEnity()}
+                        className='btn bg-success text-white'
+                        disabled={!shouldSubmitEntityData()}
+                        hidden={currentSelectedModalStepIndex !== modalSteps.length - 1}
                     >
                         Save
                     </Button>

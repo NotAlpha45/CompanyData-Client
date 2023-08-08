@@ -1,6 +1,26 @@
-import { Checkbox, SelectPicker } from 'rsuite'
+import { Checkbox, Form, Input, SelectPicker } from 'rsuite'
+import { Entity, EntityTax, EntityTct } from '../../types/entity-types';
+import { useEffect, useState } from 'react';
 
-export default function EntitiesTaxInputFields() {
+type EntitiesTaxInputFieldsProps = {
+    addedEntity: Entity,
+    setAddedEntity: React.Dispatch<React.SetStateAction<Entity>>
+}
+
+export default function EntitiesTaxInputFields(props: EntitiesTaxInputFieldsProps) {
+
+    const [taxData, setTaxData] = useState<EntityTax>({
+        taxResidentJurisdiction: "",
+        pe: false,
+        sme: false,
+        llc: false,
+        publicLtd: false,
+        privateLtd: false,
+        tct: {
+            tctName: "",
+            tctDescription: ""
+        } as EntityTct
+    });
 
     const taxResidents = [
         {
@@ -19,30 +39,40 @@ export default function EntitiesTaxInputFields() {
 
     const taxCharachterizations = [
         {
+            code: "pe",
             name: "Permanent Establishment (PE)",
             description: "A fixed place of business which generally gives rise to income or value-added tax liability in a country or jurisdiction."
         },
         {
+            code: "sme",
             name: "Small and Medium Enterprize (SME)",
             description: "A small and medium-sized enterprise (SME) is a company whose headcount or turnover falls below certain limits."
         },
         {
+            code: "llc",
             name: "Limited Liability Company (LLC)",
             description: "A limited liability company (LLC) is a corporate structure in the United States whereby the owners are not personally liable for the company's debts or liabilities."
         },
+
         {
-            name: "Non-Profit Organization (NPO)",
-            description: "A non-profit organization (NPO) is a legal entity organized and operated for a collective, public or social benefit, in contrast with an entity that operates as a business aiming to generate a profit for its owners."
+            code: "plc",
+            name: "Public Limited Company (PLC)",
+            description: "A public limited company (PLC) is a company whose shares are traded on a stock exchange and can be bought and sold by anyone."
         },
         {
-            name: "Publicly Traded Company (PTC)",
-            description: "A publicly traded company (PTC) is a company whose ownership is dispersed among the general public in many shares of stock which are freely traded on a stock exchange or in over the counter markets."
-        },
-        {
+            code: "pc",
             name: "Private Company (PC)",
             description: "A private company (PC) is a company whose ownership is private."
         },
     ]
+
+    const handleTaxCharecterizationSelection = (taxCharachterizationCode: string, checkedValue: boolean) => {
+        setTaxData({ ...taxData, [taxCharachterizationCode]: checkedValue })
+    }
+
+    useEffect(() => {
+        props.setAddedEntity({ ...props.addedEntity, entityTax: taxData })
+    }, [taxData])
 
     return (
         <>
@@ -50,13 +80,14 @@ export default function EntitiesTaxInputFields() {
 
                 <div className='row mb-5'>
 
-                    <label htmlFor="tr-input" className='fs-6'>Tax Resident Jurisdiction</label>
+                    <Form.ControlLabel className='fs-6'>Tax Resident Jurisdiction</Form.ControlLabel>
                     <SelectPicker
                         className='mb-3'
                         id='owner-selector'
                         style={{ width: "100%" }}
                         data={taxResidents}
-                    // onSelect={(_, item) => { handleOwnerSelection(index, item.value as string, item.label as string) }}
+                        onSelect={(_, item) => { setTaxData({ ...taxData, taxResidentJurisdiction: item.value as string }) }}
+
                     />
 
                 </div>
@@ -67,15 +98,35 @@ export default function EntitiesTaxInputFields() {
                             return (
                                 <div key={index} className='col-5 mb-4 p-2 rounded' style={{ background: "#EDF1F7" }}>
                                     <div>
-
-                                        <p className='fs-5'><Checkbox /> {taxCharachterization.name}</p>
-                                        <p> {taxCharachterization.description} </p>
+                                        <Checkbox
+                                            onChange={(value, checked, event) => {
+                                                handleTaxCharecterizationSelection(taxCharachterization.code, checked)
+                                            }} />
+                                        <p className='fs-5 p-2'> {taxCharachterization.name}</p>
+                                        <p className='p-2'> {taxCharachterization.description} </p>
                                     </div>
                                 </div>
                             )
                         })
                     }
                 </div>
+
+                <div className='row d-flex justify-content-center'>
+                    <div className='col-7 d-flex flex-column gap-2 mb-4 p-2 rounded' style={{ background: "#EDF1F7" }}>
+                        <Form.ControlLabel className='fs-6'>TCT Name</Form.ControlLabel>
+                        <Input
+                            className='mb-2'
+                            onChange={(value) => { setTaxData({ ...taxData, tct: { ...taxData.tct, tctName: value } as EntityTct }) }}
+                        />
+
+                        <Form.ControlLabel className='fs-6'>TCT Description</Form.ControlLabel>
+                        <Input
+                            className='mb-2'
+                            onChange={(value) => { setTaxData({ ...taxData, tct: { ...taxData.tct, tctDescription: value } as EntityTct }) }}
+                        />
+                    </div>
+                </div>
+
             </div>
         </>
     )
