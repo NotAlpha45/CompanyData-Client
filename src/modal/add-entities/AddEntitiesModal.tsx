@@ -100,7 +100,7 @@ export default function AddEntitiesModal() {
                             </div>
 
                             <div className='col' hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Tax}>
-                                <EntitiesTaxInputFields />
+                                <EntitiesTaxInputFields addedEntity={addedEntity} setAddedEntity={setAddedEntity} />
                             </div>
 
                         </div>
