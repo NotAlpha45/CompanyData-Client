@@ -1,5 +1,5 @@
 import React from 'react'
-import { InputNumber, InputPicker } from 'rsuite'
+import { Form, InputNumber, InputPicker, Schema } from 'rsuite'
 import { EntityControlUtils } from '../../utils/entity-utils/entity-control-utils'
 import CloseIcon from '@rsuite/icons/Close';
 import { OwnerShip } from '../../types/entity-types';
@@ -18,6 +18,12 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
             value: entity.entityId
         };
     });
+
+    const ownershipInputFieldModel = Schema.Model({
+        ownerId: Schema.Types.StringType().isRequired('Required'),
+        ownershipPercentage: Schema.Types.NumberType().isRequired('Required').range(0, 100, 'Ownership Percentage must be between 0 and 100')
+    });
+
 
     const { ownershipInputValues, setOwnershipInputValues } = props;
 
@@ -53,17 +59,10 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
 
     }
 
-    // useEffect(() => {
-    //     console.log(ownershipInputValues);
-    //     console.log(props.addedEntityId);
-
-    // }, [props.addedEntityId])
-
     return (
         <>
             <div className='container-fluid overflow-y-auto'>
                 <div className='row d-flex mb-3'>
-
                     {ownershipInputValues.map((_, index) => {
                         return (
                             <div key={index} className='mb-4'>
@@ -75,35 +74,43 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
                                         <CloseIcon onClick={() => { removeOwnershipInputField(index) }} />
                                     </div>
                                 </div>
-                                <div className='row d-flex'>
+                                <Form model={ownershipInputFieldModel}>
+                                    <div className='row d-flex'>
 
-                                    <div className='col'>
-                                        <label htmlFor="owner-selector" className='fs-6'>Owner Entity</label>
-                                        <InputPicker
-                                            aria-required
-                                            className='mb-3'
-                                            id='owner-selector'
-                                            style={{ width: "100%" }}
-                                            data={ownerEntityNames}
-                                            onSelect={(_, item) => { handleOwnerSelection(index, item.value as string, item.label as string) }}
-                                        />
+                                        <div className='col'>
+                                            <Form.Group controlId='ownerId'>
+                                                <label htmlFor="owner-selector" className='fs-6'>Owner Entity</label>
+                                                {/* <Form.Control name='ownerId' /> */}
+                                                <InputPicker
+                                                    aria-required
+                                                    name='ownerId'
+                                                    className='mb-3'
+                                                    id='owner-selector'
+                                                    style={{ width: "100%" }}
+                                                    data={ownerEntityNames}
+                                                    onSelect={(_, item) => { handleOwnerSelection(index, item.value as string, item.label as string) }}
+                                                />
+                                            </Form.Group>
+                                        </div>
+                                        <div className='col'>
+                                            <Form.Group controlId='ownershipPercentage'>
+                                                <label htmlFor="percentage-input" className='fs-6'>Ownership Percentage (%)</label>
+                                                <Form.Control
+                                                    aria-required
+                                                    accepter={InputNumber}
+                                                    name='ownershipPercentage'
+                                                    id='percentage-input'
+                                                    onChange={(value) => { handleOwnershipPercentageSelection(index, Number(value)) }}
+                                                />
+                                            </Form.Group>
+                                        </div>
                                     </div>
-                                    <div className='col'>
-                                        <label htmlFor="percentage-input" className='fs-6'>Ownership Percentage (%)</label>
-                                        <InputNumber
-                                            required
-                                            id='percentage-input'
-                                            min={0}
-                                            max={100}
-                                            onChange={(value) => { handleOwnershipPercentageSelection(index, Number(value)) }}
-                                        />
-                                    </div>
-
-                                </div>
+                                </Form>
                             </div>
                         )
                     })
                     }
+
                 </div>
 
                 <div className='row'>
