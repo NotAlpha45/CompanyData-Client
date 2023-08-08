@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { InputNumber, SelectPicker } from 'rsuite'
 import { EntityControlUtils } from '../../utils/entity-utils/entity-control-utils'
 import CloseIcon from '@rsuite/icons/Close';
@@ -35,7 +35,7 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
         setOwnershipInputValues([...ownershipInputValues, {
             ownershipId: props.addedEntityId,
             ownerId: "",
-            ownedId: "",
+            ownedId: props.addedEntityId,
             ownershipPercentage: 0,
             ownershipName: ""
         }]);
@@ -52,6 +52,7 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
         ownershipInputValuesCopy[index].ownerId = ownerId;
         ownershipInputValuesCopy[index].ownershipName = ownerName;
         setOwnershipInputValues(ownershipInputValuesCopy);
+        console.log(ownershipInputValues);
 
     }
 
@@ -59,7 +60,14 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
         const ownershipInputValuesCopy = [...ownershipInputValues];
         ownershipInputValuesCopy[index].ownershipPercentage = ownershipPercentage;
         setOwnershipInputValues(ownershipInputValuesCopy);
+        console.log(ownershipInputValues);
     }
+
+    // useEffect(() => {
+    //     console.log(ownershipInputValues);
+    //     console.log(props.addedEntityId);
+
+    // }, [props.addedEntityId])
 
     return (
         <>
