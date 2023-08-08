@@ -79,13 +79,12 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
 
                                         <div className='col'>
                                             <Form.Group controlId='ownerId'>
-                                                <label htmlFor="owner-selector" className='fs-6'>Owner Entity</label>
+                                                <Form.ControlLabel className='fs-6'>Owner Entity</Form.ControlLabel>
                                                 {/* <Form.Control name='ownerId' /> */}
                                                 <InputPicker
                                                     aria-required
                                                     name='ownerId'
                                                     className='mb-3'
-                                                    id='owner-selector'
                                                     style={{ width: "100%" }}
                                                     data={ownerEntityNames}
                                                     onSelect={(_, item) => { handleOwnerSelection(index, item.value as string, item.label as string) }}
@@ -94,7 +93,7 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
                                         </div>
                                         <div className='col'>
                                             <Form.Group controlId='ownershipPercentage'>
-                                                <label htmlFor="percentage-input" className='fs-6'>Ownership Percentage (%)</label>
+                                                <Form.ControlLabel className='fs-6'>Ownership Percentage (%)</Form.ControlLabel>
                                                 <Form.Control
                                                     aria-required
                                                     accepter={InputNumber}
