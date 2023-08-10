@@ -1,23 +1,19 @@
-import { Button, Modal } from 'rsuite';
-import AddEntitiesModalSidebar from '../../components/entity-controller-fields/AddEntitiesModalSidebar';
-// import EntitiesLegalInputFields from '../../components/add-entities/EntitiesLegalInputFields';
-// import EntitiesOwnershipInputFields from '../../components/add-entities/EntitiesOwnershipInputFields';
-import EntitiesTaxInputFields from '../../components/entity-controller-fields/EntitiesTaxInputFields';
-import { ModalControlUtils } from '../../utils/modal-utils/ModalControlUtils';
+import React, { useState } from 'react'
 import { useAppSelector } from '../../stores/redux-store';
 import { shallowEqual } from 'react-redux';
-import { ModalName } from '../../enums/modalName';
-import { useState } from 'react';
 import { AddEntitiesModalStepsName } from '../../enums/ModalSteps';
-import EntitiesLegalInputFields from '../../components/entity-controller-fields/EntitiesLegalInputFields';
-import EntitiesOwnershipInputFields from '../../components/entity-controller-fields/EntitiesOwnershipInputFields';
 import { AddEntitiesModalStepsNameKeyType } from '../../types/modal';
 import { Entity, OwnerShip } from '../../types/entity-types';
 import { EntityControlUtils } from '../../utils/entity-utils/entity-control-utils';
+import { ModalControlUtils } from '../../utils/modal-utils/ModalControlUtils';
+import { ModalName } from '../../enums/modalName';
+import { Button, Modal } from 'rsuite';
+import AddEntitiesModalSidebar from '../../components/entity-controller-fields/AddEntitiesModalSidebar';
+import EntitiesLegalInputFields from '../../components/entity-controller-fields/EntitiesLegalInputFields';
+import EntitiesOwnershipInputFields from '../../components/entity-controller-fields/EntitiesOwnershipInputFields';
+import EntitiesTaxInputFields from '../../components/entity-controller-fields/EntitiesTaxInputFields';
 
-
-export default function AddEntitiesModal() {
-
+export default function ControlEntitiesModal() {
     const currentSelectedModal = useAppSelector(state => state.modals.type, shallowEqual);
     const [currentSelectedModalStep, setCurrentSelectedModalStep] = useState<AddEntitiesModalStepsName>(AddEntitiesModalStepsName.Legal);
 
@@ -73,7 +69,7 @@ export default function AddEntitiesModal() {
 
     return (
         <>
-            <Modal size={"lg"} backdrop={'static'} open={currentSelectedModal === ModalName.AddEntities} onClose={handleModalClose} className='d-flex justify-content-center'>
+            <Modal size={"lg"} backdrop={'static'} open={currentSelectedModal === ModalName.EditEntities} onClose={handleModalClose} className='d-flex justify-content-center'>
                 <Modal.Header
                     className="modal-header  pt-30 ps-30 pe-30 pb-30"
                     closeButton={false}

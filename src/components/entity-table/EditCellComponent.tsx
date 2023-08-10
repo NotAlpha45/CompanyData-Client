@@ -1,4 +1,3 @@
-import React from 'react'
 import { Entity } from '../../types/entity-types'
 import { Table } from 'rsuite'
 import EditIcon from '@rsuite/icons/Edit';
