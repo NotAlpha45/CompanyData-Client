@@ -3,6 +3,8 @@ import { Pagination, Table } from "rsuite"
 import { useEffect, useState } from "react";
 import { Entity } from "../../types/entity-types";
 import { EntityControlUtils } from "../../utils/entity-utils/entity-control-utils";
+import ExpandedRowComponent from "./ExpandedRowComponent";
+import ExpandingCellComponent from "./ExpandingCellComponent";
 
 
 export default function EntityTableComponent() {
@@ -25,6 +27,19 @@ export default function EntityTableComponent() {
 
     }, [activeTablePage, tablePageLimit])
 
+
+    const [expandedRowKeys, setExpandedRowKeys] = useState<string[]>([]);
+    const rowKey = "entityId"
+
+    const handleExpanded = (rowData: Entity) => {
+        const open = expandedRowKeys.some(key => key === rowData[rowKey]);
+        if (open) {
+            setExpandedRowKeys(expandedRowKeys.filter(key => key !== rowData[rowKey]));
+        } else {
+            setExpandedRowKeys([...expandedRowKeys, rowData[rowKey]]);
+        }
+    }
+
     return (
         <>
             <div className="">
@@ -33,7 +48,21 @@ export default function EntityTableComponent() {
                     data={entities}
                     bordered
                     shouldUpdateScroll={false}
+                    rowKey={rowKey}
+                    expandedRowKeys={expandedRowKeys}
+                    onRowClick={handleExpanded}
+                    renderRowExpanded={
+                        (rowData) => {
+                            return <ExpandedRowComponent rowData={rowData as Entity} />
+                        }
+                    }
                 >
+
+                    <Table.Column align="center" resizable>
+                        <Table.HeaderCell className="fs-4" >#</Table.HeaderCell>
+                        {/* @ts-ignore */}
+                        <ExpandingCellComponent dataKey="entityId" expandedRowKeys={expandedRowKeys} onChange={handleExpanded} />
+                    </Table.Column>
 
                     <Table.Column align="center" resizable>
                         <Table.HeaderCell className="fs-4" >ID</Table.HeaderCell>
