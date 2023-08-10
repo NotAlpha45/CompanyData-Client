@@ -7,6 +7,7 @@ import ExpandedRowComponent from "./ExpandedRowComponent";
 import ExpandingCellComponent from "./ExpandingCellComponent";
 import { useAppSelector } from "../../stores/redux-store";
 import { shallowEqual } from "react-redux";
+import EditCellComponent from "./EditCellComponent";
 
 
 export default function EntityTableComponent() {
@@ -77,10 +78,15 @@ export default function EntityTableComponent() {
                         <Table.Cell dataKey="entityId" className="lead" />
                     </Table.Column>
 
+                    <Table.Column align="center" resizable  >
+                        <Table.HeaderCell className="fs-4" >{" "}</Table.HeaderCell>
+                        {/* @ts-ignore */}
+                        <EditCellComponent dataKey="entityId" />
+                    </Table.Column>
+
                     <Table.Column align="center" flexGrow={1} resizable>
                         <Table.HeaderCell className="fs-4" >Entity Name</Table.HeaderCell>
                         <Table.Cell dataKey="entityName" className="lead" />
-
                     </Table.Column>
 
                     <Table.Column align="center" flexGrow={1} resizable>

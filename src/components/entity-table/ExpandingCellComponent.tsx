@@ -8,10 +8,10 @@ type ExpandingCellComponentProps = {
     dataKey: string,
     expandedRowKeys: string[],
     handleExpand: (rowData: Entity) => void
-}
+} & typeof Table.Cell
 
 
-export default function ExpandingCellComponent({ rowData, dataKey, expandedRowKeys, handleExpand, ...props }: typeof Table.Cell & ExpandingCellComponentProps) {
+export default function ExpandingCellComponent({ rowData, dataKey, expandedRowKeys, handleExpand, ...props }: ExpandingCellComponentProps) {
 
     return (
         <>

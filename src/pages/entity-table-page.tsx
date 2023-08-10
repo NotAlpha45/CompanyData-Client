@@ -1,5 +1,5 @@
-import EntityTableSidenavComponent from '../components/entity-table/entity-table-sidenav-component'
-import EntityTableComponent from '../components/entity-table/entity-table-component'
+import EntityTableSidenavComponent from '../components/entity-table/EntityTableSideNavComponent'
+import EntityTableComponent from '../components/entity-table/EntityTableComponent'
 import FunnelStepsIcon from '@rsuite/icons/FunnelSteps';
 import { useNavigate } from 'react-router-dom';
 import { ModalControlUtils } from '../utils/modal-utils/ModalControlUtils';
