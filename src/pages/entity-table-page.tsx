@@ -4,6 +4,7 @@ import FunnelStepsIcon from '@rsuite/icons/FunnelSteps';
 import { useNavigate } from 'react-router-dom';
 import { ModalControlUtils } from '../utils/modal-utils/ModalControlUtils';
 import { ModalName } from '../enums/modalName';
+import { AppRoutesUI } from '../routes/appRoutes';
 
 export default function EntityTablePage() {
 
@@ -42,7 +43,7 @@ export default function EntityTablePage() {
                     <div className='col-9 d-flex justify-content-end'>
                         <button
                             className='btn btn-warning '
-                            onClick={() => { navigate("/home/graph-page") }}
+                            onClick={() => { navigate(AppRoutesUI.CompanyData.CompanyDataGraph.Path()) }}
                         >
                             <FunnelStepsIcon className='' /> Create Visual Entity Chart
                         </button>

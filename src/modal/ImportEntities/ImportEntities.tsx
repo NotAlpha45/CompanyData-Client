@@ -53,7 +53,7 @@ export default function ImportEntities() {
   };
 
   const handleMapEntitiesSubmit = () => {
-    console.log(map);
+    // console.log(map);
     dispatch(
       importEntitiesModalsliceActions.updateModalType(ModalName.EntitiesPreview)
     );

@@ -32,6 +32,7 @@
     "single-spa": "^5.9.5"
   },
   "devDependencies": {
+    "@types/node": "^20.4.8",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
