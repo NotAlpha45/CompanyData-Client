@@ -1,10 +1,22 @@
+import { ChangeEvent } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { Accordion } from "react-bootstrap";
 import { Table } from "react-bootstrap";
 import { Loader } from "rsuite";
 import { Entity } from "./ImportEntities";
 
-function EntitiesPreview(props) {
+type EntitiesPreviewProps = {
+  show: boolean;
+  modalTitle: string;
+  handleClose: () => void;
+  handleFile: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleModal: () => void;
+  handleBack: () => void;
+  checkbox: boolean;
+  handleSetCheckbox: () => void;
+};
+
+function EntitiesPreview(props: EntitiesPreviewProps) {
   return (
     <>
       <Modal
@@ -19,7 +31,7 @@ function EntitiesPreview(props) {
           closeButton
         >
           <h4 className="modal-title fw-normal font-sz-25 header-text-color">
-            {props.modalTittle}
+            {props.modalTitle}
           </h4>
         </Modal.Header>
 
@@ -76,7 +88,7 @@ function EntitiesPreview(props) {
 
         <Modal.Footer>
           <Button
-            onClick={() => props.handleBack(props.previous)}
+            onClick={() => props.handleBack()}
             variant="secondary"
             className=""
           >

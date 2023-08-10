@@ -1,9 +1,22 @@
 import { Button, Modal } from "react-bootstrap";
 import { Table } from "react-bootstrap";
+import { EntitiesMapExcelProperties, EntitiesMapProperties } from "../../types/entitiesMapDataTypes";
 import { EntityMap } from "./ImportEntities";
 import { Loader } from "rsuite";
 
-function EntitiesMap(props) {
+type EntitiesMapProps = {
+  file: File | undefined;
+  show: boolean;
+  handleClose: () => void;
+  handleModal: () => void;
+  modalTitle: string;
+  handleDropdownChange: (e: any, property: string) => void;
+  property: EntitiesMapProperties[];
+  excelProperty: EntitiesMapExcelProperties[];
+  selectedOption: EntityMap[];
+}
+
+function EntitiesMap(props: EntitiesMapProps) {
   return (
     <>
       <Modal
@@ -17,7 +30,7 @@ function EntitiesMap(props) {
           closeButton
         >
           <h4 className="modal-title fw-normal font-sz-25 header-text-color">
-            {props.modalTittle}
+            {props.modalTitle}
           </h4>
         </Modal.Header>
         <Modal.Body>

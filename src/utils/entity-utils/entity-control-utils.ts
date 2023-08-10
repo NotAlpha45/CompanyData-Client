@@ -1,5 +1,6 @@
 import { appStore } from "../../stores/redux-store";
-import { Entity } from "../../types/entity-types";
+import { EntitySliceActions } from "../../stores/slices/entity-slice";
+import { Entity, OwnerShip } from "../../types/entity-types";
 
 export class EntityControlUtils {
   static getEntityNamesAndIds(
@@ -21,5 +22,13 @@ export class EntityControlUtils {
       entities: entities.slice(lowerIndex, upperIndex),
       count: entities.length,
     };
+  }
+
+  static addEntity(entity: Entity) {
+    appStore.dispatch(EntitySliceActions.addEntity(entity));
+  }
+
+  static addOwnerships(ownerships: OwnerShip[]) {
+    appStore.dispatch(EntitySliceActions.addOwnerships(ownerships));
   }
 }

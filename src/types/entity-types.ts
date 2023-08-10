@@ -14,6 +14,7 @@ export type Entity = {
   subNational: string;
   sicCode: string;
   businessType?: string;
+  entityTax?: EntityTax;
 };
 
 export type EntityTax = {
