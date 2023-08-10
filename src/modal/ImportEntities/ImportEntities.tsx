@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import EntitiesMap from "./EntitiesMap";
 import EntitiesPreview from "./EntitiesPreview";
 import EntitiesUpload from "./EntitiesUpload";
-import { importEntitiesModalsliceActions } from "../../stores/slices/importEntitiesModalSlice";
+import { importEntitiesModalsliceActions } from "../../stores/slices/entitiesModalSlice";
 import { ChangeEvent, useState } from "react";
 import { ModalName } from "../../enums/modalName";
 import { useAppSelector } from "../../stores/redux-store";
