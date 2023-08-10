@@ -28,7 +28,7 @@ const authInitialState: IAuthReducerState = {
   isSuccess: false,
 };
 
-const slice = createSlice({
+const authSlice = createSlice({
   name: "auth",
   initialState: authInitialState,
   reducers: {
@@ -71,7 +71,7 @@ export const {
   loggedInFailed,
   WtaLoggedIn,
   setIsLoading,
-} = slice.actions;
+} = authSlice.actions;
 
-export const AuthReducer = slice.reducer;
-export const AuthActions = slice.actions;
+export const AuthReducer = authSlice.reducer;
+export const AuthActions = authSlice.actions;
