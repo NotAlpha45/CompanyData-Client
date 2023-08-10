@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { AddEntitiesModalStepsName } from '../../enums/ModalSteps';
 import EntitiesLegalInputFields from '../../components/entity-controller-fields/EntitiesLegalInputFields';
 import EntitiesOwnershipInputFields from '../../components/entity-controller-fields/EntitiesOwnershipInputFields';
-import { AddEntitiesModalStepsNameKeyType } from '../../types/modal';
+import { AddEntitiesModalStepsNameKeyType } from '../../types/modal-types';
 import { Entity, OwnerShip } from '../../types/entity-types';
 import { EntityControlUtils } from '../../utils/entity-utils/entity-control-utils';
 

@@ -6,3 +6,8 @@ export interface importEntityModal {
 
 export type AddEntitiesModalStepsNameKeyType =
   keyof typeof AddEntitiesModalStepsName;
+
+export type ModalStoreType = {
+  type: string;
+  data: importEntityModal;
+};

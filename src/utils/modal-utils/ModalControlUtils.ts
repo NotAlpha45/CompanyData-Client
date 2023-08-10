@@ -1,8 +1,6 @@
 import { appStore } from "../../stores/redux-store";
-import {
-  ModalStoreType,
-  importEntitiesModalsliceActions,
-} from "../../stores/slices/entitiesModalSlice";
+import { importEntitiesModalsliceActions } from "../../stores/slices/entitiesModalSlice";
+import { ModalStoreType } from "../../types/modal-types";
 
 export class ModalControlUtils {
   static setModal(modalPayload: ModalStoreType) {

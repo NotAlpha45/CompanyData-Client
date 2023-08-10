@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useAppSelector } from '../../stores/redux-store';
 import { shallowEqual } from 'react-redux';
 import { AddEntitiesModalStepsName } from '../../enums/ModalSteps';
-import { AddEntitiesModalStepsNameKeyType } from '../../types/modal';
+import { AddEntitiesModalStepsNameKeyType } from '../../types/modal-types';
 import { Entity, OwnerShip } from '../../types/entity-types';
 import { EntityControlUtils } from '../../utils/entity-utils/entity-control-utils';
 import { ModalControlUtils } from '../../utils/modal-utils/ModalControlUtils';

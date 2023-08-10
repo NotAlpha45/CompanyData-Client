@@ -1,11 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { importEntityModal } from "../../types/modal";
+import { ModalStoreType, importEntityModal } from "../../types/modal-types";
 import { ModalName } from "../../enums/modalName";
 
-export type ModalStoreType = {
-  type: string;
-  data: importEntityModal;
-};
+
 
 const initState: ModalStoreType = {
   type: "",
