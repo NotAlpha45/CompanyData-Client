@@ -23,12 +23,14 @@ const entitySlice = createSlice({
     addEntity: (state: EntityStoreType, action: PayloadAction<Entity>) => {
       state.entities.push(action.payload);
     },
+
     addOwnership: (
       state: EntityStoreType,
       action: PayloadAction<OwnerShip>
     ) => {
       state.ownerships.push(action.payload);
     },
+
     addOwnerships: (
       state: EntityStoreType,
       action: PayloadAction<OwnerShip[]>

@@ -28,6 +28,8 @@ export class EntityControlUtils {
     appStore.dispatch(EntitySliceActions.addEntity(entity));
   }
 
+  // static editEntity(entity: Entity) {}
+
   static addOwnerships(ownerships: OwnerShip[]) {
     appStore.dispatch(EntitySliceActions.addOwnerships(ownerships));
   }

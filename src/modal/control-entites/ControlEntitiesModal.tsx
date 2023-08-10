@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppSelector } from '../../stores/redux-store';
 import { shallowEqual } from 'react-redux';
 import { AddEntitiesModalStepsName } from '../../enums/ModalSteps';
@@ -13,22 +13,49 @@ import EntitiesLegalInputFields from '../../components/entity-controller-fields/
 import EntitiesOwnershipInputFields from '../../components/entity-controller-fields/EntitiesOwnershipInputFields';
 import EntitiesTaxInputFields from '../../components/entity-controller-fields/EntitiesTaxInputFields';
 
-export default function ControlEntitiesModal() {
+type ControlEntitiesModalProps = {
+    modalName: ModalName;
+    modalHeading: string;
+    sidebarNavigationEnabled: boolean;
+}
+
+export default function ControlEntitiesModal(props: ControlEntitiesModalProps) {
+
     const currentSelectedModal = useAppSelector(state => state.modals.type, shallowEqual);
-    const [currentSelectedModalStep, setCurrentSelectedModalStep] = useState<AddEntitiesModalStepsName>(AddEntitiesModalStepsName.Legal);
+
+    const entityDataToBeEdited = useAppSelector(state => state.modals.entityDataToBeEdited, shallowEqual);
+
+
 
     const modalSteps = Object.keys(AddEntitiesModalStepsName) as AddEntitiesModalStepsNameKeyType[];
     const [currentSelectedModalStepIndex, setCurrentSelectedModalStepIndex] = useState<number>(0);
+    const [currentSelectedModalStep, setCurrentSelectedModalStep] = useState<AddEntitiesModalStepsName>(AddEntitiesModalStepsName[modalSteps[0]]);
 
+    // setTimeout(() => {
+    //     console.log(currentSelectedModalStep);
+    // }, 1000);
 
-    const [addedEntity, setAddedEntity] = useState<Entity>({
-        entityId: "",
-        entityName: "",
-        incorporationJurisdiction: "",
-        entityType: "",
-        subNational: "",
-        sicCode: "",
-    });
+    const [addedEntity, setAddedEntity] = useState<Entity>(
+        entityDataToBeEdited?.entity ? entityDataToBeEdited.entity :
+            {
+                entityId: "",
+                entityName: "",
+                incorporationJurisdiction: "",
+                entityType: "",
+                subNational: "",
+                sicCode: "",
+            }
+    )
+
+    useEffect(() => {
+        if (entityDataToBeEdited?.entity) {
+            setAddedEntity(entityDataToBeEdited.entity);
+        }
+        console.log(addedEntity, entityDataToBeEdited?.entity)
+
+    }, [entityDataToBeEdited?.entity])
+
+    // console.log(entityDataToBeEdited?.entity);
 
     const [addedOwnerships, setAddedOwnerships] = useState<OwnerShip[]>([]);
 
@@ -69,13 +96,13 @@ export default function ControlEntitiesModal() {
 
     return (
         <>
-            <Modal size={"lg"} backdrop={'static'} open={currentSelectedModal === ModalName.EditEntities} onClose={handleModalClose} className='d-flex justify-content-center'>
+            <Modal size={"lg"} backdrop={'static'} open={currentSelectedModal === props.modalName} onClose={handleModalClose} className='d-flex justify-content-center'>
                 <Modal.Header
                     className="modal-header  pt-30 ps-30 pe-30 pb-30"
                     closeButton={false}
                 >
                     <Modal.Title className='d-flex justify-content-between'>
-                        <p className='fs-3'>Add Entities</p>
+                        <p className='fs-3'>{props.modalHeading}</p>
                         <button className='btn-close' type='button' aria-label='Close' onClick={handleModalClose}></button>
                     </Modal.Title>
                 </Modal.Header>
@@ -84,7 +111,7 @@ export default function ControlEntitiesModal() {
                     <div className='container-fluid' style={{ height: '40rem', width: '70rem' }}>
                         <div className='row h-100'>
                             <div className='col-3'>
-                                <AddEntitiesModalSidebar selectedStep={currentSelectedModalStep} changeStep={changeModalStep} />
+                                <AddEntitiesModalSidebar selectedStep={currentSelectedModalStep} changeStep={changeModalStep} toggleNavigationEnabled={props.sidebarNavigationEnabled} />
                             </div>
 
                             <div className='col' hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Legal}>

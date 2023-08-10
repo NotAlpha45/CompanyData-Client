@@ -1,6 +1,8 @@
 import React from "react";
 import ImportEntities from "./ImportEntities/ImportEntities";
 import AddEntitiesModal from "./add-entities/AddEntitiesModal";
+import ControlEntitiesModal from "./control-entites/ControlEntitiesModal";
+import { ModalName } from "../enums/modalName";
 
 export const PrivateLayoutModals = () => {
 
@@ -9,6 +11,11 @@ export const PrivateLayoutModals = () => {
       <React.Fragment>
         <ImportEntities />
         <AddEntitiesModal />
+        <ControlEntitiesModal
+          modalName={ModalName.EditEntities}
+          sidebarNavigationEnabled={true}
+          modalHeading={"Edit Entities"}
+        />
       </React.Fragment>
     </>
   );
