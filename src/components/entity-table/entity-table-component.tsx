@@ -14,9 +14,21 @@ export default function EntityTableComponent() {
     const [entities, setEntities] = useState<Entity[]>([]);
     const [entityCount, setEntityCount] = useState(0);
 
+    const [expandedRowKeys, setExpandedRowKeys] = useState<string[]>([]);
+    const rowKey = "entityId"
+
     const handleTablePageLimitChange = (limit: number) => {
         setTablePageLimit(limit);
         setActiveTablePage(1);
+    }
+
+    const handleExpanded = (rowData: Entity) => {
+        const open = expandedRowKeys.some(key => key === rowData[rowKey]);
+        if (open) {
+            setExpandedRowKeys(expandedRowKeys.filter(key => key !== rowData[rowKey]));
+        } else {
+            setExpandedRowKeys([...expandedRowKeys, rowData[rowKey]]);
+        }
     }
 
     useEffect(() => {
@@ -28,40 +40,31 @@ export default function EntityTableComponent() {
     }, [activeTablePage, tablePageLimit])
 
 
-    const [expandedRowKeys, setExpandedRowKeys] = useState<string[]>([]);
-    const rowKey = "entityId"
-
-    const handleExpanded = (rowData: Entity) => {
-        const open = expandedRowKeys.some(key => key === rowData[rowKey]);
-        if (open) {
-            setExpandedRowKeys(expandedRowKeys.filter(key => key !== rowData[rowKey]));
-        } else {
-            setExpandedRowKeys([...expandedRowKeys, rowData[rowKey]]);
-        }
-    }
-
     return (
         <>
             <div className="">
                 <Table className=""
-                    autoHeight
+                    // virtualized
+                    height={600}
                     data={entities}
                     bordered
                     shouldUpdateScroll={false}
                     rowKey={rowKey}
                     expandedRowKeys={expandedRowKeys}
-                    onRowClick={handleExpanded}
+                    // onRowClick={handleExpanded}
                     renderRowExpanded={
                         (rowData) => {
-                            return <ExpandedRowComponent rowData={rowData as Entity} />
+                            return <ExpandedRowComponent rowData={rowData as Entity} height={200} />
                         }
                     }
+                    rowExpandedHeight={200}
+                    headerHeight={60}
                 >
 
                     <Table.Column align="center" resizable>
                         <Table.HeaderCell className="fs-4" >#</Table.HeaderCell>
                         {/* @ts-ignore */}
-                        <ExpandingCellComponent dataKey="entityId" expandedRowKeys={expandedRowKeys} onChange={handleExpanded} />
+                        <ExpandingCellComponent dataKey="entityId" expandedRowKeys={expandedRowKeys} handleExpand={handleExpanded} />
                     </Table.Column>
 
                     <Table.Column align="center" resizable>

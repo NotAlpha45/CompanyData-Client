@@ -7,11 +7,11 @@ type ExpandingCellComponentProps = {
     rowData: Entity,
     dataKey: string,
     expandedRowKeys: string[],
-    onChange: (rowData: Entity) => void
+    handleExpand: (rowData: Entity) => void
 }
 
 
-export default function ExpandingCellComponent({ rowData, dataKey, expandedRowKeys, onChange, ...props }: typeof Table.Cell & ExpandingCellComponentProps) {
+export default function ExpandingCellComponent({ rowData, dataKey, expandedRowKeys, handleExpand, ...props }: typeof Table.Cell & ExpandingCellComponentProps) {
 
     return (
         <>
@@ -19,7 +19,7 @@ export default function ExpandingCellComponent({ rowData, dataKey, expandedRowKe
                 <IconButton
                     appearance="subtle"
                     onClick={() => {
-                        onChange(rowData);
+                        handleExpand(rowData);
                     }}
                     icon={
                         expandedRowKeys.some(key => key === rowData[dataKey as (keyof typeof rowData)]) ? (

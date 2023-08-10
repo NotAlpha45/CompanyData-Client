@@ -31,4 +31,27 @@ export class EntityControlUtils {
   static addOwnerships(ownerships: OwnerShip[]) {
     appStore.dispatch(EntitySliceActions.addOwnerships(ownerships));
   }
+
+  static getOwnerInfo(entity: Entity) {
+    const allOwnerships = appStore.getState().entity.ownerships;
+
+    const filteredOwnerships = allOwnerships.filter(
+      (ownership) => ownership.ownedId === entity.entityId
+    );
+
+    const ownerInfo = filteredOwnerships.map((ownership) => {
+      const owner = appStore
+        .getState()
+        .entity.entities.find(
+          (entity) => entity.entityId === ownership.ownerId
+        );
+      return {
+        ownerName: owner?.entityName,
+        ownerType: owner?.entityType,
+        ownershipPercentage: ownership.ownershipPercentage,
+      };
+    });
+
+    return ownerInfo;
+  }
 }
