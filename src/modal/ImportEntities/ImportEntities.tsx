@@ -10,18 +10,9 @@ import { IsExcelFile } from "../../utils/file/fileUtils";
 import { PropertyHeader } from "../../types/entitiesMapDataTypes";
 import ImportEntitiesApi from "../../apis/companyData/ImportEntitiesApi";
 import toast from "react-hot-toast";
-import { json } from "stream/consumers";
+import { EntityMap, ReviewEntity } from "../../types/companydata/importExcelType";
 
-// property: value; excelIndex: key
-export type EntityMap = { value: string; key: number };
 
-export type ReviewEntity = {
-  Id: number;
-  EntityId: string;
-  EntityName: string;
-  Data: ReviewEntityData[];
-};
-export type ReviewEntityData = { Column: string; Old: string; New: string };
 
 export default function ImportEntities() {
   const tittle = "Add Entities";
@@ -86,7 +77,7 @@ export default function ImportEntities() {
           importEntitiesModalsliceActions.updateModalType(ModalName.EntitiesMap)
         );
       })
-      .catch((err) => toast.error("something went wrong"));
+      .catch((err) => toast.error(err.response.data.Message));
 
     setloader(false);
   };
@@ -96,7 +87,7 @@ export default function ImportEntities() {
 
     // chart id will get from redux store. last selected chart. now 1 is static here
     await api
-      .GetReviewDataFromFile(file, map, 1)
+      .GetReviewDataFromFile(file, map, 2)
       .then((res) => {
         setEntityPreview(res.data);
 
@@ -106,7 +97,7 @@ export default function ImportEntities() {
           )
         );
       })
-      .catch((err) => toast.error("something went wrong"));
+      .catch((err) => toast.error(err.response.data.Message));
 
     setloader(false);
   };
@@ -115,13 +106,13 @@ export default function ImportEntities() {
     setloader(true);
 
     api
-      .ImportEntityFromExcel(file, map, 1, checkbox)
+      .ImportEntityFromExcel(file, map, 2, checkbox)
       .then((res) => {
         toast.success("successfully data imported");
-        // resetState();
-        // dispatch(importEntitiesModalsliceActions.removeModal());
+        resetState();
+        dispatch(importEntitiesModalsliceActions.removeModal());
       })
-      .catch((err) => toast.error(err));
+      .catch((err) => toast.error(err.response.data.Message));
 
     setloader(false);
   };

@@ -26,3 +26,6 @@ export type ReviewEntityData = {
   Old: string;
   New: string;
 };
+
+// property: value; excelIndex: key
+export type EntityMap = { value: string; key: number };
