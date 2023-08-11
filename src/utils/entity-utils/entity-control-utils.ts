@@ -46,7 +46,19 @@ export class EntityControlUtils {
     appStore.dispatch(EntitySliceActions.updateEntity(entity));
   }
 
-  static updateOwnerships(ownerships: OwnerShip[]) {
+  static updateOwnerships(ownerships: OwnerShip[], ownedEntity?: Entity) {
+    // If the ownership array is empty, then we are deleting the ownerships by the ownerEntity or ownedEntity
+    if (ownerships.length === 0) {
+      if (ownedEntity) {
+        ownerships = appStore
+          .getState()
+          .entity.ownerships.filter(
+            (ownership) => ownership.ownedId === ownedEntity.entityId
+          );
+      }
+      appStore.dispatch(EntitySliceActions.removeOwnerships(ownerships));
+    }
+
     appStore.dispatch(EntitySliceActions.updateOwnerships(ownerships));
   }
 

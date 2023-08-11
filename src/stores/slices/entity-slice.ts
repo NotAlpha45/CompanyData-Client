@@ -41,6 +41,21 @@ const entitySlice = createSlice({
       };
     },
 
+    removeOwnerships: (
+      state: EntityStoreType,
+      action: PayloadAction<OwnerShip[]>
+    ) => {
+      const ownerships = action.payload;
+      ownerships.forEach((ownership) => {
+        const index = state.ownerships.findIndex(
+          (o) => o.ownershipId === ownership.ownershipId
+        );
+        if (index !== -1) {
+          state.ownerships.splice(index, 1);
+        }
+      });
+    },
+
     updateEntity: (state: EntityStoreType, action: PayloadAction<Entity>) => {
       const entity = action.payload;
       const index = state.entities.findIndex(
@@ -56,14 +71,19 @@ const entitySlice = createSlice({
       action: PayloadAction<OwnerShip[]>
     ) => {
       const ownerships = action.payload;
-      ownerships.forEach((ownership) => {
-        const index = state.ownerships.findIndex(
-          (o) => o.ownershipId === ownership.ownershipId
-        );
-        if (index !== -1) {
-          state.ownerships[index] = ownership;
-        }
-      });
+
+      if (ownerships.length === 0) {
+        state.ownerships = [];
+      } else {
+        ownerships.forEach((ownership) => {
+          const index = state.ownerships.findIndex(
+            (o) => o.ownershipId === ownership.ownershipId
+          );
+          if (index !== -1) {
+            state.ownerships[index] = ownership;
+          }
+        });
+      }
     },
   },
 });

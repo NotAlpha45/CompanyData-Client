@@ -77,6 +77,7 @@ export default function ControlEntitiesModal(props: ControlEntitiesModalProps) {
     }
 
     const handleEntityOwnershipDataChange = () => {
+
         if (!shouldSubmitEntityData() || !shouldSubmitOwnershipData()) {
             return;
         }
@@ -90,7 +91,7 @@ export default function ControlEntitiesModal(props: ControlEntitiesModalProps) {
 
             case ModalName.EditEntities: {
                 EntityControlUtils.updateEntity(addedEntity);
-                EntityControlUtils.updateOwnerships(addedOwnerships);
+                EntityControlUtils.updateOwnerships(addedOwnerships, addedEntity);
                 break;
             }
         }

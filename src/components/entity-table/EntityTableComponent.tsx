@@ -42,6 +42,7 @@ export default function EntityTableComponent() {
 
         setEntities(entities);
         setEntityCount(count);
+        setExpandedRowKeys([]);
 
     }, [activeTablePage, tablePageLimit, entityStoreState])
 

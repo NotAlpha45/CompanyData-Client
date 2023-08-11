@@ -18,7 +18,7 @@ export default function ExpandedRowComponent(props: ExpandedRowComponentProps) {
             <div className='w-75 mb-4 ms-5 overflow-auto' style={{ height: height ?? 200, scrollBehavior: "smooth", }}>
                 {
                     (ownershipData.length === 0) ?
-                        <h5 className="text-center mt-5">No ownership data available</h5> :
+                        null :
                         <Table className="table table-striped text-center">
                             <thead className="text-dark fs-6">
                                 <tr>
