@@ -2,12 +2,13 @@ import { ChangeEvent } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { Loader } from "rsuite";
 
-function EntitiesUpload(props) {
 type EntitiesUploadProps = {
   modalTitle: string;
   handleClose: () => void;
   handleModal: () => void;
   show: boolean;
+  loader: boolean;
+  error: string;
   file: File | undefined;
   handleFile: (e: ChangeEvent<HTMLInputElement>) => void;
 };

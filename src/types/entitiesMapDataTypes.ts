@@ -3,7 +3,7 @@ export type EntitiesMapProperties = {
   name: string;
 };
 
-export type EntitiesMapExcelProperties = {
-  id: number;
-  name: string;
+export type PropertyHeader = {
+  index: number;
+  header: string;
 };

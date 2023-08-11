@@ -7,84 +7,226 @@ import { ChangeEvent, useState } from "react";
 import { ModalName } from "../../enums/modalName";
 import { useAppSelector } from "../../stores/redux-store";
 import { IsExcelFile } from "../../utils/file/fileUtils";
-import { EntitiesMapExcelProperties } from "../../types/entitiesMapDataTypes";
+import { PropertyHeader } from "../../types/entitiesMapDataTypes";
 
-export type EntityMap = { property: string; excelIndex: number };
+// property: value; excelIndex: key
+export type EntityMap = { value: string; key: number };
 
-export type Entity = {
-  id: number;
-  entityId: string;
-  entityName: string;
-  data: EntityWithValue[];
+export type ReviewEntity = {
+  Id: number;
+  EntityId: string;
+  EntityName: string;
+  Data: ReviewEntityData[];
 };
-export type EntityWithValue = { column: string; old: string; new: string };
+export type ReviewEntityData = { Column: string; Old: string; New: string };
 
 export default function ImportEntities() {
   const tittle = "Add Entities";
 
   const [loader, setloader] = useState<boolean>(false);
-  const [error, setError] = useState<string>();
+  const [error, setError] = useState<string>("");
   const [file, setfile] = useState<File>();
-  const [checkbox, setCheckbox] = useState<boolean>(true);
+  const [checkbox, setCheckbox] = useState<boolean>(false);
   const [map, setMap] = useState<EntityMap[]>([]);
   // const [entityPreview, setEntityPreview] = useState<Entity[]>([]);
   const dispatch = useDispatch();
   const modalType = useAppSelector((store) => store.modals.type);
 
-  const property = [
-    { id: 1, name: "Column1" },
-    { id: 2, name: "Column2" },
-    { id: 3, name: "Column3" },
+  const property: PropertyHeader[] = [
+    {
+      index: 0,
+      header: "ID",
+    },
+    {
+      index: 1,
+      header: "Entity Name",
+    },
+    {
+      index: 2,
+      header: "Incorporation Jurisdiction",
+    },
+    {
+      index: 3,
+      header: "Sub National",
+    },
+    {
+      index: 4,
+      header: "Tax Residence",
+    },
+    {
+      index: 5,
+      header: "Business Type",
+    },
+    {
+      index: 6,
+      header: "Business SIC Code",
+    },
+    {
+      index: 7,
+      header: "Ownership",
+    },
+    {
+      index: 8,
+      header: "Ownership %",
+    },
+    {
+      index: 9,
+      header: "Tax Characterization",
+    },
   ];
-  const excelProperty: EntitiesMapExcelProperties[] = [
-    { id: 1, name: "Column 1" },
-    { id: 2, name: "Column 2" },
-    { id: 3, name: "Column 3" },
+  const excelProperty: PropertyHeader[] = [
+    {
+      index: 1,
+      header: "ID",
+    },
+    {
+      index: 2,
+      header: "Entity Name",
+    },
+    {
+      index: 3,
+      header: "Incorporation Jurisdiction",
+    },
+    {
+      index: 4,
+      header: "Sub National",
+    },
+    {
+      index: 5,
+      header: "Business Type",
+    },
+    {
+      index: 6,
+      header: "Business SIC Code",
+    },
+    {
+      index: 7,
+      header: "Tax Residence",
+    },
+    {
+      index: 8,
+      header: "Ownership",
+    },
+    {
+      index: 9,
+      header: "Ownership %",
+    },
+    {
+      index: 10,
+      header: "Tax Characterization",
+    },
   ];
 
   const initMap: EntityMap[] = [
-    { property: "Column1", excelIndex: 1 },
-    { property: "Column2", excelIndex: 2 },
-    { property: "Column3", excelIndex: 3 },
+    {
+      key: 1,
+      value: "ID",
+    },
+    {
+      key: 2,
+      value: "Entity Name",
+    },
+    {
+      key: 3,
+      value: "Incorporation Jurisdiction",
+    },
+    {
+      key: 4,
+      value: "Sub National",
+    },
+    {
+      key: 7,
+      value: "Tax Residence",
+    },
+    {
+      key: 5,
+      value: "Business Type",
+    },
+    {
+      key: 6,
+      value: "Business SIC Code",
+    },
+    {
+      key: 8,
+      value: "Ownership",
+    },
+    {
+      key: 9,
+      value: "Ownership %",
+    },
+    {
+      key: 10,
+      value: "Tax Characterization",
+    },
   ];
 
-  const entityPreview: Entity[] = [
+  const entityPreview: ReviewEntity[] = [
     {
-      id: 1,
-      entityId: "001",
-      entityName: "Uniliver Bangladesh",
-      data: [
+      Id: 8,
+      EntityId: "UNI - Par - 1",
+      EntityName: "Unilever - Parent",
+      Data: [
         {
-          column: "Incorporation Jurisdiction",
-          old: "India",
-          new: "Bangladesh",
+          Column: "Incorporation Jurisdiction",
+          Old: "USA",
+          New: "UK",
         },
         {
-          column: "Type",
-          old: "Corporate",
-          new: "Company",
+          Column: "Sub National",
+          Old: "AR",
+          New: "Br",
+        },
+        {
+          Column: "Business SIC Code",
+          Old: "123",
+          New: "5421",
+        },
+        {
+          Column: "Tax Residence",
+          Old: "Company",
+          New: "Corporate",
+        },
+        {
+          Column: "Ownership",
+          Old: "<table style='border-collapse: collapse; width: 100%; border: 1px solid black; background-color: rgba(234, 235, 181, 0.7); color:black;'><tr> <th style='border: 1px solid black; padding: 8px; text-align: left; '>Owner Name</th>  <th style='border: 1px solid black; padding: 8px; text-align: right; '>Owner %</th> </tr><tr> <td style='border: 1px solid black; padding: 8px; text-align: left; '>Parent</td>  <td style='border: 1px solid black; padding: 8px; text-align: right; '>100.00%</td> </tr></table>",
+          New: "<table style='border-collapse: collapse; width: 100%; border: 1px solid black; background-color: rgba(234, 235, 181, 0.7); color:black;'><tr> <th style='border: 1px solid black; padding: 8px; text-align: left; '>Owner Name</th>  <th style='border: 1px solid black; padding: 8px; text-align: right; '>Owner %</th> </tr><tr> <td style='border: 1px solid black; padding: 8px; text-align: left; '>Third-Party 1</td>  <td style='border: 1px solid black; padding: 8px; text-align: right; '>60%</td> </tr><tr> <td style='border: 1px solid black; padding: 8px; text-align: left; '>Third-Party 2</td>  <td style='border: 1px solid black; padding: 8px; text-align: right; '>40%</td> </tr></table>",
+        },
+        {
+          Column: "Tax Characterization",
+          Old: "<table style='border-collapse: collapse; width: 100%; border: 1px solid black; background-color: rgba(234, 235, 181, 0.7); color:black;'><tr> <th style='border: 1px solid black; padding: 8px; text-align: left; '>Tax</th> </tr><tr> <td style='border: 1px solid black; padding: 8px; text-align: left; '>TCT-Part-1</td> </tr><tr> <td style='border: 1px solid black; padding: 8px; text-align: left; '>TCT-Part-2</td> </tr></table>",
+          New: "<table style='border-collapse: collapse; width: 100%; border: 1px solid black; background-color: rgba(234, 235, 181, 0.7); color:black;'><tr> <th style='border: 1px solid black; padding: 8px; text-align: left; '>Tax</th> </tr><tr> <td style='border: 1px solid black; padding: 8px; text-align: left; '>PE</td> </tr><tr> <td style='border: 1px solid black; padding: 8px; text-align: left; '>LLC</td> </tr></table>",
         },
       ],
     },
     {
-      id: 1,
-      entityId: "002",
-      entityName: "Uniliver India",
-      data: [
+      Id: 9,
+      EntityId: "Walmart - Par - 1",
+      EntityName: "Walmart - Parent",
+      Data: [
         {
-          column: "Sic Code",
-          old: "12345",
-          new: "Ind-000",
+          Column: "Incorporation Jurisdiction",
+          Old: "USA",
+          New: "UK",
         },
         {
-          column: "Incorporation Jurisdiction",
-          old: "UK",
-          new: "India",
+          Column: "Sub National",
+          Old: "AR",
+          New: "",
         },
         {
-          column: "Subnational",
-          old: "UK",
-          new: "India",
+          Column: "Business SIC Code",
+          Old: "USA",
+          New: "Bangladesh",
+        },
+        {
+          Column: "Ownership",
+          Old: "<table style='border-collapse: collapse; width: 100%; border: 1px solid; background-color: rgba(255,255,255, 0.7); color:black;'><tr> <th style='border: 1px solid black; padding: 8px; text-align: center; '>Owner Name</th>  <th style='border: 1px solid black; padding: 8px; text-align: center; '>Owner %</th> </tr><tr> <td style='border: 1px solid black; padding: 8px; text-align: left; '>Parent</td>  <td style='border: 1px solid black; padding: 8px; text-align: right; '>100.00%</td> </tr></table>",
+          New: "<table style='border-collapse: collapse; width: 100%; border: 1px solid black; background-color: rgba(234, 235, 181, 0.7); color:black;'><tr> <th style='border: 1px solid black; padding: 8px; text-align: left; '>Owner Name</th>  <th style='border: 1px solid black; padding: 8px; text-align: right; '>Owner %</th> </tr><tr> <td style='border: 1px solid black; padding: 8px; text-align: left; '>UNI</td>  <td style='border: 1px solid black; padding: 8px; text-align: right; '>60%</td> </tr><tr> <td style='border: 1px solid black; padding: 8px; text-align: left; '>UNI-IND</td>  <td style='border: 1px solid black; padding: 8px; text-align: right; '>20%</td> </tr><tr> <td style='border: 1px solid black; padding: 8px; text-align: left; '>UNI-UK</td>  <td style='border: 1px solid black; padding: 8px; text-align: right; '>20%</td> </tr></table>",
+        },
+        {
+          Column: "Tax Characterization",
+          Old: "<table style='border-collapse: collapse; width: 100%; border: 1px solid black; background-color: rgba(234, 235, 181, 0.7); color:black;'><tr> <th style='border: 1px solid black; padding: 8px; text-align: center; '>Tax</th> </tr><tr> <td style='border: 1px solid black; padding: 8px; text-align: left; '>Walmart-TCT-Part-1</td> </tr><tr> <td style='border: 1px solid black; padding: 8px; text-align: left; '>Walmart-TCT-Part-2</td> </tr></table>",
+          New: "<table style='border-collapse: collapse; width: 100%; border: 1px solid black; background-color: rgba(234, 235, 181, 0.7); color:black;'><tr> <th style='border: 1px solid black; padding: 8px; text-align: left; '>Tax</th> </tr><tr> <td style='border: 1px solid black; padding: 8px; text-align: left; '>SME</td> </tr><tr> <td style='border: 1px solid black; padding: 8px; text-align: left; '>LLC</td> </tr></table>",
         },
       ],
     },
@@ -103,8 +245,8 @@ export default function ImportEntities() {
     setError("");
   }
 
-  const handleFile = (e:ChangeEvent<HTMLInputElement>) => {
-    const item: File = e.target.files[0];
+  const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
+    const item: File | null = e.target.files[0];
 
     if (!IsExcelFile(item.type)) {
       resetState();
@@ -157,22 +299,28 @@ export default function ImportEntities() {
     );
   };
 
-  const handleDropdownChange = (e: ChangeEvent<HTMLSelectElement>, property: string) => {
+  const handleDropdownChange = (
+    e: ChangeEvent<HTMLSelectElement>,
+    property: string
+  ) => {
     const value = e.target.value;
 
-    const existingItemIndex = map.findIndex((item) => item.property === property);
+    const existingItemIndex = map.findIndex((item) => item.value === property);
 
     if (existingItemIndex !== -1) {
       const updatedMap = [...map];
 
       updatedMap[existingItemIndex] = {
         ...updatedMap[existingItemIndex],
-        excelIndex: Number(value),
+        key: Number(value),
       };
 
       setMap(() => updatedMap);
     } else {
-      setMap((prevMap) => [...prevMap, { property: property, excelIndex: Number(value) }]);
+      setMap((prevMap) => [
+        ...prevMap,
+        { value: property, key: Number(value) },
+      ]);
     }
   };
 

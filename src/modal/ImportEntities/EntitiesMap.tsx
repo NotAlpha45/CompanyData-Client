@@ -1,8 +1,11 @@
 import { Button, Modal } from "react-bootstrap";
 import { Table } from "react-bootstrap";
-import { EntitiesMapExcelProperties, EntitiesMapProperties } from "../../types/entitiesMapDataTypes";
+import {
+  PropertyHeader,
+} from "../../types/entitiesMapDataTypes";
 import { EntityMap } from "./ImportEntities";
 import { Loader } from "rsuite";
+import { ChangeEvent } from "react";
 
 type EntitiesMapProps = {
   file: File | undefined;
@@ -10,11 +13,15 @@ type EntitiesMapProps = {
   handleClose: () => void;
   handleModal: () => void;
   modalTitle: string;
-  handleDropdownChange: (e: any, property: string) => void;
-  property: EntitiesMapProperties[];
-  excelProperty: EntitiesMapExcelProperties[];
+  handleDropdownChange: (
+    e: ChangeEvent<HTMLSelectElement>,
+    property: string
+  ) => void;
+  property: PropertyHeader[];
+  excelProperty: PropertyHeader[];
   selectedOption: EntityMap[];
-}
+  loader: boolean;
+};
 
 function EntitiesMap(props: EntitiesMapProps) {
   return (
@@ -38,7 +45,10 @@ function EntitiesMap(props: EntitiesMapProps) {
 
           <h3>
             Reassign databasse columns with columns of your excel file.{" "}
-            <a target="_blank" href="https://www.youtube.com/watch?v=YT8s-90oDC0">
+            <a
+              target="_blank"
+              href="https://www.youtube.com/watch?v=YT8s-90oDC0"
+            >
               Watch this video to learn more
             </a>
           </h3>
@@ -51,20 +61,20 @@ function EntitiesMap(props: EntitiesMapProps) {
             </thead>
             <tbody>
               {props.property.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.name}</td>
+                <tr key={item.index}>
+                  <td>{item.header}</td>
                   <td>
                     <select
-                      key={item.id + item.name}
+                      key={item.index}
                       value={
                         props.selectedOption.find(
-                          (i: EntityMap) => i.property === item.name
-                        )?.excelIndex
+                          (i: EntityMap) => i.value === item.header
+                        )?.key
                       }
-                      onChange={(e) => props.handleDropdownChange(e, item.name)}
+                      onChange={(e) => props.handleDropdownChange(e, item.header)}
                     >
                       {props.excelProperty.map((excel) => (
-                        <option value={excel.id}>{excel.name}</option>
+                        <option value={excel.index}>{excel.header}</option>
                       ))}
                     </select>
                   </td>

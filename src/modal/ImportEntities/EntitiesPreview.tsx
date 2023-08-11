@@ -3,7 +3,7 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { Accordion } from "react-bootstrap";
 import { Table } from "react-bootstrap";
 import { Loader } from "rsuite";
-import { Entity } from "./ImportEntities";
+import { ReviewEntity } from "./ImportEntities";
 
 type EntitiesPreviewProps = {
   show: boolean;
@@ -13,6 +13,8 @@ type EntitiesPreviewProps = {
   handleModal: () => void;
   handleBack: () => void;
   checkbox: boolean;
+  loader: boolean;
+  entityPreview: ReviewEntity[];
   handleSetCheckbox: () => void;
 };
 
@@ -40,29 +42,47 @@ function EntitiesPreview(props: EntitiesPreviewProps) {
 
           <div style={{ maxHeight: "50vh" }}>
             <Accordion defaultActiveKey="0">
-              {props.entityPreview.map((item: Entity) => (
-                <Accordion.Item key={item.entityId} eventKey={item.entityId}>
-                  <Accordion.Header>{item.entityName}</Accordion.Header>
+              {props.entityPreview.map((item: ReviewEntity) => (
+                <Accordion.Item key={item.EntityId} eventKey={item.EntityId}>
+                  <Accordion.Header>{item.EntityName}</Accordion.Header>
                   <Accordion.Body>
                     <Table bordered>
                       <thead>
                         <tr>
-                          {item.data.map((h) => (
-                            <th key={h.column}>{h.column}</th>
+                          {item.Data.map((h) => (
+                            <th key={h.Column}>{h.Column}</th>
                           ))}
                         </tr>
                       </thead>
                       <tbody>
-                        <tr style={{ backgroundColor: "#d14b4b", color:"white" }}>
-                          {item.data.map((h) => (
-                            <td key={h.old}>{h.old}</td>
+                        <tr
+                          style={{ backgroundColor: "#d14b4b", color: "white" }}
+                        >
+                          {item.Data.map((h) => (
+                            <td key={h.Old}>
+                              {h.Old.includes("</table>") ? (
+                                <div
+                                  dangerouslySetInnerHTML={{ __html: h.Old }}
+                                />
+                              ) : (
+                                h.Old
+                              )}
+                            </td>
                           ))}
                         </tr>
                         <tr
                           style={{ backgroundColor: "#4d943a", color: "white" }}
                         >
-                          {item.data.map((h) => (
-                            <td key={h.new}>{h.new}</td>
+                          {item.Data.map((h) => (
+                            <td key={h.New}>
+                              {h.New.includes("</table>") ? (
+                                <div
+                                  dangerouslySetInnerHTML={{ __html: h.New }}
+                                />
+                              ) : (
+                                h.New
+                              )}
+                            </td>
                           ))}
                         </tr>
                       </tbody>
