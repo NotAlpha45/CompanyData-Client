@@ -9,18 +9,21 @@ type EntitiesTaxInputFieldsProps = {
 
 export default function EntitiesTaxInputFields(props: EntitiesTaxInputFieldsProps) {
 
-    const [taxData, setTaxData] = useState<EntityTax>({
-        taxResidentJurisdiction: "",
-        pe: false,
-        sme: false,
-        llc: false,
-        publicLtd: false,
-        privateLtd: false,
-        tct: {
-            tctName: "",
-            tctDescription: ""
-        } as EntityTct
-    });
+    const [taxData, setTaxData] = useState<EntityTax>(
+        props.addedEntity.entityTax ?
+            props.addedEntity.entityTax :
+            {
+                taxResidentJurisdiction: "",
+                pe: false,
+                sme: false,
+                llc: false,
+                publicLtd: false,
+                privateLtd: false,
+                tct: {
+                    tctName: "",
+                    tctDescription: ""
+                } as EntityTct
+            });
 
     const taxResidents = [
         {
@@ -55,12 +58,12 @@ export default function EntitiesTaxInputFields(props: EntitiesTaxInputFieldsProp
         },
 
         {
-            code: "plc",
+            code: "publicLtd",
             name: "Public Limited Company (PLC)",
             description: "A public limited company (PLC) is a company whose shares are traded on a stock exchange and can be bought and sold by anyone."
         },
         {
-            code: "pc",
+            code: "privateLtd",
             name: "Private Company (PC)",
             description: "A private company (PC) is a company whose ownership is private."
         },
@@ -99,6 +102,8 @@ export default function EntitiesTaxInputFields(props: EntitiesTaxInputFieldsProp
                                 <div key={index} className='col-5 mb-4 p-2 rounded' style={{ background: "#EDF1F7" }}>
                                     <div>
                                         <Checkbox
+                                            checked={(taxData as any)[taxCharachterization.code]}
+                                            // @ts-ignore
                                             onChange={(value, checked, event) => {
                                                 handleTaxCharecterizationSelection(taxCharachterization.code, checked)
                                             }} />
@@ -116,12 +121,16 @@ export default function EntitiesTaxInputFields(props: EntitiesTaxInputFieldsProp
                         <Form.ControlLabel className='fs-6'>TCT Name</Form.ControlLabel>
                         <Input
                             className='mb-2'
+                            placeholder={taxData?.tct?.tctName}
+                            value={taxData?.tct?.tctName}
                             onChange={(value) => { setTaxData({ ...taxData, tct: { ...taxData.tct, tctName: value } as EntityTct }) }}
                         />
 
                         <Form.ControlLabel className='fs-6'>TCT Description</Form.ControlLabel>
                         <Input
                             className='mb-2'
+                            placeholder={taxData?.tct?.tctDescription}
+                            value={taxData?.tct?.tctDescription}
                             onChange={(value) => { setTaxData({ ...taxData, tct: { ...taxData.tct, tctDescription: value } as EntityTct }) }}
                         />
                     </div>

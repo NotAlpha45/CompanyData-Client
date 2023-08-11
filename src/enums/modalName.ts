@@ -5,5 +5,7 @@ export enum ModalName {
 
   AddEntities = "AddEntities",
 
+  EditEntities = "EditEntities",
+
   None = "None",
 }

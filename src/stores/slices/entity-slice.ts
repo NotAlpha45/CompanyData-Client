@@ -23,12 +23,14 @@ const entitySlice = createSlice({
     addEntity: (state: EntityStoreType, action: PayloadAction<Entity>) => {
       state.entities.push(action.payload);
     },
+
     addOwnership: (
       state: EntityStoreType,
       action: PayloadAction<OwnerShip>
     ) => {
       state.ownerships.push(action.payload);
     },
+
     addOwnerships: (
       state: EntityStoreType,
       action: PayloadAction<OwnerShip[]>
@@ -37,6 +39,46 @@ const entitySlice = createSlice({
         ...state,
         ownerships: [...state.ownerships, ...action.payload],
       };
+    },
+
+    removeOwnerships: (
+      state: EntityStoreType,
+      action: PayloadAction<OwnerShip[]>
+    ) => {
+      const ownerships = action.payload;
+      ownerships.forEach((ownership) => {
+        const index = state.ownerships.findIndex(
+          (o) => o.ownershipId === ownership.ownershipId
+        );
+        if (index !== -1) {
+          state.ownerships.splice(index, 1);
+        }
+      });
+    },
+
+    updateEntity: (state: EntityStoreType, action: PayloadAction<Entity>) => {
+      const entity = action.payload;
+      const index = state.entities.findIndex(
+        (e) => e.entityId === entity.entityId
+      );
+      if (index !== -1) {
+        state.entities[index] = entity;
+      }
+    },
+
+    updateOwnerships: (
+      state: EntityStoreType,
+      action: PayloadAction<OwnerShip[]>
+    ) => {
+      const ownerships = action.payload;
+      ownerships.forEach((ownership) => {
+        const index = state.ownerships.findIndex(
+          (o) => o.ownershipId === ownership.ownershipId
+        );
+        if (index !== -1) {
+          state.ownerships[index] = ownership;
+        }
+      });
     },
   },
 });

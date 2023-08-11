@@ -1,11 +1,18 @@
 import { Nav, Sidenav } from 'rsuite'
 import GroupIcon from '@rsuite/icons/legacy/Group';
 import AddOutlineIcon from '@rsuite/icons/AddOutline';
+import { useState } from 'react';
 
 export default function EntityTableSidenavComponent() {
+
+    const [expanded, setExpanded] = useState(true);
+
     return (
         <>
-            <Sidenav >
+            <Sidenav expanded={expanded}>
+                <Sidenav.Toggle
+                    onToggle={(expanded) => setExpanded(expanded)}
+                />
                 <Sidenav.Body>
                     <Nav>
                         <Nav.Item eventKey="1" icon={<AddOutlineIcon />}>
@@ -17,6 +24,7 @@ export default function EntityTableSidenavComponent() {
 
                     </Nav>
                 </Sidenav.Body>
+
             </Sidenav>
         </>
     )

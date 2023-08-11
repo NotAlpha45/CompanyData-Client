@@ -29,7 +29,7 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
 
     const addOwnershipInputField = () => {
         setOwnershipInputValues([...ownershipInputValues, {
-            ownershipId: props.addedEntityId,
+            ownershipId: props.addedEntityId + '-' + Date.now().toString(),
             ownerId: "",
             ownedId: props.addedEntityId,
             ownershipPercentage: 0,
@@ -44,18 +44,42 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
     }
 
     const handleOwnerSelection = (index: number, ownerId: string, ownerName: string) => {
-        const ownershipInputValuesCopy = [...ownershipInputValues];
-        ownershipInputValuesCopy[index].ownerId = ownerId;
-        ownershipInputValuesCopy[index].ownershipName = ownerName;
+
+        const ownershipInputValuesCopy = ownershipInputValues.filter((_, i) => i !== index);
+        const ownershipValueOnIndex = { ...ownershipInputValues[index] };
+
         setOwnershipInputValues(ownershipInputValuesCopy);
 
+        if (!ownershipValueOnIndex) {
+            return;
+        }
+
+        ownershipValueOnIndex.ownerId = ownerId;
+        ownershipValueOnIndex.ownershipName = ownerName;
+        ownershipValueOnIndex.ownerName = ownerName;
+
+        ownershipInputValuesCopy.splice(index, 0, ownershipValueOnIndex);
+
+        setOwnershipInputValues([...ownershipInputValuesCopy]);
 
     }
 
     const handleOwnershipPercentageSelection = (index: number, ownershipPercentage: number) => {
-        const ownershipInputValuesCopy = [...ownershipInputValues];
-        ownershipInputValuesCopy[index].ownershipPercentage = ownershipPercentage;
+
+        const ownershipInputValuesCopy = ownershipInputValues.filter((_, i) => i !== index);
+        const ownershipValueOnIndex = { ...ownershipInputValues[index] };
+
         setOwnershipInputValues(ownershipInputValuesCopy);
+
+        if (!ownershipValueOnIndex) {
+            return;
+        }
+
+        ownershipValueOnIndex.ownershipPercentage = ownershipPercentage;
+
+        ownershipInputValuesCopy.splice(index, 0, ownershipValueOnIndex);
+
+        setOwnershipInputValues([...ownershipInputValuesCopy]);
 
     }
 
@@ -82,6 +106,8 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
                                                 <Form.ControlLabel className='fs-6'>Owner Entity</Form.ControlLabel>
                                                 {/* <Form.Control name='ownerId' /> */}
                                                 <InputPicker
+                                                    placeholder={ownershipInputValues[index].ownerName ?? ownershipInputValues[index].ownerId}
+                                                    // value={ownershipInputValues[index].ownerName ?? ownershipInputValues[index].ownerId}
                                                     aria-required
                                                     name='ownerId'
                                                     className='mb-3'
@@ -95,6 +121,8 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
                                             <Form.Group controlId='ownershipPercentage'>
                                                 <Form.ControlLabel className='fs-6'>Ownership Percentage (%)</Form.ControlLabel>
                                                 <Form.Control
+                                                    placeholder={ownershipInputValues[index].ownershipPercentage.toString()}
+                                                    value={ownershipInputValues[index].ownershipPercentage.toString()}
                                                     aria-required
                                                     accepter={InputNumber}
                                                     name='ownershipPercentage'

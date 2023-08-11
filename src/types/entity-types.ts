@@ -2,6 +2,8 @@ export type OwnerShip = {
   ownershipId: string;
   ownerId: string;
   ownedId: string;
+  ownerName?: string;
+  ownedName?: string;
   ownershipName: string;
   ownershipPercentage: number;
 };

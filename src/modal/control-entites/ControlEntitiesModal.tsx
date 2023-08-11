@@ -1,43 +1,68 @@
-import { Button, Modal } from 'rsuite';
-import AddEntitiesModalSidebar from '../../components/add-entities/AddEntitiesModalSidebar';
-// import EntitiesLegalInputFields from '../../components/add-entities/EntitiesLegalInputFields';
-// import EntitiesOwnershipInputFields from '../../components/add-entities/EntitiesOwnershipInputFields';
-import EntitiesTaxInputFields from '../../components/add-entities/EntitiesTaxInputFields';
-import { ModalControlUtils } from '../../utils/modal-utils/ModalControlUtils';
+import { useState } from 'react'
 import { useAppSelector } from '../../stores/redux-store';
 import { shallowEqual } from 'react-redux';
-import { ModalName } from '../../enums/modalName';
-import { useState } from 'react';
 import { AddEntitiesModalStepsName } from '../../enums/ModalSteps';
-import EntitiesLegalInputFields from '../../components/add-entities/EntitiesLegalInputFields';
-import EntitiesOwnershipInputFields from '../../components/add-entities/EntitiesOwnershipInputFields';
-import { AddEntitiesModalStepsNameKeyType } from '../../types/modal';
+import { AddEntitiesModalStepsNameKeyType } from '../../types/modal-types';
 import { Entity, OwnerShip } from '../../types/entity-types';
 import { EntityControlUtils } from '../../utils/entity-utils/entity-control-utils';
+import { ModalControlUtils } from '../../utils/modal-utils/ModalControlUtils';
+import { ModalName } from '../../enums/modalName';
+import { Button, Modal } from 'rsuite';
+import AddEntitiesModalSidebar from '../../components/entity-controller-fields/AddEntitiesModalSidebar';
+import EntitiesLegalInputFields from '../../components/entity-controller-fields/EntitiesLegalInputFields';
+import EntitiesOwnershipInputFields from '../../components/entity-controller-fields/EntitiesOwnershipInputFields';
+import EntitiesTaxInputFields from '../../components/entity-controller-fields/EntitiesTaxInputFields';
 
+type ControlEntitiesModalProps = {
+    modalName: ModalName;
+    modalHeading: string;
+    sidebarNavigationEnabled: boolean;
+}
 
-export default function AddEntitiesModal() {
+export default function ControlEntitiesModal(props: ControlEntitiesModalProps) {
 
     const currentSelectedModal = useAppSelector(state => state.modals.type, shallowEqual);
-    const [currentSelectedModalStep, setCurrentSelectedModalStep] = useState<AddEntitiesModalStepsName>(AddEntitiesModalStepsName.Legal);
+
+    const entityDataToBeEdited = useAppSelector(state => state.modals.entityDataToBeEdited, shallowEqual);
 
     const modalSteps = Object.keys(AddEntitiesModalStepsName) as AddEntitiesModalStepsNameKeyType[];
     const [currentSelectedModalStepIndex, setCurrentSelectedModalStepIndex] = useState<number>(0);
+    const [currentSelectedModalStep, setCurrentSelectedModalStep] = useState<AddEntitiesModalStepsName>(AddEntitiesModalStepsName[modalSteps[0]]);
+
+    const [addedEntity, setAddedEntity] = useState<Entity>(
+        entityDataToBeEdited ?
+            entityDataToBeEdited.entity :
+            {
+                entityId: "",
+                entityName: "",
+                incorporationJurisdiction: "",
+                entityType: "",
+                subNational: "",
+                sicCode: "",
+            },
+    );
 
 
-    const [addedEntity, setAddedEntity] = useState<Entity>({
-        entityId: "",
-        entityName: "",
-        incorporationJurisdiction: "",
-        entityType: "",
-        subNational: "",
-        sicCode: "",
-    });
-
-    const [addedOwnerships, setAddedOwnerships] = useState<OwnerShip[]>([]);
+    const [addedOwnerships, setAddedOwnerships] = useState<OwnerShip[]>(
+        entityDataToBeEdited ? entityDataToBeEdited.ownerships : []
+    );
 
     const shouldSubmitEntityData = () => {
         return addedEntity.entityName !== "" && addedEntity.entityId !== "";
+    }
+
+    const shouldSubmitOwnershipData = () => {
+        if (addedOwnerships.length > 0) {
+            for (const ownership of addedOwnerships) {
+                if (ownership.ownerId === "" || ownership.ownershipPercentage <= 0 || ownership.ownershipPercentage > 100 || ownership.ownedId === "") {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return true;
     }
 
     const handleModalClose = () => {
@@ -51,12 +76,27 @@ export default function AddEntitiesModal() {
         setCurrentSelectedModalStepIndex(modalSteps.findIndex((step) => step === stepName));
     }
 
-    const handleAddEnity = () => {
-        if (!shouldSubmitEntityData()) {
+    const handleEntityOwnershipDataChange = () => {
+
+        if (!shouldSubmitEntityData() || !shouldSubmitOwnershipData()) {
             return;
         }
-        EntityControlUtils.addEntity(addedEntity);
-        EntityControlUtils.addOwnerships(addedOwnerships);
+
+        switch (currentSelectedModal) {
+            case ModalName.AddEntities: {
+                EntityControlUtils.addEntity(addedEntity);
+                EntityControlUtils.addOwnerships(addedOwnerships);
+                break;
+            }
+
+            case ModalName.EditEntities: {
+                EntityControlUtils.updateEntity(addedEntity);
+                EntityControlUtils.updateOwnerships(addedOwnerships, addedEntity);
+                break;
+            }
+        }
+
+
         handleModalClose();
     }
 
@@ -73,10 +113,14 @@ export default function AddEntitiesModal() {
 
     return (
         <>
-            <Modal size={"lg"} open={currentSelectedModal === ModalName.AddEntities} onClose={handleModalClose} className='d-flex justify-content-center'>
-                <Modal.Header>
-                    <Modal.Title>
-                        <p className='fs-3'>Add Entities</p>
+            <Modal size={"lg"} backdrop={'static'} open={currentSelectedModal === props.modalName} onClose={handleModalClose} className='d-flex justify-content-center'>
+                <Modal.Header
+                    className="modal-header  pt-30 ps-30 pe-30 pb-30"
+                    closeButton={false}
+                >
+                    <Modal.Title className='d-flex justify-content-between'>
+                        <p className='fs-3'>{props.modalHeading}</p>
+                        <button className='btn-close' type='button' aria-label='Close' onClick={handleModalClose}></button>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -84,7 +128,7 @@ export default function AddEntitiesModal() {
                     <div className='container-fluid' style={{ height: '40rem', width: '70rem' }}>
                         <div className='row h-100'>
                             <div className='col-3'>
-                                <AddEntitiesModalSidebar selectedStep={currentSelectedModalStep} changeStep={changeModalStep} />
+                                <AddEntitiesModalSidebar selectedStep={currentSelectedModalStep} changeStep={changeModalStep} toggleNavigationEnabled={props.sidebarNavigationEnabled} />
                             </div>
 
                             <div className='col' hidden={currentSelectedModalStep !== AddEntitiesModalStepsName.Legal}>
@@ -125,9 +169,9 @@ export default function AddEntitiesModal() {
                     </Button>
 
                     <Button
-                        onClick={() => handleAddEnity()}
+                        onClick={() => handleEntityOwnershipDataChange()}
                         className='btn bg-success text-white'
-                        disabled={!shouldSubmitEntityData()}
+                        disabled={!shouldSubmitEntityData() || !shouldSubmitOwnershipData()}
                         hidden={currentSelectedModalStepIndex !== modalSteps.length - 1}
                     >
                         Save

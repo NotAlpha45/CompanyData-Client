@@ -42,13 +42,14 @@ export default function EntityTableComponent() {
 
         setEntities(entities);
         setEntityCount(count);
+        setExpandedRowKeys([]);
 
     }, [activeTablePage, tablePageLimit, entityStoreState])
 
 
     return (
         <>
-            <div className="">
+            <div className="w-auto">
                 <Table className=""
                     loading={entities.length === 0}
                     height={600}

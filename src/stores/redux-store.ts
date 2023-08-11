@@ -3,7 +3,7 @@ import { GraphReducer } from "./slices/graph-slice";
 import { TypedUseSelectorHook, createSelectorHook } from "react-redux";
 import { EntitySliceReducer } from "./slices/entity-slice";
 import { GraphFilterSliceReducer as GraphFilterReducer } from "./slices/graph-filter-slice";
-import { importEntitiesModalsliceReducer } from "./slices/importEntitiesModalSlice";
+import { importEntitiesModalsliceReducer } from "./slices/entitiesModalSlice";
 import { AuthReducer } from "./slices/authReducer";
 
 const appReducer = combineReducers({

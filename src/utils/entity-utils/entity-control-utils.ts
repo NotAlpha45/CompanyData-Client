@@ -28,8 +28,29 @@ export class EntityControlUtils {
     appStore.dispatch(EntitySliceActions.addEntity(entity));
   }
 
+  static getOwnedOwnerships(entity: Entity) {
+    const allOwnerships = appStore.getState().entity.ownerships;
+
+    const filteredOwnerships = allOwnerships.filter(
+      (ownership) => ownership.ownedId === entity.entityId
+    );
+
+    return filteredOwnerships;
+  }
+
   static addOwnerships(ownerships: OwnerShip[]) {
     appStore.dispatch(EntitySliceActions.addOwnerships(ownerships));
+  }
+
+  static updateEntity(entity: Entity) {
+    appStore.dispatch(EntitySliceActions.updateEntity(entity));
+  }
+
+  static updateOwnerships(updatedOwnerships: OwnerShip[], ownedEntity: Entity) {
+    const ownedOwnerships = this.getOwnedOwnerships(ownedEntity);
+    // Remove all the ownerships that are in ownedOwnership from the store and add the updated ownerships to the store
+    appStore.dispatch(EntitySliceActions.removeOwnerships(ownedOwnerships));
+    appStore.dispatch(EntitySliceActions.addOwnerships(updatedOwnerships));
   }
 
   static getOwnerInfo(entity: Entity) {
