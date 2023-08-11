@@ -2,8 +2,8 @@ import Axios from "axios";
 import { AuthInjector } from "./interceptor/authInjector";
 import { AxiosAuthInjector } from "./interceptor/AxiosAuthInjector";
 
-const AxiosBreif = Axios.create();
-AuthInjector.Add(AxiosBreif);
+const AxiosCompanyData = Axios.create();
+AuthInjector.Add(AxiosCompanyData);
 // RedirectUnauthorize.Add(AxiosBreif, AppRoutesUI.Auth.Login.Path(), () => {
 //   localStorage.clear();
 // });
@@ -16,4 +16,4 @@ AxiosAuthInjector.Add(AxiosAuth);
 // AxiosRedirectUnauthorize.Add(AxiosAuth, "/", () => {
 //   StorageAuth.AccessToken = undefined;
 // });
-export { AxiosBreif, AxiosAuth };
+export { AxiosCompanyData, AxiosAuth };

@@ -3,3 +3,8 @@ export type EntityChartType = {
   chartName: string;
   chartDescription?: string;
 };
+
+export type GetEntityChartResponseType = {
+  Id: string;
+  Name: string;
+};

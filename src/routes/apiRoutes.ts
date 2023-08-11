@@ -5,10 +5,8 @@ export const AUTH_URL = process.env.REACT_APP_AUTH_URL || "";
 export const USER_API_URL =
   "https://regplusapigateway.kaz.com.bd/auth/api/User/";
 export const ApiRoutes = {
-  brief: {
-    GetMonthsOfAllBriefByYear: `${BASE_URL}/api/RegBriefing/GetMonthsOfAllBriefByYear`,
-    GetContentDataByMonthYearBriefType: `${BASE_URL}/api/RegBriefing/LegacyGetContentDataByMonthYearBriefType`,
-    GetPresentContentData: `${BASE_URL}/api/RegBriefing/LegacyGetPresentContentData`,
+  companyData: {
+    getChartList: `${BASE_URL}/api/CompanyData/Charts`,
   },
   auth: {
     getAccountStatus: `${URL}/api/Auth/GetUserType`,
