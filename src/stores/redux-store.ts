@@ -5,6 +5,7 @@ import { EntitySliceReducer } from "./slices/entity-slice";
 import { GraphFilterSliceReducer as GraphFilterReducer } from "./slices/graph-filter-slice";
 import { importEntitiesModalsliceReducer } from "./slices/entitiesModalSlice";
 import { AuthReducer } from "./slices/authReducer";
+import { ChartSliceReducer } from "./slices/chartSlice";
 
 const appReducer = combineReducers({
   graph: GraphReducer,
@@ -12,6 +13,7 @@ const appReducer = combineReducers({
   graphFilter: GraphFilterReducer,
   modals: importEntitiesModalsliceReducer,
   auth: AuthReducer,
+  chart: ChartSliceReducer,
 });
 
 export const appStore = configureStore({
