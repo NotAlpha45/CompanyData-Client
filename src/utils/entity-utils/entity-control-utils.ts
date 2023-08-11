@@ -48,11 +48,9 @@ export class EntityControlUtils {
 
   static updateOwnerships(updatedOwnerships: OwnerShip[], ownedEntity: Entity) {
     const ownedOwnerships = this.getOwnedOwnerships(ownedEntity);
-
     // Remove all the ownerships that are in ownedOwnership from the store and add the updated ownerships to the store
     appStore.dispatch(EntitySliceActions.removeOwnerships(ownedOwnerships));
     appStore.dispatch(EntitySliceActions.addOwnerships(updatedOwnerships));
-
   }
 
   static getOwnerInfo(entity: Entity) {
