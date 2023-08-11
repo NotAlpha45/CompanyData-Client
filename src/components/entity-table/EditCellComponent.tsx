@@ -3,6 +3,7 @@ import { Table } from 'rsuite'
 import EditIcon from '@rsuite/icons/Edit';
 import { ModalControlUtils } from '../../utils/modal-utils/ModalControlUtils';
 import { ModalName } from '../../enums/modalName';
+import { EntityControlUtils } from '../../utils/entity-utils/entity-control-utils';
 
 type EditCellComponentProps = {
     rowData: Entity,
@@ -16,7 +17,7 @@ export default function EditCellComponent({ rowData, dataKey, ...props }: EditCe
 
         ModalControlUtils.updateEntityDataToBeEdited({
             entity: rowData,
-            ownerships: []
+            ownerships: EntityControlUtils.getOwnedOwnerships(rowData),
         })
 
         ModalControlUtils.updateModalType(ModalName.EditEntities);

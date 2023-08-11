@@ -25,8 +25,6 @@ export default function ControlEntitiesModal(props: ControlEntitiesModalProps) {
 
     const entityDataToBeEdited = useAppSelector(state => state.modals.entityDataToBeEdited, shallowEqual);
 
-    // window.location.reload();
-
     const modalSteps = Object.keys(AddEntitiesModalStepsName) as AddEntitiesModalStepsNameKeyType[];
     const [currentSelectedModalStepIndex, setCurrentSelectedModalStepIndex] = useState<number>(0);
     const [currentSelectedModalStep, setCurrentSelectedModalStep] = useState<AddEntitiesModalStepsName>(AddEntitiesModalStepsName[modalSteps[0]]);
@@ -53,6 +51,20 @@ export default function ControlEntitiesModal(props: ControlEntitiesModalProps) {
         return addedEntity.entityName !== "" && addedEntity.entityId !== "";
     }
 
+    const shouldSubmitOwnershipData = () => {
+        if (addedOwnerships.length > 0) {
+            for (const ownership of addedOwnerships) {
+                if (ownership.ownerId === "" || ownership.ownershipPercentage <= 0 || ownership.ownershipPercentage > 100 || ownership.ownedId === "") {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return true;
+    }
+
     const handleModalClose = () => {
         ModalControlUtils.removeModal();
         setCurrentSelectedModalStepIndex(0);
@@ -65,7 +77,7 @@ export default function ControlEntitiesModal(props: ControlEntitiesModalProps) {
     }
 
     const handleAddEnity = () => {
-        if (!shouldSubmitEntityData()) {
+        if (!shouldSubmitEntityData() || !shouldSubmitOwnershipData()) {
             return;
         }
         EntityControlUtils.addEntity(addedEntity);
@@ -144,7 +156,7 @@ export default function ControlEntitiesModal(props: ControlEntitiesModalProps) {
                     <Button
                         onClick={() => handleAddEnity()}
                         className='btn bg-success text-white'
-                        disabled={!shouldSubmitEntityData()}
+                        disabled={!shouldSubmitEntityData() || !shouldSubmitOwnershipData()}
                         hidden={currentSelectedModalStepIndex !== modalSteps.length - 1}
                     >
                         Save

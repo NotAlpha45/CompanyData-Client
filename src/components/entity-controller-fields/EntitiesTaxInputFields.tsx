@@ -122,6 +122,7 @@ export default function EntitiesTaxInputFields(props: EntitiesTaxInputFieldsProp
                         <Input
                             className='mb-2'
                             placeholder={taxData?.tct?.tctName}
+                            value={taxData?.tct?.tctName}
                             onChange={(value) => { setTaxData({ ...taxData, tct: { ...taxData.tct, tctName: value } as EntityTct }) }}
                         />
 
@@ -129,6 +130,7 @@ export default function EntitiesTaxInputFields(props: EntitiesTaxInputFieldsProp
                         <Input
                             className='mb-2'
                             placeholder={taxData?.tct?.tctDescription}
+                            value={taxData?.tct?.tctDescription}
                             onChange={(value) => { setTaxData({ ...taxData, tct: { ...taxData.tct, tctDescription: value } as EntityTct }) }}
                         />
                     </div>

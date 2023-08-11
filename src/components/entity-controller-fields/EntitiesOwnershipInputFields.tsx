@@ -84,6 +84,7 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
                                                 {/* <Form.Control name='ownerId' /> */}
                                                 <InputPicker
                                                     placeholder={ownershipInputValues[index].ownerName ?? ownershipInputValues[index].ownerId}
+                                                    value={ownershipInputValues[index].ownerName ?? ownershipInputValues[index].ownerId}
                                                     aria-required
                                                     name='ownerId'
                                                     className='mb-3'
@@ -98,6 +99,7 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
                                                 <Form.ControlLabel className='fs-6'>Ownership Percentage (%)</Form.ControlLabel>
                                                 <Form.Control
                                                     placeholder={ownershipInputValues[index].ownershipPercentage.toString()}
+                                                    value={ownershipInputValues[index].ownershipPercentage.toString()}
                                                     aria-required
                                                     accepter={InputNumber}
                                                     name='ownershipPercentage'

@@ -35,6 +35,7 @@ export default function EntitiesLegalInputFields(props: EntitiesLegalInputFields
                                 accepter={Input}
                                 required
                                 name='entityId'
+                                value={props.addedEntity.entityId}
                                 placeholder={props.addedEntity.entityId}
                                 onChange={(value) => { props.setAddedEntity({ ...props.addedEntity, entityId: value }) }}
                             />
@@ -44,6 +45,7 @@ export default function EntitiesLegalInputFields(props: EntitiesLegalInputFields
                             <Form.Control
                                 accepter={Input}
                                 name='entityName'
+                                value={props.addedEntity.entityName}
                                 placeholder={props.addedEntity.entityName}
                                 onChange={(value) => { props.setAddedEntity({ ...props.addedEntity, entityName: value }) }}
                             />
@@ -61,6 +63,7 @@ export default function EntitiesLegalInputFields(props: EntitiesLegalInputFields
                                 data={incorporationJuristrictionNames}
                                 style={{ width: "100%" }}
                                 placeholder={props.addedEntity.incorporationJurisdiction}
+                                value={props.addedEntity.incorporationJurisdiction}
                                 onChange={(value) => { props.setAddedEntity({ ...props.addedEntity, incorporationJurisdiction: value as string }) }}
                             />
                         </div>
@@ -74,6 +77,7 @@ export default function EntitiesLegalInputFields(props: EntitiesLegalInputFields
                                 id='entity-selector'
                                 data={subNationalNames}
                                 style={{ width: "100%" }}
+                                value={props.addedEntity.subNational}
                                 placeholder={props.addedEntity.subNational}
                                 onChange={(value) => { props.setAddedEntity({ ...props.addedEntity, subNational: value as string }) }}
                             />
@@ -88,6 +92,7 @@ export default function EntitiesLegalInputFields(props: EntitiesLegalInputFields
                                 name='businessType'
                                 required
                                 placeholder={props.addedEntity.businessType}
+                                value={props.addedEntity.businessType}
                                 onChange={(value) => { props.setAddedEntity({ ...props.addedEntity, businessType: value }) }}
                             />
                         </div>
@@ -99,6 +104,7 @@ export default function EntitiesLegalInputFields(props: EntitiesLegalInputFields
                                 required
                                 onChange={(value) => { props.setAddedEntity({ ...props.addedEntity, sicCode: value }) }}
                                 placeholder={props.addedEntity.sicCode}
+                                value={props.addedEntity.sicCode}
                             />
                         </div>
                     </div>

@@ -1,6 +1,5 @@
 import React from "react";
 import ImportEntities from "./ImportEntities/ImportEntities";
-import AddEntitiesModal from "./add-entities/AddEntitiesModal";
 import ControlEntitiesModal from "./control-entites/ControlEntitiesModal";
 import { ModalName } from "../enums/modalName";
 import { shallowEqual } from "react-redux";
@@ -14,13 +13,21 @@ export const PrivateLayoutModals = () => {
     <>
       <React.Fragment>
         <ImportEntities />
-        <AddEntitiesModal />
         {
           (currentSelectedModal === ModalName.EditEntities) ?
             <ControlEntitiesModal
               modalName={ModalName.EditEntities}
               sidebarNavigationEnabled={true}
               modalHeading={"Edit Entities"}
+            /> : null
+        }
+
+        {
+          (currentSelectedModal === ModalName.AddEntities) ?
+            <ControlEntitiesModal
+              modalName={ModalName.AddEntities}
+              sidebarNavigationEnabled={false}
+              modalHeading={"Add Entities"}
             /> : null
         }
 
