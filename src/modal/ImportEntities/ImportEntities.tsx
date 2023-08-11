@@ -9,6 +9,8 @@ import { useAppSelector } from "../../stores/redux-store";
 import { IsExcelFile } from "../../utils/file/fileUtils";
 import { PropertyHeader } from "../../types/entitiesMapDataTypes";
 import ImportEntitiesApi from "../../apis/companyData/ImportEntitiesApi";
+import toast from "react-hot-toast";
+import { json } from "stream/consumers";
 
 // property: value; excelIndex: key
 export type EntityMap = { value: string; key: number };
@@ -84,7 +86,7 @@ export default function ImportEntities() {
           importEntitiesModalsliceActions.updateModalType(ModalName.EntitiesMap)
         );
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error("something went wrong"));
 
     setloader(false);
   };
@@ -104,7 +106,7 @@ export default function ImportEntities() {
           )
         );
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error("something went wrong"));
 
     setloader(false);
   };
@@ -115,11 +117,11 @@ export default function ImportEntities() {
     api
       .ImportEntityFromExcel(file, map, 1, checkbox)
       .then((res) => {
-        console.log(res.data);
-        resetState();
-        dispatch(importEntitiesModalsliceActions.removeModal());
+        toast.success("successfully data imported");
+        // resetState();
+        // dispatch(importEntitiesModalsliceActions.removeModal());
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error(err));
 
     setloader(false);
   };
