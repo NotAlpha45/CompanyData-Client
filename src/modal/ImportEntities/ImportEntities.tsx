@@ -10,9 +10,10 @@ import { IsExcelFile } from "../../utils/file/fileUtils";
 import { PropertyHeader } from "../../types/entitiesMapDataTypes";
 import ImportEntitiesApi from "../../apis/companyData/ImportEntitiesApi";
 import toast from "react-hot-toast";
-import { EntityMap, ReviewEntity } from "../../types/companydata/importExcelType";
-
-
+import {
+  EntityMap,
+  ReviewEntity,
+} from "../../types/companydata/importExcelType";
 
 export default function ImportEntities() {
   const tittle = "Add Entities";
@@ -77,9 +78,8 @@ export default function ImportEntities() {
           importEntitiesModalsliceActions.updateModalType(ModalName.EntitiesMap)
         );
       })
-      .catch((err) => toast.error(err.response.data.Message));
-
-    setloader(false);
+      .catch((err) => toast.error(err.response.data.Message))
+      .finally(() => setloader(false));
   };
 
   const handleMapEntitiesSubmit = async () => {
@@ -97,9 +97,8 @@ export default function ImportEntities() {
           )
         );
       })
-      .catch((err) => toast.error(err.response.data.Message));
-
-    setloader(false);
+      .catch((err) => toast.error(err.response.data.Message))
+      .finally(() => setloader(false));
   };
 
   const handlePreviewEntitiesSubmit = () => {
@@ -112,9 +111,8 @@ export default function ImportEntities() {
         resetState();
         dispatch(importEntitiesModalsliceActions.removeModal());
       })
-      .catch((err) => toast.error(err.response.data.Message));
-
-    setloader(false);
+      .catch((err) => toast.error(err.response.data.Message))
+      .finally(() => setloader(false));
   };
   const handleSetCheckbox = () => {
     setCheckbox(!checkbox);
