@@ -84,7 +84,7 @@ export default function EntitiesOwnershipInputFields(props: EntitiesOwnershipInp
                                                 {/* <Form.Control name='ownerId' /> */}
                                                 <InputPicker
                                                     placeholder={ownershipInputValues[index].ownerName ?? ownershipInputValues[index].ownerId}
-                                                    value={ownershipInputValues[index].ownerName ?? ownershipInputValues[index].ownerId}
+                                                    // value={ownershipInputValues[index].ownerName ?? ownershipInputValues[index].ownerId}
                                                     aria-required
                                                     name='ownerId'
                                                     className='mb-3'

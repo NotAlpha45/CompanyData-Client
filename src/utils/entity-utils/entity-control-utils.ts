@@ -47,28 +47,12 @@ export class EntityControlUtils {
   }
 
   static updateOwnerships(updatedOwnerships: OwnerShip[], ownedEntity: Entity) {
-    const ownedOwnerships = this.getOwnedOwnerships(ownedEntity!);
+    const ownedOwnerships = this.getOwnedOwnerships(ownedEntity);
 
-    // If the ownership array has been reduced, then we need to remove the ownerships from the store and set the updated ownerships in the store
-    if (updatedOwnerships.length < ownedOwnerships.length) {
-      // Get the ownerships that have been removed
-      const removedOwnerships = ownedOwnerships.filter(
-        (ownership) =>
-          !updatedOwnerships.some(
-            (updatedOwnership) =>
-              updatedOwnership.ownershipId === ownership.ownershipId
-          )
-      );
+    // Remove all the ownerships that are in ownedOwnership from the store and add the updated ownerships to the store
+    appStore.dispatch(EntitySliceActions.removeOwnerships(ownedOwnerships));
+    appStore.dispatch(EntitySliceActions.addOwnerships(updatedOwnerships));
 
-      // Remove the ownerships from the store
-      appStore.dispatch(EntitySliceActions.removeOwnerships(removedOwnerships));
-
-      // Set the updated ownerships in the store
-      appStore.dispatch(EntitySliceActions.updateOwnerships(updatedOwnerships));
-      return;
-    }
-
-    appStore.dispatch(EntitySliceActions.updateOwnerships(updatedOwnerships));
   }
 
   static getOwnerInfo(entity: Entity) {

@@ -63,7 +63,7 @@ export default function EntitiesLegalInputFields(props: EntitiesLegalInputFields
                                 data={incorporationJuristrictionNames}
                                 style={{ width: "100%" }}
                                 placeholder={props.addedEntity.incorporationJurisdiction}
-                                value={props.addedEntity.incorporationJurisdiction}
+                                // value={props.addedEntity.incorporationJurisdiction}
                                 onChange={(value) => { props.setAddedEntity({ ...props.addedEntity, incorporationJurisdiction: value as string }) }}
                             />
                         </div>
@@ -77,7 +77,7 @@ export default function EntitiesLegalInputFields(props: EntitiesLegalInputFields
                                 id='entity-selector'
                                 data={subNationalNames}
                                 style={{ width: "100%" }}
-                                value={props.addedEntity.subNational}
+                                // value={props.addedEntity.subNational}
                                 placeholder={props.addedEntity.subNational}
                                 onChange={(value) => { props.setAddedEntity({ ...props.addedEntity, subNational: value as string }) }}
                             />
