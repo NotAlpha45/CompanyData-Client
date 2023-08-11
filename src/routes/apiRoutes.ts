@@ -1,7 +1,8 @@
-// export const BASE_URL = "https://192.168.0.111:5000";
-export const BASE_URL = process.env.REACT_APP_NEST_URL || "";
+export const BASE_URL = "https://localhost:6001";
+// export const BASE_URL = process.env.REACT_APP_NEST_URL || "";
 export const URL = "https://regplusapigateway.kaz.com.bd/wta";
-export const AUTH_URL = process.env.REACT_APP_AUTH_URL || "";
+export const AUTH_URL = "https://localhost:6001";
+// export const AUTH_URL = process.env.REACT_APP_AUTH_URL || "";
 export const USER_API_URL =
   "https://regplusapigateway.kaz.com.bd/auth/api/User/";
 export const ApiRoutes = {
@@ -39,4 +40,10 @@ export const ApiRoutes = {
     subscribeData: `${BASE_URL}/api/RegBriefPublisher/UploadSubscriberData`,
     unSubscribeData: `${BASE_URL}/api/RegBriefPublisher/UnSubscribe`,
   },
+
+  companyData:{
+    getCompanyDataProperties:`${BASE_URL}/api/CompanyData/GetCompanyDataProperties`,
+    mapEntityFromExcel:`${BASE_URL}/api/CompanyData/MapEntityFromExcel`,
+    importEntityFromExcel:`${BASE_URL}/api/CompanyData/ImportEntityFromExcel`,
+  }
 };

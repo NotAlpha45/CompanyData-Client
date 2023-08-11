@@ -40,71 +40,86 @@ function EntitiesPreview(props: EntitiesPreviewProps) {
         <Modal.Body>
           {props.loader && <Loader backdrop content="loading..." vertical />}
 
-          <div style={{ maxHeight: "50vh" }}>
-            <Accordion defaultActiveKey="0">
-              {props.entityPreview.map((item: ReviewEntity) => (
-                <Accordion.Item key={item.EntityId} eventKey={item.EntityId}>
-                  <Accordion.Header>{item.EntityName}</Accordion.Header>
-                  <Accordion.Body>
-                    <Table bordered>
-                      <thead>
-                        <tr>
-                          {item.Data.map((h) => (
-                            <th key={h.Column}>{h.Column}</th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr
-                          style={{ backgroundColor: "#d14b4b", color: "white" }}
-                        >
-                          {item.Data.map((h) => (
-                            <td key={h.Old}>
-                              {h.Old.includes("</table>") ? (
-                                <div
-                                  dangerouslySetInnerHTML={{ __html: h.Old }}
-                                />
-                              ) : (
-                                h.Old
-                              )}
-                            </td>
-                          ))}
-                        </tr>
-                        <tr
-                          style={{ backgroundColor: "#4d943a", color: "white" }}
-                        >
-                          {item.Data.map((h) => (
-                            <td key={h.New}>
-                              {h.New.includes("</table>") ? (
-                                <div
-                                  dangerouslySetInnerHTML={{ __html: h.New }}
-                                />
-                              ) : (
-                                h.New
-                              )}
-                            </td>
-                          ))}
-                        </tr>
-                      </tbody>
-                    </Table>
-                  </Accordion.Body>
-                </Accordion.Item>
-              ))}
-            </Accordion>
-          </div>
+          {props.entityPreview.length > 0 ? (
+            <div style={{ maxHeight: "50vh" }}>
+              <Accordion defaultActiveKey="0">
+                {props.entityPreview.map((item: ReviewEntity) => (
+                  <Accordion.Item key={item.EntityId} eventKey={item.EntityId}>
+                    <Accordion.Header>{item.EntityName}</Accordion.Header>
+                    <Accordion.Body>
+                      <Table bordered>
+                        <thead>
+                          <tr>
+                            {item.Data.map((h) => (
+                              <th key={h.Column}>{h.Column}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            style={{
+                              backgroundColor: "#d14b4b",
+                              color: "white",
+                            }}
+                          >
+                            {item.Data.map((h) => (
+                              <td key={h.Old}>
+                                {h.Old.includes("</table>") ? (
+                                  <div
+                                    dangerouslySetInnerHTML={{ __html: h.Old }}
+                                  />
+                                ) : (
+                                  h.Old
+                                )}
+                              </td>
+                            ))}
+                          </tr>
+                          <tr
+                            style={{
+                              backgroundColor: "#4d943a",
+                              color: "white",
+                            }}
+                          >
+                            {item.Data.map((h) => (
+                              <td key={h.New}>
+                                {h.New.includes("</table>") ? (
+                                  <div
+                                    dangerouslySetInnerHTML={{ __html: h.New }}
+                                  />
+                                ) : (
+                                  h.New
+                                )}
+                              </td>
+                            ))}
+                          </tr>
+                        </tbody>
+                      </Table>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                ))}
+              </Accordion>
+            </div>
+          ) : (
+            <div className="p-3">
+              <h3 style={{color:'green'}}>No changes detected!</h3>
+              <h3>You can add your new entities anyway!</h3>
+            </div>
+          )}
         </Modal.Body>
 
-        <div className="p-3">
-          <Form.Check
-            inline
-            label="Replace the existing sheet with new one"
-            name="Replace the existing sheet with new one"
-            type={"checkbox"}
-            id={`inline-${1}-1`}
-            checked={props.checkbox}
-            onChange={props.handleSetCheckbox}
-          />
-        </div>
+        {props.entityPreview.length > 0 && (
+          <div className="p-3">
+            <Form.Check
+              inline
+              label="Replace the existing sheet with new one"
+              name="Replace the existing sheet with new one"
+              type={"checkbox"}
+              id={`inline-${1}-1`}
+              checked={props.checkbox}
+              onChange={props.handleSetCheckbox}
+            />
+          </div>
+        )}
 
         <Modal.Footer>
           <Button
