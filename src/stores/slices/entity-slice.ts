@@ -71,19 +71,14 @@ const entitySlice = createSlice({
       action: PayloadAction<OwnerShip[]>
     ) => {
       const ownerships = action.payload;
-
-      if (ownerships.length === 0) {
-        state.ownerships = [];
-      } else {
-        ownerships.forEach((ownership) => {
-          const index = state.ownerships.findIndex(
-            (o) => o.ownershipId === ownership.ownershipId
-          );
-          if (index !== -1) {
-            state.ownerships[index] = ownership;
-          }
-        });
-      }
+      ownerships.forEach((ownership) => {
+        const index = state.ownerships.findIndex(
+          (o) => o.ownershipId === ownership.ownershipId
+        );
+        if (index !== -1) {
+          state.ownerships[index] = ownership;
+        }
+      });
     },
   },
 });

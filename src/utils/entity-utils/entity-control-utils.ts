@@ -46,20 +46,29 @@ export class EntityControlUtils {
     appStore.dispatch(EntitySliceActions.updateEntity(entity));
   }
 
-  static updateOwnerships(ownerships: OwnerShip[], ownedEntity?: Entity) {
-    // If the ownership array is empty, then we are deleting the ownerships by the ownerEntity or ownedEntity
-    if (ownerships.length === 0) {
-      if (ownedEntity) {
-        ownerships = appStore
-          .getState()
-          .entity.ownerships.filter(
-            (ownership) => ownership.ownedId === ownedEntity.entityId
-          );
-      }
-      appStore.dispatch(EntitySliceActions.removeOwnerships(ownerships));
+  static updateOwnerships(updatedOwnerships: OwnerShip[], ownedEntity: Entity) {
+    const ownedOwnerships = this.getOwnedOwnerships(ownedEntity!);
+
+    // If the ownership array has been reduced, then we need to remove the ownerships from the store and set the updated ownerships in the store
+    if (updatedOwnerships.length < ownedOwnerships.length) {
+      // Get the ownerships that have been removed
+      const removedOwnerships = ownedOwnerships.filter(
+        (ownership) =>
+          !updatedOwnerships.some(
+            (updatedOwnership) =>
+              updatedOwnership.ownershipId === ownership.ownershipId
+          )
+      );
+
+      // Remove the ownerships from the store
+      appStore.dispatch(EntitySliceActions.removeOwnerships(removedOwnerships));
+
+      // Set the updated ownerships in the store
+      appStore.dispatch(EntitySliceActions.updateOwnerships(updatedOwnerships));
+      return;
     }
 
-    appStore.dispatch(EntitySliceActions.updateOwnerships(ownerships));
+    appStore.dispatch(EntitySliceActions.updateOwnerships(updatedOwnerships));
   }
 
   static getOwnerInfo(entity: Entity) {
@@ -83,9 +92,5 @@ export class EntityControlUtils {
     });
 
     return ownerInfo;
-  }
-
-  static getOwnerCount(entity: Entity): number {
-    return this.getOwnedOwnerships(entity).length;
   }
 }
