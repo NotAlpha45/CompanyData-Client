@@ -10,16 +10,9 @@ export default function EntityTablePage() {
 
     const navigate = useNavigate();
 
-    const showAddEntitiesModal = () => {
+    const showModal = (modalType: ModalName) => {
         ModalControlUtils.setModal({
-            type: ModalName.AddEntities,
-            data: {}
-        })
-    }
-
-    const showImportEntitiesModal = () => {
-        ModalControlUtils.setModal({
-            type: ModalName.EntitiesUpload,
+            type: modalType,
             data: {},
         })
     }
@@ -32,10 +25,10 @@ export default function EntityTablePage() {
             <div className="container-fluid">
                 <div className='row mt-3 p-2 mb-3'>
                     <div className='col-1 w-auto'>
-                        <button className='btn btn-primary' onClick={() => { showImportEntitiesModal() }}> Import Entities </button>
+                        <button className='btn btn-primary' onClick={() => { showModal(ModalName.EntitiesUpload) }}> Import Entities </button>
                     </div>
                     <div className='col-1 w-auto'>
-                        <button className='btn btn-primary' onClick={() => { showAddEntitiesModal() }}> Add Entities </button>
+                        <button className='btn btn-primary' onClick={() => { showModal(ModalName.AddEntities) }}> Add Entities </button>
                     </div>
                     <div className='col-1 w-auto'>
                         <button className='btn btn-secondary'> Export Entities </button>
@@ -50,10 +43,10 @@ export default function EntityTablePage() {
                     </div>
                 </div>
                 <div className='row p-2'>
-                    <div className='col-2'>
+                    <div className='col-auto'>
                         <EntityTableSidenavComponent />
                     </div>
-                    <div className='col-10'>
+                    <div className='col'>
                         <EntityTableComponent />
                     </div>
                 </div>

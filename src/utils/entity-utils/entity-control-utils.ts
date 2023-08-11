@@ -72,4 +72,8 @@ export class EntityControlUtils {
 
     return ownerInfo;
   }
+
+  static getOwnerCount(entity: Entity): number {
+    return this.getOwnedOwnerships(entity).length;
+  }
 }
