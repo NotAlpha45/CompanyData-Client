@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ModalStoreType, importEntityModal } from "../../types/modal-types";
+import { ModalStoreType } from "../../types/modal-types";
 import { ModalName } from "../../enums/modalName";
 import { Entity, OwnerShip } from "../../types/entity-types";
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useAppSelector } from '../../stores/redux-store';
 import { shallowEqual } from 'react-redux';
 import { AddEntitiesModalStepsName } from '../../enums/ModalSteps';
@@ -25,18 +25,15 @@ export default function ControlEntitiesModal(props: ControlEntitiesModalProps) {
 
     const entityDataToBeEdited = useAppSelector(state => state.modals.entityDataToBeEdited, shallowEqual);
 
-
+    // window.location.reload();
 
     const modalSteps = Object.keys(AddEntitiesModalStepsName) as AddEntitiesModalStepsNameKeyType[];
     const [currentSelectedModalStepIndex, setCurrentSelectedModalStepIndex] = useState<number>(0);
     const [currentSelectedModalStep, setCurrentSelectedModalStep] = useState<AddEntitiesModalStepsName>(AddEntitiesModalStepsName[modalSteps[0]]);
 
-    // setTimeout(() => {
-    //     console.log(currentSelectedModalStep);
-    // }, 1000);
-
     const [addedEntity, setAddedEntity] = useState<Entity>(
-        entityDataToBeEdited?.entity ? entityDataToBeEdited.entity :
+        entityDataToBeEdited ?
+            entityDataToBeEdited.entity :
             {
                 entityId: "",
                 entityName: "",
@@ -44,20 +41,13 @@ export default function ControlEntitiesModal(props: ControlEntitiesModalProps) {
                 entityType: "",
                 subNational: "",
                 sicCode: "",
-            }
-    )
+            },
+    );
 
-    useEffect(() => {
-        if (entityDataToBeEdited?.entity) {
-            setAddedEntity(entityDataToBeEdited.entity);
-        }
-        console.log(addedEntity, entityDataToBeEdited?.entity)
 
-    }, [entityDataToBeEdited?.entity])
-
-    // console.log(entityDataToBeEdited?.entity);
-
-    const [addedOwnerships, setAddedOwnerships] = useState<OwnerShip[]>([]);
+    const [addedOwnerships, setAddedOwnerships] = useState<OwnerShip[]>(
+        entityDataToBeEdited ? entityDataToBeEdited.ownerships : []
+    );
 
     const shouldSubmitEntityData = () => {
         return addedEntity.entityName !== "" && addedEntity.entityId !== "";
