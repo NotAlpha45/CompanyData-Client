@@ -76,12 +76,26 @@ export default function ControlEntitiesModal(props: ControlEntitiesModalProps) {
         setCurrentSelectedModalStepIndex(modalSteps.findIndex((step) => step === stepName));
     }
 
-    const handleAddEnity = () => {
+    const handleEntityOwnershipDataChange = () => {
         if (!shouldSubmitEntityData() || !shouldSubmitOwnershipData()) {
             return;
         }
-        EntityControlUtils.addEntity(addedEntity);
-        EntityControlUtils.addOwnerships(addedOwnerships);
+
+        switch (currentSelectedModal) {
+            case ModalName.AddEntities: {
+                EntityControlUtils.addEntity(addedEntity);
+                EntityControlUtils.addOwnerships(addedOwnerships);
+                break;
+            }
+
+            case ModalName.EditEntities: {
+                EntityControlUtils.updateEntity(addedEntity);
+                EntityControlUtils.updateOwnerships(addedOwnerships);
+                break;
+            }
+        }
+
+
         handleModalClose();
     }
 
@@ -154,7 +168,7 @@ export default function ControlEntitiesModal(props: ControlEntitiesModalProps) {
                     </Button>
 
                     <Button
-                        onClick={() => handleAddEnity()}
+                        onClick={() => handleEntityOwnershipDataChange()}
                         className='btn bg-success text-white'
                         disabled={!shouldSubmitEntityData() || !shouldSubmitOwnershipData()}
                         hidden={currentSelectedModalStepIndex !== modalSteps.length - 1}

@@ -42,6 +42,14 @@ export class EntityControlUtils {
     appStore.dispatch(EntitySliceActions.addOwnerships(ownerships));
   }
 
+  static updateEntity(entity: Entity) {
+    appStore.dispatch(EntitySliceActions.updateEntity(entity));
+  }
+
+  static updateOwnerships(ownerships: OwnerShip[]) {
+    appStore.dispatch(EntitySliceActions.updateOwnerships(ownerships));
+  }
+
   static getOwnerInfo(entity: Entity) {
     const allOwnerships = appStore.getState().entity.ownerships;
 

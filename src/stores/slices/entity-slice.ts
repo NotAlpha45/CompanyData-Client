@@ -40,6 +40,31 @@ const entitySlice = createSlice({
         ownerships: [...state.ownerships, ...action.payload],
       };
     },
+
+    updateEntity: (state: EntityStoreType, action: PayloadAction<Entity>) => {
+      const entity = action.payload;
+      const index = state.entities.findIndex(
+        (e) => e.entityId === entity.entityId
+      );
+      if (index !== -1) {
+        state.entities[index] = entity;
+      }
+    },
+
+    updateOwnerships: (
+      state: EntityStoreType,
+      action: PayloadAction<OwnerShip[]>
+    ) => {
+      const ownerships = action.payload;
+      ownerships.forEach((ownership) => {
+        const index = state.ownerships.findIndex(
+          (o) => o.ownershipId === ownership.ownershipId
+        );
+        if (index !== -1) {
+          state.ownerships[index] = ownership;
+        }
+      });
+    },
   },
 });
 
