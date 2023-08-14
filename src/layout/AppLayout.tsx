@@ -11,7 +11,7 @@ export const AppLayout = () => {
       <Route path="/" element={<Navigate replace to={AppRoutesUI.CompanyData.Root()} />} />
       <Route path={`${AppRoutesUI.CompanyData.Root()}*`} element={<PrivateLayout />} />
 
-      <Route path="/modal" element={<PrivateLayoutModals></PrivateLayoutModals>} />
+      {/* <Route path="/modal" element={<PrivateLayoutModals></PrivateLayoutModals>} /> */}
 
     </Routes>
   );
