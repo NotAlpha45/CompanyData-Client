@@ -32,13 +32,13 @@ export default function ExpandedRowComponent(props: ExpandedRowComponentProps) {
                                 {
                                     ownershipData.map((ownership, index) => {
                                         return (
-                                            <>
-                                                <tr key={index} className="lead">
-                                                    <td>{ownership?.ownerName}</td>
-                                                    <td>{ownership?.ownerType}</td>
-                                                    <td>{ownership?.ownershipPercentage}</td>
-                                                </tr>
-                                            </>
+
+                                            <tr key={index} className="lead">
+                                                <td>{ownership?.ownerName}</td>
+                                                <td>{ownership?.ownerType}</td>
+                                                <td>{ownership?.ownershipPercentage}</td>
+                                            </tr>
+
                                         )
                                     }
                                     )
