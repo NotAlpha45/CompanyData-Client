@@ -1,8 +1,12 @@
 import { AxiosResponse } from "axios";
 import { ApiRoutes } from "../../routes/apiRoutes";
 import { AxiosCompanyData } from "../../axios/axiosInstance";
-import { EntityMapDto, ReviewEntity } from "../../types/companydata/importExcelType";
-import { EntityMap } from "../../modal/ImportEntities/ImportEntities";
+import {
+  EntityMap,
+  EntityMapDto,
+  ReviewEntity,
+} from "../../types/companydata/importExcelType";
+// import { EntityMap } from "../../modal/ImportEntities/ImportEntities";
 
 export default class ImportEntitiesApi {
   GetCompanyDataPropertiesFromFile(

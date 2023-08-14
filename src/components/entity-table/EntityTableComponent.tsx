@@ -46,6 +46,10 @@ export default function EntityTableComponent() {
 
     }, [activeTablePage, tablePageLimit, entityStoreState])
 
+    // useEffect(() => {
+    //     EntityControlUtils.getEntitiesAndOwnershisByChartId(selectedChartId);
+    // }, [])
+
 
     return (
         <>

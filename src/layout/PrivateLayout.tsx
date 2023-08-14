@@ -6,7 +6,18 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import GraphPage from "../pages/graph-page";
 import { PrivateLayoutModals } from "../modal/PrivateLayoutModals";
 import { AppRoutesUI } from "../routes/appRoutes";
+import { ChartControlUtils } from "../utils/chart-utils/ChartControlUtils";
+import { EntityControlUtils } from "../utils/entity-utils/entity-control-utils";
 export const PrivateLayout = () => {
+
+  const initialChartDatafetch = async () => {
+    const chartList = await ChartControlUtils.getChartList();
+    ChartControlUtils.setSelectedChartId(chartList[0].chartId);
+    EntityControlUtils.getEntitiesAndOwnershisByChartId(chartList[0].chartId);
+  }
+
+  initialChartDatafetch();
+
   return (
     <>
       <Navbar />

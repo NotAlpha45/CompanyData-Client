@@ -4,19 +4,22 @@ export type OwnerShip = {
   ownedId: string;
   ownerName?: string;
   ownedName?: string;
-  ownershipName: string;
+  ownershipName?: string;
   ownershipPercentage: number;
 };
 
 export type Entity = {
+  chartId?: string;
+  entityCode?: string;
   entityId: string;
   entityName: string;
   incorporationJurisdiction: string;
   entityType: string;
-  subNational: string;
-  sicCode: string;
+  subNational?: string;
+  sicCode?: string;
   businessType?: string;
   entityTax?: EntityTax;
+  taxResidentJurisdiction?: string;
 };
 
 export type EntityTax = {
@@ -32,4 +35,19 @@ export type EntityTax = {
 export type EntityTct = {
   tctName: string;
   tctDescription: string;
+};
+
+export type GetEntityListByChartIdResponseType = {
+  ChartId: string;
+  Id: string;
+  Code: string;
+  Name: string;
+  IncorporationJurisdiction: string;
+  EntityType: string;
+  EntityOwnerList: {
+    OwnerName: string;
+    OwnerPercentage: number;
+  }[];
+  BusinessType: string;
+  TaxResidentJurisdiction: string;
 };

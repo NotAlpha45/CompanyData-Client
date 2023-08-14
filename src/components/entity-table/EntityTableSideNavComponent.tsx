@@ -2,10 +2,20 @@ import { Nav, Sidenav } from 'rsuite'
 import GroupIcon from '@rsuite/icons/legacy/Group';
 import AddOutlineIcon from '@rsuite/icons/AddOutline';
 import { useState } from 'react';
+import { useAppSelector } from '../../stores/redux-store';
+import { shallowEqual } from 'react-redux';
+import { ChartControlUtils } from '../../utils/chart-utils/ChartControlUtils';
+import { EntityControlUtils } from '../../utils/entity-utils/entity-control-utils';
 
 export default function EntityTableSidenavComponent() {
 
     const [expanded, setExpanded] = useState(true);
+    const { chartList, selectedChartId } = useAppSelector(state => state.chart, shallowEqual);
+
+    const handleChartSlection = (chartId: string) => {
+        ChartControlUtils.setSelectedChartId(chartId);
+        EntityControlUtils.getEntitiesAndOwnershisByChartId(chartId);
+    }
 
     return (
         <>
@@ -14,13 +24,25 @@ export default function EntityTableSidenavComponent() {
                     onToggle={(expanded) => setExpanded(expanded)}
                 />
                 <Sidenav.Body>
-                    <Nav>
-                        <Nav.Item eventKey="1" icon={<AddOutlineIcon />}>
+                    <Nav activeKey={selectedChartId}>
+                        <Nav.Item eventKey="add-entity-chart" icon={<AddOutlineIcon />}>
                             Add Entity Chart
                         </Nav.Item>
-                        <Nav.Item eventKey="2" icon={<GroupIcon />}>
-                            Master Entity Chart
-                        </Nav.Item>
+                        {
+                            chartList.map((chart, index) => {
+                                return (
+                                    <Nav.Item
+                                        eventKey={chart.chartId}
+                                        icon={<GroupIcon />}
+                                        key={index}
+                                        onClick={() => { handleChartSlection(chart.chartId) }}
+                                    >
+                                        {chart.chartName}
+                                    </Nav.Item>
+                                )
+                            }
+                            )
+                        }
 
                     </Nav>
                 </Sidenav.Body>
