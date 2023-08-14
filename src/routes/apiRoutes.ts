@@ -6,9 +6,6 @@ export const AUTH_URL = "https://localhost:6001";
 export const USER_API_URL =
   "https://regplusapigateway.kaz.com.bd/auth/api/User/";
 export const ApiRoutes = {
-  companyData: {
-    getChartList: `${BASE_URL}/api/CompanyData/Charts`,
-  },
   auth: {
     getAccountStatus: `${URL}/api/Auth/GetUserType`,
     getToken: `${URL}/api/Auth/GetToken`,
@@ -39,9 +36,10 @@ export const ApiRoutes = {
     unSubscribeData: `${BASE_URL}/api/RegBriefPublisher/UnSubscribe`,
   },
 
-  companyData:{
-    getCompanyDataProperties:`${BASE_URL}/api/CompanyData/GetCompanyDataProperties`,
-    mapEntityFromExcel:`${BASE_URL}/api/CompanyData/MapEntityFromExcel`,
-    importEntityFromExcel:`${BASE_URL}/api/CompanyData/ImportEntityFromExcel`,
-  }
+  companyData: {
+    getCompanyDataProperties: `${BASE_URL}/api/CompanyData/GetCompanyDataProperties`,
+    mapEntityFromExcel: `${BASE_URL}/api/CompanyData/MapEntityFromExcel`,
+    importEntityFromExcel: `${BASE_URL}/api/CompanyData/ImportEntityFromExcel`,
+    getChartList: `${BASE_URL}/api/CompanyData/Charts`,
+  },
 };
