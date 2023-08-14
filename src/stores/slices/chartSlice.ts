@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { EntityChartType } from "../../types/entityChartType";
+import { EntityChartType } from "../../types/entityChartTypes";
 
 // Create a slice for chart data
-const initialChartData: EntityChartType[] = [
+const initialChartList: EntityChartType[] = [
   {
     chartId: "00",
     chartName: "MyChart",
@@ -10,15 +10,32 @@ const initialChartData: EntityChartType[] = [
   },
 ];
 
+type chartSliceType = {
+  chartList: EntityChartType[];
+  selectedChartId: string;
+};
+
+const initialChartData: chartSliceType = {
+  chartList: initialChartList,
+  selectedChartId: "00",
+};
+
 const chartSlice = createSlice({
   name: "chart",
   initialState: initialChartData,
   reducers: {
-    setChart: (
-      state: EntityChartType[],
+    setChartList: (
+      state: chartSliceType,
       action: PayloadAction<EntityChartType[]>
     ) => {
-      return [...action.payload];
+      state.chartList = action.payload;
+    },
+
+    setSelectedChartId: (
+      state: chartSliceType,
+      action: PayloadAction<string>
+    ) => {
+      state.selectedChartId = action.payload;
     },
   },
 });

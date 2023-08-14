@@ -1,7 +1,7 @@
 import { ChartApi } from "../../apis/ChartApi";
 import { appStore } from "../../stores/redux-store";
 import { ChartSliceActions } from "../../stores/slices/chartSlice";
-import { EntityChartType } from "../../types/entityChartType";
+import { EntityChartType } from "../../types/entityChartTypes";
 
 export class ChartControlUtils {
   static async getChartList() {
@@ -9,13 +9,17 @@ export class ChartControlUtils {
       await ChartApi.getChartList()
     ).data.map((chart) => {
       return {
-        chartId: chart.Id,
+        chartId: chart.Id.toString(),
         chartName: chart.Name,
       };
     });
 
-    appStore.dispatch(ChartSliceActions.setChart(chartList));
+    appStore.dispatch(ChartSliceActions.setChartList(chartList));
 
     return chartList;
+  }
+
+  static setSelectedChartId(chartId: string) {
+    appStore.dispatch(ChartSliceActions.setSelectedChartId(chartId));
   }
 }
