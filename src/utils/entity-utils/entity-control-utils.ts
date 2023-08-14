@@ -1,8 +1,49 @@
+import { EntityApi } from "../../apis/EntityApi";
 import { appStore } from "../../stores/redux-store";
 import { EntitySliceActions } from "../../stores/slices/entity-slice";
 import { Entity, OwnerShip } from "../../types/entity-types";
 
 export class EntityControlUtils {
+  static getEntitiesAndOwnershisByChartId = async (chartId: string) => {
+    const entityOwnershipResponseData = await EntityApi.getEntityListByChartId(
+      chartId
+    );
+
+    const entities: Entity[] = entityOwnershipResponseData.data.map(
+      (entity) => {
+        return {
+          entityId: entity.Id.toString(),
+          entityName: entity.Name,
+          incorporationJurisdiction: entity.IncorporationJurisdiction,
+          entityType: entity.EntityType,
+          entityCode: entity.Code,
+          chartId: entity.ChartId.toString(),
+          businessType: entity.BusinessType,
+          taxResidentJurisdiction: entity.TaxResidentJurisdiction,
+        };
+      }
+    );
+
+    const ownerships: OwnerShip[] = entityOwnershipResponseData.data.flatMap(
+      (entity) => {
+        return entity.EntityOwnerList.map((owner) => {
+          return {
+            ownershipId: entity.Id.toString() + owner.OwnerName,
+            ownerId: owner.OwnerName,
+            ownedId: entity.Id.toString(),
+            ownershipPercentage: owner.OwnerPercentage,
+            ownerName: owner.OwnerName,
+            ownershipName: owner.OwnerName,
+            ownedName: entity.Name,
+          };
+        });
+      }
+    );
+
+    appStore.dispatch(EntitySliceActions.setEntities(entities));
+    appStore.dispatch(EntitySliceActions.setOwnerships(ownerships));
+  };
+
   static getEntityNamesAndIds(
     entities: Entity[] = appStore.getState().entity.entities
   ) {

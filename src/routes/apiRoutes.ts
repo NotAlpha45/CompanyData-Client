@@ -1,4 +1,4 @@
-export const BASE_URL = "https://localhost:6001";
+export const BASE_URL = "https://192.168.0.104:6001";
 // export const BASE_URL = process.env.REACT_APP_NEST_URL || "";
 export const URL = "https://regplusapigateway.kaz.com.bd/wta";
 export const AUTH_URL = "https://localhost:6001";
@@ -41,5 +41,6 @@ export const ApiRoutes = {
     mapEntityFromExcel: `${BASE_URL}/api/CompanyData/MapEntityFromExcel`,
     importEntityFromExcel: `${BASE_URL}/api/CompanyData/ImportEntityFromExcel`,
     getChartList: `${BASE_URL}/api/CompanyData/Charts`,
+    getEntityListByChartId: `${BASE_URL}/api/CompanyData/Charts/`,
   },
 };

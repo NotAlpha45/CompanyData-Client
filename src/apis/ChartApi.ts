@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { GetEntityChartResponseType } from "../types/entityChartType";
+import { GetEntityChartResponseType } from "../types/entityChartTypes";
 import { AxiosCompanyData } from "../axios/axiosInstance";
 import { ApiRoutes } from "../routes/apiRoutes";
 
