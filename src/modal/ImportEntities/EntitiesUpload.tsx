@@ -1,11 +1,14 @@
 import { ChangeEvent } from "react";
 import { Button, Modal } from "react-bootstrap";
+import { Loader } from "rsuite";
 
 type EntitiesUploadProps = {
   modalTitle: string;
   handleClose: () => void;
   handleModal: () => void;
   show: boolean;
+  loader: boolean;
+  error: string;
   file: File | undefined;
   handleFile: (e: ChangeEvent<HTMLInputElement>) => void;
 };
@@ -14,7 +17,12 @@ function EntitiesUpload(props: EntitiesUploadProps) {
   
   return (
     <>
-      <Modal show={props.show} size="xl" backdrop="static" onHide={props.handleClose}>
+      <Modal
+        show={props.show}
+        size="xl"
+        backdrop="static"
+        onHide={props.handleClose}
+      >
         <Modal.Header
           className="modal-header  pt-30 ps-30 pe-30 pb-30"
           closeButton
@@ -23,7 +31,9 @@ function EntitiesUpload(props: EntitiesUploadProps) {
             {props.modalTitle}
           </h4>
         </Modal.Header>
+
         <Modal.Body>
+          {props.loader && <Loader backdrop content="loading..." vertical />}
           <div className="container">
             <div className="content">
               <h3>Select the excel that contains a list of entities</h3>
@@ -33,6 +43,11 @@ function EntitiesUpload(props: EntitiesUploadProps) {
                 name="file"
                 onChange={props.handleFile}
               ></input>
+              {props.error && (
+                <div>
+                  <span className="text-danger">{props.error}</span>
+                </div>
+              )}
               <div className="mt-3">
                 <p>
                   Lorem Ipsum is simply dummy text of the printing and
@@ -40,7 +55,11 @@ function EntitiesUpload(props: EntitiesUploadProps) {
                   standard dummy text ...
                 </p>
                 <span className="pt-2">
-                  <a href="https://file-examples.com/wp-content/storage/2017/02/file_example_XLS_10.xls">
+                  <a
+                    target="_blank"
+                    href="\src\assets\file\Import_Entities_Template.xlsx"
+                    download
+                  >
                     Download Default Template
                   </a>
                 </span>
@@ -67,7 +86,7 @@ function EntitiesUpload(props: EntitiesUploadProps) {
           <Button
             onClick={props.handleModal}
             variant="primary"
-            disabled={!props.file}
+            disabled={!props.file || props.loader}
           >
             Next
           </Button>

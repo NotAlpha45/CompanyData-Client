@@ -4,12 +4,12 @@ import { AxiosAuthInjector } from "./interceptor/AxiosAuthInjector";
 
 const AxiosCompanyData = Axios.create();
 AuthInjector.Add(AxiosCompanyData);
-// RedirectUnauthorize.Add(AxiosBreif, AppRoutesUI.Auth.Login.Path(), () => {
+// RedirectUnauthorize.Add(AxiosCompanyData, AppRoutesUI.Auth.Login.Path(), () => {
 //   localStorage.clear();
 // });
 
 const AxiosAuth = Axios.create({
-  baseURL: process.env.REACT_APP_NEST_URL,
+  // baseURL: process.env.REACT_APP_NEST_URL,
 });
 
 AxiosAuthInjector.Add(AxiosAuth);

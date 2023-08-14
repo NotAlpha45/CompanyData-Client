@@ -10,15 +10,28 @@ export const PrivateLayout = () => {
   return (
     <>
       <Navbar />
-      <Toaster reverseOrder={true} />
+      <Toaster position="top-right" reverseOrder={true} />
 
       <Routes>
-        <Route path={AppRoutesUI.Root} element={<Navigate replace to={AppRoutesUI.CompanyData.CompanyDataChart.Root()} />} />
-        <Route path={AppRoutesUI.CompanyData.CompanyDataChart.Root()} element={<EntityTablePage />} />
-        <Route path={AppRoutesUI.CompanyData.CompanyDataGraph.Root()} element={<GraphPage />} />
+        <Route
+          path={AppRoutesUI.Root}
+          element={
+            <Navigate
+              replace
+              to={AppRoutesUI.CompanyData.CompanyDataChart.Root()}
+            />
+          }
+        />
+        <Route
+          path={AppRoutesUI.CompanyData.CompanyDataChart.Root()}
+          element={<EntityTablePage />}
+        />
+        <Route
+          path={AppRoutesUI.CompanyData.CompanyDataGraph.Root()}
+          element={<GraphPage />}
+        />
       </Routes>
-      <div className="">
-      </div>
+      <div className=""></div>
       <PrivateLayoutModals />
     </>
   );
