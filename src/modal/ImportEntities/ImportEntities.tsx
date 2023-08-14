@@ -6,61 +6,113 @@ import { importEntitiesModalsliceActions } from "../../stores/slices/entitiesMod
 import { ChangeEvent, useState } from "react";
 import { ModalName } from "../../enums/modalName";
 import { useAppSelector } from "../../stores/redux-store";
-import { EntitiesMapExcelProperties, EntitiesMapProperties } from "../../types/entitiesMapDataTypes";
-
-export type EntityMap = { property: string; excelIndex: number };
+import { IsExcelFile } from "../../utils/file/fileUtils";
+import { PropertyHeader } from "../../types/entitiesMapDataTypes";
+import ImportEntitiesApi from "../../apis/companyData/ImportEntitiesApi";
+import toast from "react-hot-toast";
+import {
+  EntityMap,
+  ReviewEntity,
+} from "../../types/companydata/importExcelType";
 
 export default function ImportEntities() {
   const tittle = "Add Entities";
 
-  const property: EntitiesMapProperties[] = [
-    { id: 1, name: "Column1" },
-    { id: 2, name: "Column2" },
-    { id: 3, name: "Column3" },
-  ];
-  const excelProperty: EntitiesMapExcelProperties[] = [
-    { id: 1, name: "Column 1" },
-    { id: 2, name: "Column 2" },
-    { id: 3, name: "Column 3" },
-  ];
+  const [loader, setloader] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [file, setfile] = useState<File>(undefined);
+  const [checkbox, setCheckbox] = useState<boolean>(false);
+  const [map, setMap] = useState<EntityMap[]>([]);
 
-  const initMap: EntityMap[] = [
-    { property: "Column1", excelIndex: 1 },
-    { property: "Column2", excelIndex: 2 },
-    { property: "Column3", excelIndex: 3 },
-  ]
-
-  const [file, setfile] = useState<File>();
-  const [checkbox, setCheckbox] = useState<boolean>(true);
-  const [map, setMap] = useState<EntityMap[]>(initMap);
   const dispatch = useDispatch();
-
   const modalType = useAppSelector((store) => store.modals.type);
 
+  const [property, setProperty] = useState<PropertyHeader[]>([]);
+  const [excelProperty, setExcelProperty] = useState<PropertyHeader[]>([]);
+  const [entityPreview, setEntityPreview] = useState<ReviewEntity[]>([]);
+
+  const api = new ImportEntitiesApi();
+
   const handleClose = () => {
+    resetState();
+
     dispatch(importEntitiesModalsliceActions.removeModal());
   };
 
+  function resetState() {
+    setfile(undefined);
+    setMap([]);
+    setCheckbox(false);
+    setError("");
+    setProperty([]);
+    setExcelProperty([]);
+    setEntityPreview([]);
+    setloader(false);
+  }
+
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    setfile(e.target.files[0]);
+    const item: File | null = e.target.files[0];
+
+    if (!IsExcelFile(item.type)) {
+      resetState();
+      setError("invalid file format!");
+      return;
+    }
+
+    setError("");
+
+    setfile(item);
   };
 
-  const handleUploadEntitiesSubmit = () => {
-    dispatch(
-      importEntitiesModalsliceActions.updateModalType(ModalName.EntitiesMap)
-    );
+  const handleUploadEntitiesSubmit = async () => {
+    setloader(true);
+
+    await api
+      .GetCompanyDataPropertiesFromFile(file)
+      .then((res) => {
+        setProperty(res.data.Column);
+        setExcelProperty(res.data.ExcelColumn);
+        setMap(res.data.MapedColumn);
+
+        dispatch(
+          importEntitiesModalsliceActions.updateModalType(ModalName.EntitiesMap)
+        );
+      })
+      .catch((err) => toast.error(err.response.data.Message))
+      .finally(() => setloader(false));
   };
 
-  const handleMapEntitiesSubmit = () => {
-    // console.log(map);
-    dispatch(
-      importEntitiesModalsliceActions.updateModalType(ModalName.EntitiesPreview)
-    );
+  const handleMapEntitiesSubmit = async () => {
+    setloader(true);
+
+    // chart id will get from redux store. last selected chart. now 1 is static here
+    await api
+      .GetReviewDataFromFile(file, map, 2)
+      .then((res) => {
+        setEntityPreview(res.data);
+
+        dispatch(
+          importEntitiesModalsliceActions.updateModalType(
+            ModalName.EntitiesPreview
+          )
+        );
+      })
+      .catch((err) => toast.error(err.response.data.Message))
+      .finally(() => setloader(false));
   };
 
   const handlePreviewEntitiesSubmit = () => {
-    dispatch(importEntitiesModalsliceActions.removeModal());
+    setloader(true);
+
+    api
+      .ImportEntityFromExcel(file, map, 2, checkbox)
+      .then((res) => {
+        toast.success("successfully data imported");
+        resetState();
+        dispatch(importEntitiesModalsliceActions.removeModal());
+      })
+      .catch((err) => toast.error(err.response.data.Message))
+      .finally(() => setloader(false));
   };
   const handleSetCheckbox = () => {
     setCheckbox(!checkbox);
@@ -72,22 +124,28 @@ export default function ImportEntities() {
     );
   };
 
-  const handleDropdownChange = (e: ChangeEvent<HTMLSelectElement>, property: string) => {
+  const handleDropdownChange = (
+    e: ChangeEvent<HTMLSelectElement>,
+    property: string
+  ) => {
     const value = e.target.value;
 
-    const existingItemIndex = map.findIndex((item) => item.property === property);
+    const existingItemIndex = map.findIndex((item) => item.value === property);
 
     if (existingItemIndex !== -1) {
       const updatedMap = [...map];
 
       updatedMap[existingItemIndex] = {
         ...updatedMap[existingItemIndex],
-        excelIndex: Number(value),
+        key: Number(value),
       };
 
       setMap(() => updatedMap);
     } else {
-      setMap((prevMap) => [...prevMap, { property: property, excelIndex: Number(value) }]);
+      setMap((prevMap) => [
+        ...prevMap,
+        { value: property, key: Number(value) },
+      ]);
     }
   };
 
@@ -100,6 +158,8 @@ export default function ImportEntities() {
         handleModal={handleUploadEntitiesSubmit}
         show={modalType === ModalName.EntitiesUpload}
         file={file}
+        error={error}
+        loader={loader}
       ></EntitiesUpload>
 
       <EntitiesMap
@@ -112,6 +172,7 @@ export default function ImportEntities() {
         excelProperty={excelProperty}
         handleDropdownChange={handleDropdownChange}
         selectedOption={map}
+        loader={loader}
       ></EntitiesMap>
 
       <EntitiesPreview
@@ -123,6 +184,8 @@ export default function ImportEntities() {
         handleBack={handlePreviewEntitiesBack}
         checkbox={checkbox}
         handleSetCheckbox={handleSetCheckbox}
+        loader={loader}
+        entityPreview={entityPreview}
       ></EntitiesPreview>
     </>
   );
