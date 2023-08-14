@@ -12,7 +12,7 @@ export class EntityControlUtils {
     const entities: Entity[] = entityOwnershipResponseData.data.map(
       (entity) => {
         return {
-          entityId: entity.Id.toString(),
+          entityId: entity.Name,
           entityName: entity.Name,
           incorporationJurisdiction: entity.IncorporationJurisdiction,
           entityType: entity.EntityType,
@@ -28,9 +28,9 @@ export class EntityControlUtils {
       (entity) => {
         return entity.EntityOwnerList.map((owner) => {
           return {
-            ownershipId: entity.Id.toString() + owner.OwnerName,
+            ownershipId: entity.Name + owner.OwnerName,
             ownerId: owner.OwnerName,
-            ownedId: entity.Id.toString(),
+            ownedId: entity.Name,
             ownershipPercentage: owner.OwnerPercentage,
             ownerName: owner.OwnerName,
             ownershipName: owner.OwnerName,
@@ -39,6 +39,8 @@ export class EntityControlUtils {
         });
       }
     );
+
+    console.log(ownerships);
 
     appStore.dispatch(EntitySliceActions.setEntities(entities));
     appStore.dispatch(EntitySliceActions.setOwnerships(ownerships));
