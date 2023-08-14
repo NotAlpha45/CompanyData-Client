@@ -4,6 +4,7 @@ import ControlEntitiesModal from "./control-entites/ControlEntitiesModal";
 import { ModalName } from "../enums/modalName";
 import { shallowEqual } from "react-redux";
 import { useAppSelector } from "../stores/redux-store";
+import EntityChart from "./EntityChart/EntityChart";
 
 export const PrivateLayoutModals = () => {
 
@@ -13,6 +14,7 @@ export const PrivateLayoutModals = () => {
     <>
       <React.Fragment>
         <ImportEntities />
+        <EntityChart></EntityChart>
         {
           (currentSelectedModal === ModalName.EditEntities) ?
             <ControlEntitiesModal

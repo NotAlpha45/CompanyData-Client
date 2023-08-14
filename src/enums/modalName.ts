@@ -6,6 +6,9 @@ export enum ModalName {
   AddEntities = "AddEntities",
 
   EditEntities = "EditEntities",
+  
+  EntityChart = "EntityChart",
+  EntityChart_EntitiesMap = "EntityChart_EntitiesMap",
 
   None = "None",
 }
